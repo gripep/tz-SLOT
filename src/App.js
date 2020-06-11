@@ -1,13 +1,14 @@
 import React from "react";
 
 import Footer from "./components/Footer";
+import Form from "./components/Form";
 
 import "./assets/css/react.min.css";
 
 function App() {
   return (
     <div className="App">
-      <h1>TZ Stats, baby!</h1>
+      <Form />
       <Footer />
     </div>
   );
