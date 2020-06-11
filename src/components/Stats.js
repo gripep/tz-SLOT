@@ -54,7 +54,11 @@ export class Stats extends Component {
   render() {
     const { hasResponse } = this.state;
 
-    const stats = <div>Stats...</div>;
+    const stats = (
+      <div className="text-center mt--100">
+        <h5 className="floating">Stats...</h5>
+      </div>
+    );
 
     const wait = (
       <div className="text-center mt--100">
