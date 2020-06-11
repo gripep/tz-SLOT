@@ -37,9 +37,17 @@ export class Stats extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    this.setState({
-      hasResponse: true,
-    });
+    axios
+      .post("api/upload", this.state.token, {})
+      .then((res) => {
+        this.setState({
+          hasResponse: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err.response.status);
+      });
+
     console.log(this.state.token);
   };
 
