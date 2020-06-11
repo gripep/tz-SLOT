@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardBody,
+  Form,
   FormGroup,
   Input,
   InputGroupAddon,
@@ -18,16 +19,23 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faKey } from "@fortawesome/free-solid-svg-icons";
 
-export class Form extends Component {
+export class Stats extends Component {
   state = {
     hasResponse: false,
+    token: null,
   };
 
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
-    this.refs.main.scrollTop = 0;
   }
+
+  onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    console.log(this.state.token);
+  };
 
   render() {
     const { hasResponse } = this.state;
@@ -42,12 +50,12 @@ export class Form extends Component {
 
     return (
       <>
-        <main ref="main">
-          <section className="section section-lg pt-lg-0 bg-gradient-default">
-            <Container>
-              <Row></Row>
-              <Row className="justify-content-center mt-5">
-                <Col lg="8">
+        <section className="section section-lg pt-lg-0 bg-gradient-default">
+          <Container>
+            <Row></Row>
+            <Row className="justify-content-center mt-5">
+              <Col lg="8">
+                <Form onSubmit={this.onSubmit}>
                   <Card className="bg-gradient-secondary shadow">
                     <CardBody className="p-lg-5">
                       <h4 className="mb-1">Please enter a Token Address</h4>
@@ -67,7 +75,9 @@ export class Form extends Component {
                           </InputGroupAddon>
                           <Input
                             placeholder="Your Token Address"
+                            name="token"
                             type="text"
+                            onChange={this.onChange}
                             onFocus={(e) => this.setState({ boxFocused: true })}
                             onBlur={(e) => this.setState({ boxFocused: false })}
                           />
@@ -79,43 +89,41 @@ export class Form extends Component {
                           className="btn-round"
                           color="default"
                           size="lg"
-                          type="button"
+                          type="submit"
+                          // onClick={this.onClick}
                         >
                           Submit
                         </Button>
                       </div>
                     </CardBody>
                   </Card>
-                </Col>
-              </Row>
-            </Container>
-            <div className="separator separator-bottom separator-skew zindex-100">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                preserveAspectRatio="none"
-                version="1.1"
-                viewBox="0 0 2560 100"
-                x="0"
-                y="0"
-              >
-                <polygon
-                  className="fill-white"
-                  points="2560 0 2560 100 0 100"
-                />
-              </svg>
-            </div>
-          </section>
-          <section className="section section-lg pt-lg-0t">
-            <Container>
-              <Row className="justify-content-center mt-5 mb-5">
-                <Col lg="8">{hasResponse ? stats : wait}</Col>
-              </Row>
-            </Container>
-          </section>
-        </main>
+                </Form>
+              </Col>
+            </Row>
+          </Container>
+          <div className="separator separator-bottom separator-skew zindex-100">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="none"
+              version="1.1"
+              viewBox="0 0 2560 100"
+              x="0"
+              y="0"
+            >
+              <polygon className="fill-white" points="2560 0 2560 100 0 100" />
+            </svg>
+          </div>
+        </section>
+        <section className="section section-lg pt-lg-0t">
+          <Container>
+            <Row className="justify-content-center mt-5 mb-5">
+              <Col lg="8">{hasResponse ? stats : wait}</Col>
+            </Row>
+          </Container>
+        </section>
       </>
     );
   }
 }
 
-export default Form;
+export default Stats;
