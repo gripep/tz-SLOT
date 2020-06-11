@@ -38,9 +38,9 @@ export class Form extends Component {
                 <Col lg="8">
                   <Card className="bg-gradient-secondary shadow">
                     <CardBody className="p-lg-5">
-                      <h4 className="mb-1">Please enter your hash</h4>
+                      <h4 className="mb-1">Please enter a Token Address</h4>
                       <p className="mt-0 mb-0">
-                        Enter your hash and click the button below.
+                        Enter your Token Address and click the button below.
                       </p>
                       <FormGroup
                         className={classnames({
@@ -54,7 +54,7 @@ export class Form extends Component {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            placeholder="Your Hash"
+                            placeholder="Your Token Address"
                             type="text"
                             onFocus={(e) => this.setState({ boxFocused: true })}
                             onBlur={(e) => this.setState({ boxFocused: false })}
