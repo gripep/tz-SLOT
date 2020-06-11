@@ -19,7 +19,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faKey } from "@fortawesome/free-solid-svg-icons";
 
 export class Form extends Component {
-  state = {};
+  state = {
+    hasResponse: false,
+  };
 
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -28,6 +30,16 @@ export class Form extends Component {
   }
 
   render() {
+    const { hasResponse } = this.state;
+
+    const stats = <div>Stats...</div>;
+
+    const wait = (
+      <div className="text-center mt--100">
+        <h5 className="floating">Waiting for Token Address...</h5>
+      </div>
+    );
+
     return (
       <>
         <main ref="main">
@@ -92,6 +104,13 @@ export class Form extends Component {
                 />
               </svg>
             </div>
+          </section>
+          <section className="section section-lg pt-lg-0t">
+            <Container>
+              <Row className="justify-content-center mt-5 mb-5">
+                <Col lg="8">{hasResponse ? stats : wait}</Col>
+              </Row>
+            </Container>
           </section>
         </main>
       </>
