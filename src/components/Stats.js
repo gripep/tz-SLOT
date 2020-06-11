@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+
+import axios from "axios";
 import classnames from "classnames";
 
 import {
@@ -34,6 +36,10 @@ export class Stats extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+
+    this.setState({
+      hasResponse: true,
+    });
     console.log(this.state.token);
   };
 
@@ -75,6 +81,7 @@ export class Stats extends Component {
                           </InputGroupAddon>
                           <Input
                             placeholder="Your Token Address"
+                            autoComplete="false"
                             name="token"
                             type="text"
                             onChange={this.onChange}
@@ -90,7 +97,6 @@ export class Stats extends Component {
                           color="default"
                           size="lg"
                           type="submit"
-                          // onClick={this.onClick}
                         >
                           Submit
                         </Button>
