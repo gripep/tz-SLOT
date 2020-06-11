@@ -53,7 +53,10 @@ export class Footer extends Component {
               <Col md="6">
                 <Nav className=" nav-footer justify-content-end">
                   <NavItem>
-                    <NavLink href="" target="_blank">
+                    <NavLink
+                      href="https://github.com/gripep/tzstats/blob/master/LICENSE.md"
+                      target="_blank"
+                    >
                       MIT License
                     </NavLink>
                   </NavItem>
