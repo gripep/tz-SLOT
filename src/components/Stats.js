@@ -62,7 +62,12 @@ export class Stats extends Component {
 
     const wait = (
       <div className="text-center mt--100">
-        <h5 className="floating">Waiting for Token Address...</h5>
+        <img
+          alt="..."
+          className="img-fluid floating"
+          src={require("../assets/img/address.png")}
+        />
+        <h6 className="ml-5 mt-5">Waiting for Token Address...</h6>
       </div>
     );
 
