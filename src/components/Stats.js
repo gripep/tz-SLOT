@@ -38,11 +38,13 @@ export class Stats extends Component {
     e.preventDefault();
 
     axios
-      .post("api/upload", this.state.token, {})
+      .get(`https://api.tzstats.com/tables/income?address=${this.state.token}`)
       .then((res) => {
         this.setState({
           hasResponse: true,
         });
+        // bonds 21, 23
+        console.log(res.data[1]);
       })
       .catch((err) => {
         console.log(err.response.status);
