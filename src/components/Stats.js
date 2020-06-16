@@ -7,6 +7,7 @@ import {
   Button,
   Card,
   CardBody,
+  CardHeader,
   Form,
   FormGroup,
   Input,
@@ -16,6 +17,7 @@ import {
   Container,
   Row,
   Col,
+  Table,
 } from "reactstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,7 +27,37 @@ export class Stats extends Component {
   state = {
     hasResponse: false,
     token: null,
+    stats: {
+      account: {
+        address: null,
+        first_in_time: null,
+        last_out_time: null,
+        active_delegations: null,
+        full_balance: null,
+      },
+      income: {
+        cycle: null,
+        total_bonds: null,
+        start_time: null,
+        end_time: null,
+      },
+    },
   };
+
+  // Intl.NumberFormat().format(
+  //   Math.round(
+  //     bonds.balance[bonds.balance.length - 1] * 100
+  //   ) / 100
+  //  )
+
+  // new Intl.DateTimeFormat("en-US", {
+  //   year: "numeric",
+  //   month: "2-digit",
+  //   day: "2-digit",
+  //   hour: "2-digit",
+  //   minute: "2-digit",
+  //   second: "2-digit",
+  // }).format(bonds.start_time[bonds.start_time.length - 1])}
 
   componentDidMount() {
     document.documentElement.scrollTop = 0;
@@ -38,27 +70,114 @@ export class Stats extends Component {
     e.preventDefault();
 
     axios
-      .get(`https://api.tzstats.com/tables/income?address=${this.state.token}`)
-      .then((res) => {
-        this.setState({
-          hasResponse: true,
-        });
-        // bonds 21, 23
-        console.log(res.data[1]);
-      })
-      .catch((err) => {
-        console.log(err.response.status);
-      });
+      .all([
+        axios.get(
+          `https://api.tzstats.com/explorer/account/${this.state.token}`
+        ),
+        axios.get(
+          `https://api.tzstats.com/tables/income?address=${this.state.token}`
+        ),
+      ])
+      .then(
+        axios.spread((account, income) => {
+          /* account response */
+          const accountData = account.data;
+          const incomeData = income.data;
+          // find active cycle
+          let i;
+          for (i = incomeData.length - 1; i >= 0; i--) {
+            // When total_bonds (index 22 of result Array) is not 0,
+            // an active cycle is found.
+            // 'i' will represent its position in the result Array
+            if (incomeData[i][22] !== 0) break;
+          }
+          const active_cycle = incomeData[i];
 
-    console.log(this.state.token);
+          this.setState({
+            hasResponse: true,
+            stats: {
+              account: {
+                address: accountData.address,
+                first_in_time: accountData.first_in_time,
+                last_out_time: accountData.last_out_time,
+                active_delegations: accountData.active_delegations,
+                full_balance:
+                  accountData.total_balance + accountData.frozen_rewards,
+              },
+              income: {
+                cycle: active_cycle[1],
+                total_bonds: active_cycle[22],
+                start_time: active_cycle[39],
+                end_time: active_cycle[40],
+              },
+            },
+          });
+          console.log(this.state.stats);
+        })
+      )
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   render() {
-    const { hasResponse } = this.state;
+    const { hasResponse, stats } = this.state;
 
-    const stats = (
+    const dashboard = (
       <div className="text-center mt--100">
-        <h5 className="floating">Stats...</h5>
+        <Row>
+          <div className="col">
+            <Card className="shadow">
+              <CardHeader className="border-0">
+                <h3 className="mb-0">Bonds</h3>
+              </CardHeader>
+              <Table
+                className="align-items-center mx-auto table-flush"
+                responsive
+              >
+                <thead className="thead-light">
+                  <tr>
+                    <th scope="col">Cycle</th>
+                    <th scope="col">Total Bonds</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{stats.income.cycle}</td>
+
+                    <td>
+                      {Intl.NumberFormat().format(stats.income.total_bonds)}
+                    </td>
+
+                    <td>
+                      {new Intl.DateTimeFormat("en-US", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                      }).format(stats.income.start_time)}
+                    </td>
+
+                    <td>
+                      {new Intl.DateTimeFormat("en-US", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                      }).format(stats.income.end_time)}
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Card>
+          </div>
+        </Row>
       </div>
     );
 
@@ -142,7 +261,7 @@ export class Stats extends Component {
         <section className="section section-lg pt-lg-0t">
           <Container>
             <Row className="justify-content-center mt-5 mb-5">
-              <Col lg="8">{hasResponse ? stats : wait}</Col>
+              <Col lg="12">{hasResponse ? dashboard : wait}</Col>
             </Row>
           </Container>
         </section>
