@@ -7,7 +7,7 @@ import {
   Button,
   Card,
   CardBody,
-  CardHeader,
+  CardTitle,
   Form,
   FormGroup,
   Input,
@@ -17,11 +17,16 @@ import {
   Container,
   Row,
   Col,
-  Table,
 } from "reactstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faKey } from "@fortawesome/free-solid-svg-icons";
+import {
+  faKey,
+  faCoins,
+  faStar,
+  faUsers,
+  faCalendarAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 export class Stats extends Component {
   state = {
@@ -38,6 +43,7 @@ export class Stats extends Component {
       },
       income: {
         cycle: null,
+        bonds: [],
         total_bonds: null,
         average_return: null,
         start_time: null,
@@ -94,12 +100,19 @@ export class Stats extends Component {
             if (incomeData[i][22] !== 0) break;
           }
 
+          // create an array containing the bonds over time
+          let bonds_over_time = [];
+          let j;
+          for (j = 0; j <= i; j++) {
+            bonds_over_time.push(incomeData[j][22]);
+          }
+
           // find tot bonds for average_return by
           // calculating the difference between consecutive bonds
           let tot = 0;
-          let j;
-          for (j = 1; j <= i; j++) {
-            tot += incomeData[j][22] - incomeData[j - 1][22];
+          let k;
+          for (k = 1; k <= i; k++) {
+            tot += incomeData[k][22] - incomeData[k - 1][22];
           }
 
           const active_cycle = incomeData[i];
@@ -118,6 +131,7 @@ export class Stats extends Component {
               },
               income: {
                 cycle: active_cycle[1],
+                bonds: bonds_over_time,
                 total_bonds: active_cycle[22],
                 average_return: tot / active_cycle[1],
                 start_time: active_cycle[39],
@@ -141,7 +155,7 @@ export class Stats extends Component {
 
     const dashboard = (
       <div className="text-center mt--100">
-        <Row>
+        {/* <Row>
           <div className="col">
             <Card className="shadow">
               <CardHeader className="border-0">
@@ -191,6 +205,108 @@ export class Stats extends Component {
                   </tr>
                 </tbody>
               </Table>
+            </Card>
+          </div>
+        </Row> */}
+        <Row>
+          <div className="col col-6">
+            <Card className="card-lift--hover shadow border-0">
+              <CardBody>
+                <Row>
+                  <div className="col">
+                    <CardTitle
+                      tag="h5"
+                      className="text-uppercase text-muted mb-0"
+                    >
+                      Full Balance
+                    </CardTitle>
+                    <span className="h4 font-weight-bold mb-0">
+                      {stats.account.full_balance} XTZ
+                    </span>
+                  </div>
+                  <Col className="col-auto">
+                    <div className="icon icon-shape bg-info text-white rounded-circle shadow">
+                      <FontAwesomeIcon icon={faCoins} />
+                    </div>
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </div>
+
+          <div className="col col-6">
+            <Card className="card-lift--hover shadow border-0">
+              <CardBody>
+                <Row>
+                  <div className="col">
+                    <CardTitle
+                      tag="h5"
+                      className="text-uppercase text-muted mb-0"
+                    >
+                      Rewards Earned
+                    </CardTitle>
+                    <span className="h4 font-weight-bold mb-0">
+                      {stats.account.total_rewards_earned}
+                    </span>
+                  </div>
+                  <Col className="col-auto">
+                    <div className="icon icon-shape bg-info text-white rounded-circle shadow">
+                      <FontAwesomeIcon icon={faStar} />
+                    </div>
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </div>
+        </Row>
+        <Row>
+          <div className="col col-6 mt-5">
+            <Card className="card-lift--hover shadow border-0">
+              <CardBody>
+                <Row>
+                  <div className="col">
+                    <CardTitle
+                      tag="h5"
+                      className="text-uppercase text-muted mb-0"
+                    >
+                      Active Delegations
+                    </CardTitle>
+                    <span className="h4 font-weight-bold mb-0">
+                      {stats.account.active_delegations}
+                    </span>
+                  </div>
+                  <Col className="col-auto">
+                    <div className="icon icon-shape bg-info text-white rounded-circle shadow">
+                      <FontAwesomeIcon icon={faUsers} />
+                    </div>
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </div>
+
+          <div className="col col-6 mt-5">
+            <Card className="card-lift--hover shadow border-0">
+              <CardBody>
+                <Row>
+                  <div className="col">
+                    <CardTitle
+                      tag="h5"
+                      className="text-uppercase text-muted mb-0"
+                    >
+                      Last Active
+                    </CardTitle>
+                    <span className="h4 font-weight-bold mb-0">
+                      {stats.account.last_out_time}
+                    </span>
+                  </div>
+                  <Col className="col-auto">
+                    <div className="icon icon-shape bg-info text-white rounded-circle shadow">
+                      <FontAwesomeIcon icon={faCalendarAlt} />
+                    </div>
+                  </Col>
+                </Row>
+              </CardBody>
             </Card>
           </div>
         </Row>
