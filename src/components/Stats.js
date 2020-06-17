@@ -122,8 +122,12 @@ export class Stats extends Component {
             stats: {
               account: {
                 address: accountData.address,
-                first_in_time: accountData.first_in_time,
-                last_out_time: accountData.last_out_time,
+                first_in_time: accountData.first_in_time
+                  .replace("T", ", ")
+                  .replace("Z", ""),
+                last_out_time: accountData.last_out_time
+                  .replace("T", ", ")
+                  .replace("Z", ""),
                 active_delegations: accountData.active_delegations,
                 full_balance:
                   accountData.total_balance + accountData.frozen_rewards,
@@ -155,161 +159,118 @@ export class Stats extends Component {
 
     const dashboard = (
       <div className="text-center mt--100">
-        {/* <Row>
-          <div className="col">
-            <Card className="shadow">
-              <CardHeader className="border-0">
-                <h3 className="mb-0">Bonds</h3>
-              </CardHeader>
-              <Table
-                className="align-items-center mx-auto table-flush"
-                responsive
-              >
-                <thead className="thead-light">
-                  <tr>
-                    <th scope="col">Cycle</th>
-                    <th scope="col">Total Bonds</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">End Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{stats.income.cycle}</td>
+        <Container fluid>
+          <div className="header-body">
+            <Row>
+              <div className="col ml-4 mb-5">
+                <h4>{stats.account.address}</h4>
+                <p>Joined {stats.account.first_in_time}</p>
+              </div>
+            </Row>
+            <Row>
+              <div className="col col-6">
+                <Card className="card-lift--hover shadow border-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h5"
+                          className="text-uppercase text-muted mb-0"
+                        >
+                          Full Balance
+                        </CardTitle>
+                        <span className="h4 font-weight-bold mb-0">
+                          {stats.account.full_balance} XTZ
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-info text-white rounded-circle shadow">
+                          <FontAwesomeIcon icon={faCoins} />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </div>
 
-                    <td>
-                      {Intl.NumberFormat().format(stats.income.total_bonds)}
-                    </td>
+              <div className="col col-6">
+                <Card className="card-lift--hover shadow border-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h5"
+                          className="text-uppercase text-muted mb-0"
+                        >
+                          Rewards Earned
+                        </CardTitle>
+                        <span className="h4 font-weight-bold mb-0">
+                          {stats.account.total_rewards_earned}
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-info text-white rounded-circle shadow">
+                          <FontAwesomeIcon icon={faStar} />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </div>
+            </Row>
+            <Row>
+              <div className="col col-6 mt-5">
+                <Card className="card-lift--hover shadow border-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h5"
+                          className="text-uppercase text-muted mb-0"
+                        >
+                          Active Delegations
+                        </CardTitle>
+                        <span className="h4 font-weight-bold mb-0">
+                          {stats.account.active_delegations}
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-info text-white rounded-circle shadow">
+                          <FontAwesomeIcon icon={faUsers} />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </div>
 
-                    <td>
-                      {new Intl.DateTimeFormat("en-US", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        second: "2-digit",
-                      }).format(stats.income.start_time)}
-                    </td>
-
-                    <td>
-                      {new Intl.DateTimeFormat("en-US", {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        second: "2-digit",
-                      }).format(stats.income.end_time)}
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card>
+              <div className="col col-6 mt-5">
+                <Card className="card-lift--hover shadow border-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h5"
+                          className="text-uppercase text-muted mb-0"
+                        >
+                          Last Active
+                        </CardTitle>
+                        <span className="h4 font-weight-bold mb-0">
+                          {stats.account.last_out_time}
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-info text-white rounded-circle shadow">
+                          <FontAwesomeIcon icon={faCalendarAlt} />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </div>
+            </Row>
           </div>
-        </Row> */}
-        <Row>
-          <div className="col col-6">
-            <Card className="card-lift--hover shadow border-0">
-              <CardBody>
-                <Row>
-                  <div className="col">
-                    <CardTitle
-                      tag="h5"
-                      className="text-uppercase text-muted mb-0"
-                    >
-                      Full Balance
-                    </CardTitle>
-                    <span className="h4 font-weight-bold mb-0">
-                      {stats.account.full_balance} XTZ
-                    </span>
-                  </div>
-                  <Col className="col-auto">
-                    <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                      <FontAwesomeIcon icon={faCoins} />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </div>
-
-          <div className="col col-6">
-            <Card className="card-lift--hover shadow border-0">
-              <CardBody>
-                <Row>
-                  <div className="col">
-                    <CardTitle
-                      tag="h5"
-                      className="text-uppercase text-muted mb-0"
-                    >
-                      Rewards Earned
-                    </CardTitle>
-                    <span className="h4 font-weight-bold mb-0">
-                      {stats.account.total_rewards_earned}
-                    </span>
-                  </div>
-                  <Col className="col-auto">
-                    <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                      <FontAwesomeIcon icon={faStar} />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </div>
-        </Row>
-        <Row>
-          <div className="col col-6 mt-5">
-            <Card className="card-lift--hover shadow border-0">
-              <CardBody>
-                <Row>
-                  <div className="col">
-                    <CardTitle
-                      tag="h5"
-                      className="text-uppercase text-muted mb-0"
-                    >
-                      Active Delegations
-                    </CardTitle>
-                    <span className="h4 font-weight-bold mb-0">
-                      {stats.account.active_delegations}
-                    </span>
-                  </div>
-                  <Col className="col-auto">
-                    <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                      <FontAwesomeIcon icon={faUsers} />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </div>
-
-          <div className="col col-6 mt-5">
-            <Card className="card-lift--hover shadow border-0">
-              <CardBody>
-                <Row>
-                  <div className="col">
-                    <CardTitle
-                      tag="h5"
-                      className="text-uppercase text-muted mb-0"
-                    >
-                      Last Active
-                    </CardTitle>
-                    <span className="h4 font-weight-bold mb-0">
-                      {stats.account.last_out_time}
-                    </span>
-                  </div>
-                  <Col className="col-auto">
-                    <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                      <FontAwesomeIcon icon={faCalendarAlt} />
-                    </div>
-                  </Col>
-                </Row>
-              </CardBody>
-            </Card>
-          </div>
-        </Row>
+        </Container>
       </div>
     );
 
