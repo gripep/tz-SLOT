@@ -34,10 +34,12 @@ export class Stats extends Component {
         last_out_time: null,
         active_delegations: null,
         full_balance: null,
+        total_rewards_earned: null,
       },
       income: {
         cycle: null,
         total_bonds: null,
+        average_return: null,
         start_time: null,
         end_time: null,
       },
@@ -91,6 +93,15 @@ export class Stats extends Component {
             // 'i' will represent its position in the result Array
             if (incomeData[i][22] !== 0) break;
           }
+
+          // find tot bonds for average_return by
+          // calculating the difference between consecutive bonds
+          let tot = 0;
+          let j;
+          for (j = 1; j <= i; j++) {
+            tot += incomeData[j][22] - incomeData[j - 1][22];
+          }
+
           const active_cycle = incomeData[i];
 
           this.setState({
@@ -103,16 +114,21 @@ export class Stats extends Component {
                 active_delegations: accountData.active_delegations,
                 full_balance:
                   accountData.total_balance + accountData.frozen_rewards,
+                total_rewards_earned: accountData.total_rewards_earned,
               },
               income: {
                 cycle: active_cycle[1],
                 total_bonds: active_cycle[22],
+                average_return: tot / active_cycle[1],
                 start_time: active_cycle[39],
                 end_time: active_cycle[40],
               },
             },
           });
           console.log(this.state.stats);
+          // console.log(accountData);
+          // console.log(incomeData);
+          // console.log(active_cycle);
         })
       )
       .catch((err) => {
