@@ -3,10 +3,15 @@ import React, { Component } from "react";
 import axios from "axios";
 import classnames from "classnames";
 
+import Chart from "chart.js";
+import { Line } from "react-chartjs-2";
+import { chartOptions, parseOptions, linechart } from "./charts/charts.js";
+
 import {
   Button,
   Card,
   CardBody,
+  CardHeader,
   CardTitle,
   Form,
   FormGroup,
@@ -22,10 +27,13 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faKey,
-  faCoins,
+  faWallet,
   faStar,
   faUsers,
   faCalendarAlt,
+  faRedoAlt,
+  faCoins,
+  faChartLine,
 } from "@fortawesome/free-solid-svg-icons";
 
 export class Stats extends Component {
@@ -50,6 +58,7 @@ export class Stats extends Component {
         end_time: null,
       },
     },
+    linechartData: "data1",
   };
 
   // Intl.NumberFormat().format(
@@ -70,6 +79,9 @@ export class Stats extends Component {
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
+    if (window.Chart) {
+      parseOptions(Chart, chartOptions());
+    }
   }
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
@@ -185,7 +197,7 @@ export class Stats extends Component {
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                          <FontAwesomeIcon icon={faCoins} />
+                          <FontAwesomeIcon icon={faWallet} />
                         </div>
                       </Col>
                     </Row>
@@ -268,6 +280,126 @@ export class Stats extends Component {
                   </CardBody>
                 </Card>
               </div>
+            </Row>
+          </div>
+          <hr />
+          <div className="text-center mt-5">
+            <Row>
+              <Col className="mb-5 mb-xl-0" xl="8">
+                <Card className="bg-gradient-default shadow">
+                  <CardHeader className="bg-transparent">
+                    <Row className="align-items-center">
+                      <div className="col">
+                        <h5 className="text-white mb-0">
+                          <strong>Bonds</strong> over last 7 Cycles
+                        </h5>
+                      </div>
+                    </Row>
+                  </CardHeader>
+                  <CardBody>
+                    {/* Chart */}
+                    <div className="chart">
+                      <Line
+                        data={linechart[this.state.linechartData]}
+                        options={linechart.options}
+                        getDatasetAtEvent={(e) => console.log(e)}
+                      />
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
+
+              <Col>
+                <Card className="mb-3 shadow border-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h6"
+                          className="text-uppercase text-muted mb-0"
+                        >
+                          Deposit Time
+                        </CardTitle>
+                        <span className="h6 font-weight-bold mb-0">
+                          <p>First Deposit: {stats.income.start_time}</p>
+                          <p>Last Deposit: {stats.income.end_time}</p>
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-default text-white rounded-circle shadow">
+                          <FontAwesomeIcon icon={faCalendarAlt} />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+                <Card className="mb-3 shadow border-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h6"
+                          className="text-uppercase text-muted mb-0"
+                        >
+                          Cycle
+                        </CardTitle>
+                        <span className="h6 font-weight-bold mb-0">
+                          {stats.income.cycle}
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-default text-white rounded-circle shadow">
+                          <FontAwesomeIcon icon={faRedoAlt} />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+                <Card className="mb-3 shadow border-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h6"
+                          className="text-uppercase text-muted mb-0"
+                        >
+                          Total Bonds
+                        </CardTitle>
+                        <span className="h6 font-weight-bold mb-0">
+                          {stats.income.total_bonds}
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-default text-white rounded-circle shadow">
+                          <FontAwesomeIcon icon={faCoins} />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+                <Card className="mb-3 shadow border-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h6"
+                          className="text-uppercase text-muted mb-0"
+                        >
+                          Avg Bond Return
+                        </CardTitle>
+                        <span className="h6 font-weight-bold mb-0">
+                          {stats.income.average_return}
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-default text-white rounded-circle shadow">
+                          <FontAwesomeIcon icon={faChartLine} />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
             </Row>
           </div>
         </Container>
