@@ -175,7 +175,9 @@ export class Stats extends Component {
           <div className="header-body">
             <Row>
               <div className="col ml-4 mb-5">
-                <h4>{stats.account.address}</h4>
+                <h4>
+                  <u>{stats.account.address}</u>
+                </h4>
                 <p>Joined {stats.account.first_in_time}</p>
               </div>
             </Row>
@@ -186,10 +188,10 @@ export class Stats extends Component {
                     <Row>
                       <div className="col">
                         <CardTitle
-                          tag="h5"
+                          tag="h6"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Full Balance
+                          <u>Full Balance</u>
                         </CardTitle>
                         <span className="h4 font-weight-bold mb-0">
                           {stats.account.full_balance} XTZ
@@ -211,10 +213,10 @@ export class Stats extends Component {
                     <Row>
                       <div className="col">
                         <CardTitle
-                          tag="h5"
+                          tag="h6"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Rewards Earned
+                          <u>Rewards Earned</u>
                         </CardTitle>
                         <span className="h4 font-weight-bold mb-0">
                           {stats.account.total_rewards_earned}
@@ -237,10 +239,10 @@ export class Stats extends Component {
                     <Row>
                       <div className="col">
                         <CardTitle
-                          tag="h5"
+                          tag="h6"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Active Delegations
+                          <u>Active Delegations</u>
                         </CardTitle>
                         <span className="h4 font-weight-bold mb-0">
                           {stats.account.active_delegations}
@@ -262,10 +264,10 @@ export class Stats extends Component {
                     <Row>
                       <div className="col">
                         <CardTitle
-                          tag="h5"
+                          tag="h6"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Last Active
+                          <u>Last Active</u>
                         </CardTitle>
                         <span className="h4 font-weight-bold mb-0">
                           {stats.account.last_out_time}
@@ -291,7 +293,10 @@ export class Stats extends Component {
                     <Row className="align-items-center">
                       <div className="col">
                         <h5 className="text-white mb-0">
-                          <strong>Bonds</strong> over last 7 Cycles
+                          <strong>Bonds</strong>{" "}
+                          <small>
+                            <p>over last 7 Cycles</p>
+                          </small>
                         </h5>
                       </div>
                     </Row>
@@ -318,11 +323,31 @@ export class Stats extends Component {
                           tag="h6"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Deposit Time
+                          <u>Deposit Time</u>
                         </CardTitle>
                         <span className="h6 font-weight-bold mb-0">
-                          <p>First Deposit: {stats.income.start_time}</p>
-                          <p>Last Deposit: {stats.income.end_time}</p>
+                          <p>
+                            First Deposit:{" "}
+                            {new Intl.DateTimeFormat("en-US", {
+                              year: "numeric",
+                              month: "2-digit",
+                              day: "2-digit",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              second: "2-digit",
+                            }).format(stats.income.start_time)}
+                          </p>
+                          <p>
+                            Last Deposit:{" "}
+                            {new Intl.DateTimeFormat("en-US", {
+                              year: "numeric",
+                              month: "2-digit",
+                              day: "2-digit",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              second: "2-digit",
+                            }).format(stats.income.end_time)}
+                          </p>
                         </span>
                       </div>
                       <Col className="col-auto">
@@ -341,7 +366,7 @@ export class Stats extends Component {
                           tag="h6"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Cycle
+                          <u>Cycle</u>
                         </CardTitle>
                         <span className="h6 font-weight-bold mb-0">
                           {stats.income.cycle}
@@ -363,7 +388,7 @@ export class Stats extends Component {
                           tag="h6"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Total Bonds
+                          <u>Total Bonds</u>
                         </CardTitle>
                         <span className="h6 font-weight-bold mb-0">
                           {stats.income.total_bonds}
@@ -385,7 +410,7 @@ export class Stats extends Component {
                           tag="h6"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Avg Bond Return
+                          <u>Avg Bond Return</u>
                         </CardTitle>
                         <span className="h6 font-weight-bold mb-0">
                           {stats.income.average_return}
