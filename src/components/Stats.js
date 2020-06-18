@@ -325,7 +325,7 @@ export class Stats extends Component {
                         >
                           <u>Deposit Time</u>
                         </CardTitle>
-                        <span className="h4 font-weight-bold mb-2">
+                        <span className="h4 font-weight-bold">
                           <p>
                             First Deposit:{" "}
                             {new Intl.DateTimeFormat("en-US", {
@@ -368,7 +368,7 @@ export class Stats extends Component {
                         >
                           <u>Cycle</u>
                         </CardTitle>
-                        <span className="h4 font-weight-bold mb-2">
+                        <span className="h4 font-weight-bold">
                           {stats.income.cycle}
                         </span>
                       </div>
@@ -390,7 +390,7 @@ export class Stats extends Component {
                         >
                           <u>Total Bonds</u>
                         </CardTitle>
-                        <span className="h4 font-weight-bold mb-2">
+                        <span className="h4 font-weight-bold">
                           {stats.income.total_bonds}
                         </span>
                       </div>
@@ -412,7 +412,7 @@ export class Stats extends Component {
                         >
                           <u>Avg Bond Return</u>
                         </CardTitle>
-                        <span className="h4 font-weight-bold mb-2">
+                        <span className="h4 font-weight-bold">
                           {stats.income.average_return}
                         </span>
                       </div>
@@ -452,9 +452,11 @@ export class Stats extends Component {
                 <Form onSubmit={this.onSubmit}>
                   <Card className="bg-gradient-secondary shadow mb-5">
                     <CardBody className="p-lg-5">
-                      <h4 className="mb-1">Please enter a Token Address</h4>
-                      <p className="mt-0 mb-0">
-                        Enter your Token Address and click the button below.
+                      <h3 className="mb-1">Please enter a Token Address</h3>
+                      <p className="mt-0 mb-1">
+                        <small>
+                          Enter your Token Address and click the button below.
+                        </small>
                       </p>
                       <FormGroup
                         className={classnames({
@@ -495,18 +497,6 @@ export class Stats extends Component {
               </Col>
             </Row>
           </Container>
-          {/* <div className="separator separator-bottom separator-skew zindex-100">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="none"
-              version="1.1"
-              viewBox="0 0 2560 100"
-              x="0"
-              y="0"
-            >
-              <polygon className="fill-white" points="2560 0 2560 100 0 100" />
-            </svg>
-          </div> */}
         </section>
         <section className="section section-lg pt-lg-0t">
           <Container>
