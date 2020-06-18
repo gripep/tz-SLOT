@@ -170,7 +170,7 @@ export class Stats extends Component {
     const { hasResponse, stats } = this.state;
 
     const dashboard = (
-      <div className="text-center mt--100">
+      <div className="text-center">
         <Container fluid>
           <div className="header-body">
             <Row>
@@ -188,12 +188,12 @@ export class Stats extends Component {
                     <Row>
                       <div className="col">
                         <CardTitle
-                          tag="h6"
-                          className="text-uppercase text-muted mb-0"
+                          tag="h4"
+                          className="text-uppercase text-muted mb-2"
                         >
                           <u>Full Balance</u>
                         </CardTitle>
-                        <span className="h4 font-weight-bold mb-0">
+                        <span className="h4 font-weight-bold mb-2">
                           {stats.account.full_balance} XTZ
                         </span>
                       </div>
@@ -213,12 +213,12 @@ export class Stats extends Component {
                     <Row>
                       <div className="col">
                         <CardTitle
-                          tag="h6"
-                          className="text-uppercase text-muted mb-0"
+                          tag="h4"
+                          className="text-uppercase text-muted mb-2"
                         >
                           <u>Rewards Earned</u>
                         </CardTitle>
-                        <span className="h4 font-weight-bold mb-0">
+                        <span className="h4 font-weight-bold mb-2">
                           {stats.account.total_rewards_earned}
                         </span>
                       </div>
@@ -239,7 +239,7 @@ export class Stats extends Component {
                     <Row>
                       <div className="col">
                         <CardTitle
-                          tag="h6"
+                          tag="h4"
                           className="text-uppercase text-muted mb-0"
                         >
                           <u>Active Delegations</u>
@@ -264,7 +264,7 @@ export class Stats extends Component {
                     <Row>
                       <div className="col">
                         <CardTitle
-                          tag="h6"
+                          tag="h4"
                           className="text-uppercase text-muted mb-0"
                         >
                           <u>Last Active</u>
@@ -292,12 +292,12 @@ export class Stats extends Component {
                   <CardHeader className="bg-transparent">
                     <Row className="align-items-center">
                       <div className="col">
-                        <h5 className="text-white mb-0">
+                        <h4 className="text-white mb-0">
                           <strong>Bonds</strong>{" "}
                           <small>
                             <p>over last 7 Cycles</p>
                           </small>
-                        </h5>
+                        </h4>
                       </div>
                     </Row>
                   </CardHeader>
@@ -320,12 +320,12 @@ export class Stats extends Component {
                     <Row>
                       <div className="col">
                         <CardTitle
-                          tag="h6"
-                          className="text-uppercase text-muted mb-0"
+                          tag="h4"
+                          className="text-uppercase text-muted mb-2"
                         >
                           <u>Deposit Time</u>
                         </CardTitle>
-                        <span className="h6 font-weight-bold mb-0">
+                        <span className="h4 font-weight-bold mb-2">
                           <p>
                             First Deposit:{" "}
                             {new Intl.DateTimeFormat("en-US", {
@@ -363,12 +363,12 @@ export class Stats extends Component {
                     <Row>
                       <div className="col">
                         <CardTitle
-                          tag="h6"
-                          className="text-uppercase text-muted mb-0"
+                          tag="h4"
+                          className="text-uppercase text-muted mb-2"
                         >
                           <u>Cycle</u>
                         </CardTitle>
-                        <span className="h6 font-weight-bold mb-0">
+                        <span className="h4 font-weight-bold mb-2">
                           {stats.income.cycle}
                         </span>
                       </div>
@@ -385,12 +385,12 @@ export class Stats extends Component {
                     <Row>
                       <div className="col">
                         <CardTitle
-                          tag="h6"
-                          className="text-uppercase text-muted mb-0"
+                          tag="h4"
+                          className="text-uppercase text-muted mb-2"
                         >
                           <u>Total Bonds</u>
                         </CardTitle>
-                        <span className="h6 font-weight-bold mb-0">
+                        <span className="h4 font-weight-bold mb-2">
                           {stats.income.total_bonds}
                         </span>
                       </div>
@@ -407,12 +407,12 @@ export class Stats extends Component {
                     <Row>
                       <div className="col">
                         <CardTitle
-                          tag="h6"
-                          className="text-uppercase text-muted mb-0"
+                          tag="h4"
+                          className="text-uppercase text-muted mb-2"
                         >
                           <u>Avg Bond Return</u>
                         </CardTitle>
-                        <span className="h6 font-weight-bold mb-0">
+                        <span className="h4 font-weight-bold mb-2">
                           {stats.income.average_return}
                         </span>
                       </div>
@@ -432,13 +432,13 @@ export class Stats extends Component {
     );
 
     const wait = (
-      <div className="text-center mt--100">
+      <div className="text-center mt-5">
         <img
           alt="..."
           className="img-fluid floating"
           src={require("../assets/img/address.png")}
         />
-        <h6 className="ml-5 mt-5">Waiting for Token Address...</h6>
+        <h4 className="ml-5 mt-5">Waiting for Token Address...</h4>
       </div>
     );
 
@@ -450,7 +450,7 @@ export class Stats extends Component {
             <Row className="justify-content-center mt-5">
               <Col lg="8">
                 <Form onSubmit={this.onSubmit}>
-                  <Card className="bg-gradient-secondary shadow">
+                  <Card className="bg-gradient-secondary shadow mb-5">
                     <CardBody className="p-lg-5">
                       <h4 className="mb-1">Please enter a Token Address</h4>
                       <p className="mt-0 mb-0">
@@ -495,7 +495,7 @@ export class Stats extends Component {
               </Col>
             </Row>
           </Container>
-          <div className="separator separator-bottom separator-skew zindex-100">
+          {/* <div className="separator separator-bottom separator-skew zindex-100">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="none"
@@ -506,7 +506,7 @@ export class Stats extends Component {
             >
               <polygon className="fill-white" points="2560 0 2560 100 0 100" />
             </svg>
-          </div>
+          </div> */}
         </section>
         <section className="section section-lg pt-lg-0t">
           <Container>

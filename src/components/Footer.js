@@ -18,11 +18,11 @@ export class Footer extends Component {
   render() {
     return (
       <>
-        <footer className=" footer">
+        <footer className="footer bg-light">
           <Container>
-            <Row className=" row-grid align-items-center mb-1">
+            <Row className="row-grid align-items-center mb-1">
               <Col lg="6">
-                <h4 className=" mb-0 font-weight-light">
+                <h4 className="mb-0 font-weight-light">
                   Find out more about this project on Github!
                 </h4>
               </Col>
@@ -34,7 +34,7 @@ export class Footer extends Component {
                   id="tooltip495507257"
                   target="_blank"
                 >
-                  <span className="btn-inner--icon">
+                  <span className="btn-inner">
                     <FontAwesomeIcon icon={faGithub} />
                   </span>
                 </Button>
@@ -47,7 +47,7 @@ export class Footer extends Component {
             <Row className=" align-items-center justify-content-md-between">
               <Col md="6">
                 <div className=" copyright">
-                  © {new Date().getFullYear()} TZ Stats.
+                  © {new Date().getFullYear()} gripep.
                 </div>
               </Col>
               <Col md="6">
