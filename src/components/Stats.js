@@ -92,10 +92,12 @@ export class Stats extends Component {
     axios
       .all([
         axios.get(
-          `https://api.tzstats.com/explorer/account/${this.state.token}`
+          `https://api.tzstats.com/explorer/account/${this.state.token}`,
+          { headers: { accept: "Accept: application/json" } }
         ),
         axios.get(
-          `https://api.tzstats.com/tables/income?address=${this.state.token}`
+          `https://api.tzstats.com/tables/income?address=${this.state.token}`,
+          { headers: { accept: "Accept: application/json" } }
         ),
       ])
       .then(
@@ -468,7 +470,7 @@ export class Stats extends Component {
             <Row></Row>
             <Row className="justify-content-center mt-5">
               <Col lg="8">
-                <Form onSubmit={this.onSubmit} data-netlify="true">
+                <Form onSubmit={this.onSubmit}>
                   <Card className="bg-gradient-secondary shadow mb-5">
                     <CardBody className="p-lg-5">
                       <h3 className="mb-1">Please enter a Token Address</h3>
