@@ -183,10 +183,16 @@ export class Stats extends Component {
     //     console.log(err);
     //   });
 
+    let config = { headers: { accept: "Accept: application/json" } };
+
     Promise.all([
-      fetch(`https://api.tzstats.com/explorer/account/${this.state.token}`),
       fetch(
-        `https://api.tzstats.com/tables/income?address=${this.state.token}`
+        `https://api.tzstats.com/explorer/account/${this.state.token}`,
+        config
+      ),
+      fetch(
+        `https://api.tzstats.com/tables/income?address=${this.state.token}`,
+        config
       ),
     ])
       .then(([account, income]) => Promise.all([account.json(), income.json()]))
