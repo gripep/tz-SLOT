@@ -468,7 +468,7 @@ export class Stats extends Component {
             <Row></Row>
             <Row className="justify-content-center mt-5">
               <Col lg="8">
-                <Form onSubmit={this.onSubmit}>
+                <Form onSubmit={this.onSubmit} data-netlify="true">
                   <Card className="bg-gradient-secondary shadow mb-5">
                     <CardBody className="p-lg-5">
                       <h3 className="mb-1">Please enter a Token Address</h3>
