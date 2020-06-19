@@ -92,12 +92,10 @@ export class Stats extends Component {
     axios
       .all([
         axios.get(
-          `https://api.tzstats.com/explorer/account/${this.state.token}`,
-          { headers: { accept: "Accept: application/json" } }
+          `https://api.tzstats.com/explorer/account/${this.state.token}`
         ),
         axios.get(
-          `https://api.tzstats.com/tables/income?address=${this.state.token}`,
-          { headers: { accept: "Accept: application/json" } }
+          `https://api.tzstats.com/tables/income?address=${this.state.token}`
         ),
       ])
       .then(
