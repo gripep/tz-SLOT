@@ -89,13 +89,28 @@ export class Stats extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
+    let config = {
+      method: "HEAD",
+      mode: "no-cors",
+      // headers: {
+      //   "Access-Control-Allow-Origin": "*",
+      //   Accept: "application/json",
+      //   "Content-Type": "application/json",
+      // },
+      // withCredentials: true,
+      // credentials: "same-origin",
+      // crossdomain: true,
+    };
+
     axios
       .all([
         axios.get(
-          `https://api.tzstats.com/explorer/account/${this.state.token}`
+          `https://api.tzstats.com/explorer/account/${this.state.token}`,
+          config
         ),
         axios.get(
-          `https://api.tzstats.com/tables/income?address=${this.state.token}`
+          `https://api.tzstats.com/tables/income?address=${this.state.token}`,
+          config
         ),
       ])
       .then(
