@@ -129,6 +129,13 @@ export class Stats extends Component {
 
           const active_cycle = incomeData[i];
 
+          // calculate last 7 cycles
+          let last_7_cycles = [];
+          let l;
+          for (l = 0; l < 7; l++) {
+            last_7_cycles.push(active_cycle[1] - l);
+          }
+
           this.setState({
             hasResponse: true,
             stats: {
@@ -154,8 +161,20 @@ export class Stats extends Component {
                 end_time: active_cycle[40],
               },
             },
+            linechartData: {
+              labels: last_7_cycles.reverse(),
+              datasets: [
+                {
+                  label: "Bonds",
+                  data: bonds_over_time.slice(
+                    bonds_over_time.length - 7,
+                    bonds_over_time.length - 1
+                  ),
+                },
+              ],
+            },
           });
-          console.log(this.state.stats);
+          // console.log(this.state.stats);
           // console.log(accountData);
           // console.log(incomeData);
           // console.log(active_cycle);
@@ -305,7 +324,7 @@ export class Stats extends Component {
                     {/* Chart */}
                     <div className="chart">
                       <Line
-                        data={linechart[this.state.linechartData]}
+                        data={this.state.linechartData}
                         options={linechart.options}
                         getDatasetAtEvent={(e) => console.log(e)}
                       />

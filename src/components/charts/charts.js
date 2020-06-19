@@ -285,7 +285,6 @@ function parseOptions(parent, options) {
   }
 }
 
-// Example 1 of Chart inside src/views/Index.js (Sales value - Card)
 let linechart = {
   options: {
     scales: {
@@ -316,38 +315,16 @@ let linechart = {
             content += label;
           }
 
-          content += "$" + yLabel + "k";
+          content += yLabel;
           return content;
         },
       },
     },
   },
-  data1: (canvas) => {
-    return {
-      labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      datasets: [
-        {
-          label: "Performance",
-          data: [0, 20, 10, 30, 15, 40, 20, 60, 60],
-        },
-      ],
-    };
-  },
-  data2: (canvas) => {
-    return {
-      labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      datasets: [
-        {
-          label: "Performance",
-          data: [0, 20, 5, 25, 10, 30, 15, 40, 40],
-        },
-      ],
-    };
-  },
 };
 
 module.exports = {
-  chartOptions, // used inside src/views/Index.js
-  parseOptions, // used inside src/views/Index.js
-  linechart, // used inside src/views/Index.js
+  chartOptions,
+  parseOptions,
+  linechart,
 };
