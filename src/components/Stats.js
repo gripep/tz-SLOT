@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-// import axios from "axios";
+import axios from "axios";
 import classnames from "classnames";
 
 import Chart from "chart.js";
@@ -89,181 +89,186 @@ export class Stats extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    // axios
-    //   .all([
-    //     axios.get(
-    //       `https://api.tzstats.com/explorer/account/${this.state.token}`
-    //     ),
-    //     axios.get(
-    //       `https://api.tzstats.com/tables/income?address=${this.state.token}`
-    //     ),
-    //   ])
-    //   .then(
-    //     axios.spread((account, income) => {
-    //       const accountData = account.data;
-    //       const incomeData = income.data;
-    //       // find active cycle
-    //       let i;
-    //       for (i = incomeData.length - 1; i >= 0; i--) {
-    //         // When total_bonds (index 22 of result Array) is not 0,
-    //         // an active cycle is found.
-    //         // 'i' will represent its position in the result Array
-    //         if (incomeData[i][22] !== 0) break;
-    //       }
+    let config = {
+      method: "GET",
+      mode: "no-cors",
+    };
 
-    //       // create an array containing the bonds over time
-    //       let bonds_over_time = [];
-    //       let j;
-    //       for (j = 0; j <= i; j++) {
-    //         bonds_over_time.push(incomeData[j][22]);
-    //       }
+    axios
+      .all([
+        axios.get(
+          `https://api.tzstats.com/explorer/account/${this.state.token}`,
+          config
+        ),
+        axios.get(
+          `https://api.tzstats.com/tables/income?address=${this.state.token}`,
+          config
+        ),
+      ])
+      .then(
+        axios.spread((account, income) => {
+          const accountData = account.data;
+          const incomeData = income.data;
+          // find active cycle
+          let i;
+          for (i = incomeData.length - 1; i >= 0; i--) {
+            // When total_bonds (index 22 of result Array) is not 0,
+            // an active cycle is found.
+            // 'i' will represent its position in the result Array
+            if (incomeData[i][22] !== 0) break;
+          }
 
-    //       // find tot bonds for average_return by
-    //       // calculating the difference between consecutive bonds
-    //       let tot = 0;
-    //       let k;
-    //       for (k = 1; k <= i; k++) {
-    //         tot += incomeData[k][22] - incomeData[k - 1][22];
-    //       }
+          // create an array containing the bonds over time
+          let bonds_over_time = [];
+          let j;
+          for (j = 0; j <= i; j++) {
+            bonds_over_time.push(incomeData[j][22]);
+          }
 
-    //       const active_cycle = incomeData[i];
+          // find tot bonds for average_return by
+          // calculating the difference between consecutive bonds
+          let tot = 0;
+          let k;
+          for (k = 1; k <= i; k++) {
+            tot += incomeData[k][22] - incomeData[k - 1][22];
+          }
 
-    //       // calculate last 7 cycles
-    //       let last_7_cycles = [];
-    //       let l;
-    //       for (l = 0; l < 7; l++) {
-    //         last_7_cycles.push(active_cycle[1] - l);
-    //       }
+          const active_cycle = incomeData[i];
 
-    //       this.setState({
-    //         hasResponse: true,
-    //         stats: {
-    //           account: {
-    //             address: accountData.address,
-    //             first_in_time: accountData.first_in_time
-    //               .replace("T", ", ")
-    //               .replace("Z", ""),
-    //             last_out_time: accountData.last_out_time
-    //               .replace("T", ", ")
-    //               .replace("Z", ""),
-    //             active_delegations: accountData.active_delegations,
-    //             full_balance:
-    //               accountData.total_balance + accountData.frozen_rewards,
-    //             total_rewards_earned: accountData.total_rewards_earned,
-    //           },
-    //           income: {
-    //             cycle: active_cycle[1],
-    //             bonds: bonds_over_time,
-    //             total_bonds: active_cycle[22],
-    //             average_return: tot / active_cycle[1],
-    //             start_time: active_cycle[39],
-    //             end_time: active_cycle[40],
-    //           },
-    //         },
-    //         linechartData: {
-    //           labels: last_7_cycles.reverse(),
-    //           datasets: [
-    //             {
-    //               label: "Bonds",
-    //               data: bonds_over_time.slice(
-    //                 bonds_over_time.length - 7,
-    //                 bonds_over_time.length - 1
-    //               ),
-    //             },
-    //           ],
-    //         },
-    //       });
-    //       // console.log(this.state.stats);
-    //       // console.log(accountData);
-    //       // console.log(incomeData);
-    //       // console.log(active_cycle);
-    //     })
-    //   )
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+          // calculate last 7 cycles
+          let last_7_cycles = [];
+          let l;
+          for (l = 0; l < 7; l++) {
+            last_7_cycles.push(active_cycle[1] - l);
+          }
 
-    // let config = { headers: { accept: "Accept: application/json" } };
-
-    Promise.all([
-      fetch(`https://api.tzstats.com/explorer/account/${this.state.token}`),
-      fetch(
-        `https://api.tzstats.com/tables/income?address=${this.state.token}`
-      ),
-    ])
-      .then(([account, income]) => Promise.all([account.json(), income.json()]))
-      .then(([accountData, incomeData]) => {
-        // find active cycle
-        let i;
-        for (i = incomeData.length - 1; i >= 0; i--) {
-          // When total_bonds (index 22 of result Array) is not 0,
-          // an active cycle is found.
-          // 'i' will represent its position in the result Array
-          if (incomeData[i][22] !== 0) break;
-        }
-        // create an array containing the bonds over time
-        let bonds_over_time = [];
-        let j;
-        for (j = 0; j <= i; j++) {
-          bonds_over_time.push(incomeData[j][22]);
-        }
-        // find tot bonds for average_return by
-        // calculating the difference between consecutive bonds
-        let tot = 0;
-        let k;
-        for (k = 1; k <= i; k++) {
-          tot += incomeData[k][22] - incomeData[k - 1][22];
-        }
-        const active_cycle = incomeData[i];
-        // calculate last 7 cycles
-        let last_7_cycles = [];
-        let l;
-        for (l = 0; l < 7; l++) {
-          last_7_cycles.push(active_cycle[1] - l);
-        }
-        this.setState({
-          hasResponse: true,
-          stats: {
-            account: {
-              address: accountData.address,
-              first_in_time: accountData.first_in_time
-                .replace("T", ", ")
-                .replace("Z", ""),
-              last_out_time: accountData.last_out_time
-                .replace("T", ", ")
-                .replace("Z", ""),
-              active_delegations: accountData.active_delegations,
-              full_balance:
-                accountData.total_balance + accountData.frozen_rewards,
-              total_rewards_earned: accountData.total_rewards_earned,
-            },
-            income: {
-              cycle: active_cycle[1],
-              bonds: bonds_over_time,
-              total_bonds: active_cycle[22],
-              average_return: tot / active_cycle[1],
-              start_time: active_cycle[39],
-              end_time: active_cycle[40],
-            },
-          },
-          linechartData: {
-            labels: last_7_cycles.reverse(),
-            datasets: [
-              {
-                label: "Bonds",
-                data: bonds_over_time.slice(
-                  bonds_over_time.length - 7,
-                  bonds_over_time.length - 1
-                ),
+          this.setState({
+            hasResponse: true,
+            stats: {
+              account: {
+                address: accountData.address,
+                first_in_time: accountData.first_in_time
+                  .replace("T", ", ")
+                  .replace("Z", ""),
+                last_out_time: accountData.last_out_time
+                  .replace("T", ", ")
+                  .replace("Z", ""),
+                active_delegations: accountData.active_delegations,
+                full_balance:
+                  accountData.total_balance + accountData.frozen_rewards,
+                total_rewards_earned: accountData.total_rewards_earned,
               },
-            ],
-          },
-        });
-        // console.log(this.state.stats);
-        // console.log(accountData);
-        // console.log(incomeData);
-        // console.log(active_cycle);
+              income: {
+                cycle: active_cycle[1],
+                bonds: bonds_over_time,
+                total_bonds: active_cycle[22],
+                average_return: tot / active_cycle[1],
+                start_time: active_cycle[39],
+                end_time: active_cycle[40],
+              },
+            },
+            linechartData: {
+              labels: last_7_cycles.reverse(),
+              datasets: [
+                {
+                  label: "Bonds",
+                  data: bonds_over_time.slice(
+                    bonds_over_time.length - 7,
+                    bonds_over_time.length - 1
+                  ),
+                },
+              ],
+            },
+          });
+          // console.log(this.state.stats);
+          // console.log(accountData);
+          // console.log(incomeData);
+          // console.log(active_cycle);
+        })
+      )
+      .catch((err) => {
+        console.log(err);
       });
+
+    // Promise.all([
+    //   fetch(`https://api.tzstats.com/explorer/account/${this.state.token}`),
+    //   fetch(
+    //     `https://api.tzstats.com/tables/income?address=${this.state.token}`
+    //   ),
+    // ])
+    //   .then(([account, income]) => Promise.all([account.json(), income.json()]))
+    //   .then(([accountData, incomeData]) => {
+    //     // find active cycle
+    //     let i;
+    //     for (i = incomeData.length - 1; i >= 0; i--) {
+    //       // When total_bonds (index 22 of result Array) is not 0,
+    //       // an active cycle is found.
+    //       // 'i' will represent its position in the result Array
+    //       if (incomeData[i][22] !== 0) break;
+    //     }
+    //     // create an array containing the bonds over time
+    //     let bonds_over_time = [];
+    //     let j;
+    //     for (j = 0; j <= i; j++) {
+    //       bonds_over_time.push(incomeData[j][22]);
+    //     }
+    //     // find tot bonds for average_return by
+    //     // calculating the difference between consecutive bonds
+    //     let tot = 0;
+    //     let k;
+    //     for (k = 1; k <= i; k++) {
+    //       tot += incomeData[k][22] - incomeData[k - 1][22];
+    //     }
+    //     const active_cycle = incomeData[i];
+    //     // calculate last 7 cycles
+    //     let last_7_cycles = [];
+    //     let l;
+    //     for (l = 0; l < 7; l++) {
+    //       last_7_cycles.push(active_cycle[1] - l);
+    //     }
+    //     this.setState({
+    //       hasResponse: true,
+    //       stats: {
+    //         account: {
+    //           address: accountData.address,
+    //           first_in_time: accountData.first_in_time
+    //             .replace("T", ", ")
+    //             .replace("Z", ""),
+    //           last_out_time: accountData.last_out_time
+    //             .replace("T", ", ")
+    //             .replace("Z", ""),
+    //           active_delegations: accountData.active_delegations,
+    //           full_balance:
+    //             accountData.total_balance + accountData.frozen_rewards,
+    //           total_rewards_earned: accountData.total_rewards_earned,
+    //         },
+    //         income: {
+    //           cycle: active_cycle[1],
+    //           bonds: bonds_over_time,
+    //           total_bonds: active_cycle[22],
+    //           average_return: tot / active_cycle[1],
+    //           start_time: active_cycle[39],
+    //           end_time: active_cycle[40],
+    //         },
+    //       },
+    //       linechartData: {
+    //         labels: last_7_cycles.reverse(),
+    //         datasets: [
+    //           {
+    //             label: "Bonds",
+    //             data: bonds_over_time.slice(
+    //               bonds_over_time.length - 7,
+    //               bonds_over_time.length - 1
+    //             ),
+    //           },
+    //         ],
+    //       },
+    //     });
+    //     // console.log(this.state.stats);
+    //     // console.log(accountData);
+    //     // console.log(incomeData);
+    //     // console.log(active_cycle);
+    //   });
   };
 
   render() {
