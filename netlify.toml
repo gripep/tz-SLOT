@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build"
+  functions = "functions/apiCalls"
+  publish = "build"
+
+[[headers]]
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
