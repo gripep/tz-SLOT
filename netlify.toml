@@ -1,9 +1,9 @@
 [build]
   command = "npm run build"
-  functions = "functions/apiCalls"
+  functions = "lambda-functions"
   publish = "build"
 
-[[headers]]
-  for = "/*"
-    [headers.values]
-    Access-Control-Allow-Origin = "*"
+#[[headers]]
+  #for = "/*"
+    #[headers.values]
+    #Access-Control-Allow-Origin = "*"

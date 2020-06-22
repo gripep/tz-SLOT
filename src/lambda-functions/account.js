@@ -28,7 +28,7 @@ exports.handler = (event, context, callback) => {
       });
   };
 
-  // make sure method is GET
+  // make sure method is POST
   if (event.httpMethod == "POST") {
     getAccount();
   }

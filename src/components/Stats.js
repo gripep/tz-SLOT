@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 
-// import axios from "axios";
+import axios from "axios";
 import classnames from "classnames";
 
 import Chart from "chart.js";
-import { Line } from "react-chartjs-2";
-import { chartOptions, parseOptions, linechart } from "./charts/charts.js";
+import { Bar, Line } from "react-chartjs-2";
+import {
+  chartOptions,
+  parseOptions,
+  linechart,
+  barchart,
+} from "./charts/charts.js";
 
 import {
   Button,
@@ -54,11 +59,14 @@ export class Stats extends Component {
         bonds: [],
         total_bonds: null,
         average_return: null,
+        average_delegations: [],
+        average_rewards: [],
         start_time: null,
         end_time: null,
       },
     },
-    linechartData: "data1",
+    linechartData: null,
+    barchartData: null,
   };
 
   // Intl.NumberFormat().format(
@@ -89,163 +97,215 @@ export class Stats extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    // prod
-    const fetchAccount = async () => {
-      await (
-        await fetch("./netlyfy/functions/account", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-          body: JSON.stringify({
-            token: this.state.token,
-          }),
-        })
-      ).json();
-    };
+    // // prod
+    // const fetchAccount = async () => {
+    //   await (
+    //     await fetch("./netlyfy/lambda-functions/account", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         token: this.state.token,
+    //       }),
+    //     })
+    //   ).json();
+    // };
 
-    // dev
-    const fetchAccountDev = async () => {
-      await (
-        await fetch("http://localhost900/account", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-          body: JSON.stringify({
-            token: this.state.token,
-          }),
-        })
-      ).json();
-    };
+    // // dev
+    // const fetchAccountDev = async () => {
+    //   await (
+    //     await fetch("http://localhost:9000/account", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         token: this.state.token,
+    //       }),
+    //     })
+    //   ).json();
+    // };
 
-    // prod
-    const fetchIncome = async () => {
-      await (
-        await fetch("./netlyfy/functions/income", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-          body: JSON.stringify({
-            token: this.state.token,
-          }),
-        })
-      ).json();
-    };
+    // // prod
+    // const fetchIncome = async () => {
+    //   await (
+    //     await fetch("./netlyfy/lambda-functions/income", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         token: this.state.token,
+    //       }),
+    //     })
+    //   ).json();
+    // };
 
-    // dev
-    const fetchIncomeDev = async () => {
-      await (
-        await fetch("http://localhost900/income", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-          body: JSON.stringify({
-            token: this.state.token,
-          }),
-        })
-      ).json();
-    };
-
-    fetchAccountDev().then((data) => {
-      console.log(data);
-    });
+    // // dev
+    // const fetchIncomeDev = async () => {
+    //   await (
+    //     await fetch("http://localhost:9000/income", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         token: this.state.token,
+    //       }),
+    //     })
+    //   ).json();
+    // };
 
     // axios
-    //   .all([
-    //     axios.get(
-    //       `https://api.tzstats.com/explorer/account/${this.state.token}`
-    //     ),
-    //     axios.get(
-    //       `https://api.tzstats.com/tables/income?address=${this.state.token}`
-    //     ),
-    //   ])
-    //   .then(
-    //     axios.spread((account, income) => {
-    //       const accountData = account.data;
-    //       const incomeData = income.data;
-    //       // find active cycle
-    //       let i;
-    //       for (i = incomeData.length - 1; i >= 0; i--) {
-    //         // When total_bonds (index 22 of result Array) is not 0,
-    //         // an active cycle is found.
-    //         // 'i' will represent its position in the result Array
-    //         if (incomeData[i][22] !== 0) break;
-    //       }
-
-    //       // create an array containing the bonds over time
-    //       let bonds_over_time = [];
-    //       let j;
-    //       for (j = 0; j <= i; j++) {
-    //         bonds_over_time.push(incomeData[j][22]);
-    //       }
-
-    //       // find tot bonds for average_return by
-    //       // calculating the difference between consecutive bonds
-    //       let tot = 0;
-    //       let k;
-    //       for (k = 1; k <= i; k++) {
-    //         tot += incomeData[k][22] - incomeData[k - 1][22];
-    //       }
-
-    //       const active_cycle = incomeData[i];
-
-    //       // calculate last 7 cycles
-    //       let last_7_cycles = [];
-    //       let l;
-    //       for (l = 0; l < 7; l++) {
-    //         last_7_cycles.push(active_cycle[1] - l);
-    //       }
-
-    //       this.setState({
-    //         hasResponse: true,
-    //         stats: {
-    //           account: {
-    //             address: accountData.address,
-    //             first_in_time: accountData.first_in_time
-    //               .replace("T", ", ")
-    //               .replace("Z", ""),
-    //             last_out_time: accountData.last_out_time
-    //               .replace("T", ", ")
-    //               .replace("Z", ""),
-    //             active_delegations: accountData.active_delegations,
-    //             full_balance:
-    //               accountData.total_balance + accountData.frozen_rewards,
-    //             total_rewards_earned: accountData.total_rewards_earned,
-    //           },
-    //           income: {
-    //             cycle: active_cycle[1],
-    //             bonds: bonds_over_time,
-    //             total_bonds: active_cycle[22],
-    //             average_return: tot / active_cycle[1],
-    //             start_time: active_cycle[39],
-    //             end_time: active_cycle[40],
-    //           },
-    //         },
-    //         linechartData: {
-    //           labels: last_7_cycles.reverse(),
-    //           datasets: [
-    //             {
-    //               label: "Bonds",
-    //               data: bonds_over_time.slice(
-    //                 bonds_over_time.length - 7,
-    //                 bonds_over_time.length - 1
-    //               ),
-    //             },
-    //           ],
-    //         },
-    //       });
-    //       // console.log(this.state.stats);
-    //       // console.log(accountData);
-    //       // console.log(incomeData);
-    //       // console.log(active_cycle);
-    //     })
-    //   )
+    //   .post("http://localhost:9000/.netlify/account", {
+    //     body: {
+    //       token: this.state.token,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
     //   .catch((err) => {
     //     console.log(err);
     //   });
+
+    // axios
+    //   // .get(`https://api.tzstats.com/tables/account?address=${this.state.token}`)
+    //   .get(`https://api.tzstats.com/tables/income?address=${this.state.token}`)
+    //   .then((res) => {
+    //     console.log(res.data[res.data.length - 1]);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
+    axios
+      .all([
+        axios.get(
+          `https://api.tzstats.com/explorer/account/${this.state.token}`
+        ),
+        axios.get(
+          `https://api.tzstats.com/tables/income?address=${this.state.token}`
+        ),
+      ])
+      .then(
+        axios.spread((account, income) => {
+          const accountData = account.data;
+          const incomeData = income.data;
+
+          // find active cycle
+          let i;
+          for (i = incomeData.length - 1; i >= 0; i--) {
+            // When total_bonds (i 22 of response Array) is not 0,
+            // an active cycle is found.
+            // 'i' will represent its position in the result Array
+            if (incomeData[i][22] !== 0) break;
+          }
+
+          // Array storing the bonds ans rewards over time
+          let bonds_over_time = [];
+          let delegations_over_time = [];
+          let tot_delegations = 0;
+          let rewards_over_time = []; // baking_income
+          let tot_rewards = 0;
+
+          // Each roll represents a weight which
+          // multiplies the number of bonds
+          // the sum of all teh weights (roll) is kept to
+          // calculate the weighted average
+          let bond_x_weight_sum = 0;
+          let weight_sum = 0; // rolls' sum
+
+          let j;
+          for (j = 0; j <= i; j++) {
+            bonds_over_time.push(incomeData[j][22]);
+            delegations_over_time.push(incomeData[j][6]);
+            tot_delegations += incomeData[j][6];
+            rewards_over_time.push(incomeData[j][23]);
+            tot_rewards += incomeData[j][23];
+
+            let bonds = incomeData[j][22];
+            let rolls = incomeData[j][3];
+            bond_x_weight_sum += bonds * rolls;
+            weight_sum += rolls;
+          }
+          const active_cycle = incomeData[i];
+
+          // calculate all cycles
+          let cycles = [];
+          let l;
+          for (l = 0; l <= i; l++) {
+            cycles.push(l);
+          }
+
+          this.setState({
+            hasResponse: true,
+            stats: {
+              account: {
+                address: accountData.address,
+                first_in_time: accountData.first_in_time
+                  .replace("T", ", ")
+                  .replace("Z", ""),
+                last_out_time: accountData.last_out_time
+                  .replace("T", ", ")
+                  .replace("Z", ""),
+                active_delegations: accountData.active_delegations,
+                full_balance:
+                  accountData.total_balance + accountData.frozen_rewards,
+                total_rewards_earned: accountData.total_rewards_earned,
+              },
+              income: {
+                cycle: active_cycle[1],
+                bonds: bonds_over_time,
+                total_bonds: active_cycle[22],
+                average_return: bond_x_weight_sum / weight_sum,
+                average_delegations: Math.round(
+                  tot_delegations / active_cycle[1]
+                ),
+                average_rewards: Math.round(tot_rewards / active_cycle[1]),
+                start_time: active_cycle[39],
+                end_time: active_cycle[40],
+              },
+            },
+            linechartData: {
+              labels: cycles,
+              datasets: [
+                {
+                  label: "Bonds: ",
+                  data: bonds_over_time,
+                },
+                // {
+                //   label: "Rewards: ",
+                //   data: rewards_over_time,
+                //   type: "bar",
+                // },
+              ],
+            },
+            barchartData: {
+              labels: cycles,
+              datasets: [
+                {
+                  label: "Rewards: ",
+                  data: rewards_over_time,
+                },
+                // {
+                //   label: "Delegations: ",
+                //   data: delegations_over_time,
+                //   type: "line",
+                // },
+              ],
+            },
+          });
+          // console.log(this.state.stats);
+          // console.log(accountData);
+          // console.log(incomeData);
+          // console.log(active_cycle);
+        })
+      )
+      .catch((err) => {
+        console.log(err);
+      });
 
     // Promise.all([
     //   fetch(`https://api.tzstats.com/explorer/account/${this.state.token}`),
@@ -454,12 +514,10 @@ export class Stats extends Component {
                   <CardHeader className="bg-transparent">
                     <Row className="align-items-center">
                       <div className="col">
-                        <h4 className="text-white mb-0">
-                          <strong>Bonds</strong>{" "}
-                          <small>
-                            <p>over last 7 Cycles</p>
-                          </small>
-                        </h4>
+                        <h6 className="text-uppercase text-muted ls-1 mb-1">
+                          Bonds
+                        </h6>
+                        <h2 className="text-white mb-0">Bonds per cycle</h2>
                       </div>
                     </Row>
                   </CardHeader>
@@ -470,6 +528,28 @@ export class Stats extends Component {
                         data={this.state.linechartData}
                         options={linechart.options}
                         getDatasetAtEvent={(e) => console.log(e)}
+                      />
+                    </div>
+                  </CardBody>
+                </Card>
+
+                <Card className="shadow mt-5">
+                  <CardHeader className="bg-transparent">
+                    <Row className="align-items-center">
+                      <div className="col">
+                        <h6 className="text-uppercase text-muted ls-1 mb-1">
+                          Rewards
+                        </h6>
+                        <h2 className="mb-0">Rewards per cycle</h2>
+                      </div>
+                    </Row>
+                  </CardHeader>
+                  <CardBody>
+                    {/* Chart */}
+                    <div className="chart">
+                      <Bar
+                        data={this.state.barchartData}
+                        options={barchart.options}
                       />
                     </div>
                   </CardBody>
@@ -581,6 +661,50 @@ export class Stats extends Component {
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-default text-white rounded-circle shadow">
                           <FontAwesomeIcon icon={faChartLine} />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+                <Card className="mb-3 shadow border-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h4"
+                          className="text-uppercase text-muted mb-2"
+                        >
+                          <u>Avg Rewards per Cycle</u>
+                        </CardTitle>
+                        <span className="h4 font-weight-bold">
+                          {stats.income.average_rewards}
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
+                          <FontAwesomeIcon icon={faStar} />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+                <Card className="mb-3 shadow border-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h4"
+                          className="text-uppercase text-muted mb-2"
+                        >
+                          <u>Avg Delegations per Cycle</u>
+                        </CardTitle>
+                        <span className="h4 font-weight-bold">
+                          {stats.income.average_delegations}
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
+                          <FontAwesomeIcon icon={faUsers} />
                         </div>
                       </Col>
                     </Row>
