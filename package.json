@@ -15,6 +15,7 @@
     "bootstrap": "^4.5.0",
     "chart.js": "^2.9.3",
     "classnames": "^2.2.6",
+    "headroom.js": "^0.11.0",
     "netlify-cli": "^2.54.0",
     "netlify-lambda": "^1.6.3",
     "react": "^16.13.1",
