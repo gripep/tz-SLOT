@@ -738,60 +738,60 @@ export class Stats extends Component {
 
     return (
       <>
-        <section className="section section-lg pt-lg-0 bg-gradient-default">
-          <Container>
-            <Row></Row>
-            <Row className="justify-content-center mt-5">
-              <Col lg="8">
-                <Form onSubmit={this.onSubmit}>
-                  <Card className="bg-gradient-secondary shadow mb-5">
-                    <CardBody className="p-lg-5">
-                      <h3 className="mb-1">Please enter a Token Address</h3>
-                      <p className="mt-0 mb-1">
-                        <small>
-                          Enter your Token Address and click the button below.
-                        </small>
-                      </p>
-                      <FormGroup
-                        className={classnames({
-                          focused: this.state.boxFocused,
-                        })}
+        {/* <section className="section section-lg pt-lg-0 bg-gradient-default"> */}
+        <Container fluid className="bg-gradient-default">
+          <Row></Row>
+          <Row className="justify-content-center mt-5">
+            <Col lg="8">
+              <Form onSubmit={this.onSubmit}>
+                <Card className="bg-gradient-secondary shadow mb-5">
+                  <CardBody className="p-lg-5">
+                    <h3 className="mb-1">Please enter a Token Address</h3>
+                    <p className="mt-0 mb-1">
+                      <small>
+                        Enter your Token Address and click the button below.
+                      </small>
+                    </p>
+                    <FormGroup
+                      className={classnames({
+                        focused: this.state.boxFocused,
+                      })}
+                    >
+                      <InputGroup className="input-group-alternative">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <FontAwesomeIcon icon={faKey} />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder="Your Token Address"
+                          autoComplete="false"
+                          name="token"
+                          type="text"
+                          onChange={this.onChange}
+                          onFocus={(e) => this.setState({ boxFocused: true })}
+                          onBlur={(e) => this.setState({ boxFocused: false })}
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    <div>
+                      <Button
+                        block
+                        className="btn-round"
+                        color="default"
+                        size="lg"
+                        type="submit"
                       >
-                        <InputGroup className="input-group-alternative">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <FontAwesomeIcon icon={faKey} />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            placeholder="Your Token Address"
-                            autoComplete="false"
-                            name="token"
-                            type="text"
-                            onChange={this.onChange}
-                            onFocus={(e) => this.setState({ boxFocused: true })}
-                            onBlur={(e) => this.setState({ boxFocused: false })}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                      <div>
-                        <Button
-                          block
-                          className="btn-round"
-                          color="default"
-                          size="lg"
-                          type="submit"
-                        >
-                          Submit
-                        </Button>
-                      </div>
-                    </CardBody>
-                  </Card>
-                </Form>
-              </Col>
-            </Row>
-          </Container>
-        </section>
+                        Submit
+                      </Button>
+                    </div>
+                  </CardBody>
+                </Card>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+        {/* </section> */}
         <section className="section section-lg pt-lg-0t">
           <Container>
             <Row className="justify-content-center mt-5 mb-5">
