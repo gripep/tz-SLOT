@@ -710,6 +710,14 @@ export class Stats extends Component {
                     </Row>
                   </CardBody>
                 </Card>
+
+                <Row className="justify-content-center mt-5">
+                  <div className="col mt-5">
+                    <p>
+                      Data provided by <a href="https://tezos.com/">Tezos</a>
+                    </p>
+                  </div>
+                </Row>
               </Col>
             </Row>
           </div>
