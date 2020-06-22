@@ -17,6 +17,12 @@ object-assign
  * Released under the MIT License
  */
 
+/*!
+ * headroom.js v0.11.0 - Give your page some headroom. Hide your header until you need it
+ * Copyright (c) 2020 Nick Williams - http://wicky.nillia.ms/headroom.js
+ * License: MIT
+ */
+
 /** @license React v0.19.1
  * scheduler.production.min.js
  *
