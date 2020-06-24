@@ -158,31 +158,27 @@ export class Stats extends Component {
     // };
 
     const fetchAccount = async () => {
-      await (
-        await fetch("/.netlify/functions/account", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({
-            token: this.state.token,
-          }),
-        })
-      ).json();
+      await await fetch("/.netlify/functions/account", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          token: this.state.token,
+        }),
+      });
     };
 
     const fetchIncome = async () => {
-      await (
-        await fetch("/.netlify/functions/income", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({
-            token: this.state.token,
-          }),
-        })
-      ).json();
+      await await fetch("/.netlify/functions/income", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          token: this.state.token,
+        }),
+      });
     };
 
     fetchAccount().then((data) => {
