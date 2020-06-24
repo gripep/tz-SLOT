@@ -1,9 +1,0 @@
-[build]
-  command = "npm run build"
-  functions = "lambda-functions"
-  publish = "build"
-
-#[[headers]]
-  #for = "/*"
-    #[headers.values]
-    #Access-Control-Allow-Origin = "*"
