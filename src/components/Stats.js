@@ -136,22 +136,16 @@ export class Stats extends Component {
     // });
 
     axios
-      .post("/.netlify/functions/account", { token: this.state.token })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    axios
       .all([
-        axios.get(
-          `https://api.tzstats.com/explorer/account/${this.state.token}`
-        ),
-        axios.get(
-          `https://api.tzstats.com/tables/income?address=${this.state.token}`
-        ),
+        // axios.get(
+        //   `https://api.tzstats.com/explorer/account/${this.state.token}`
+        // ),
+        // axios.get(
+        //   `https://api.tzstats.com/tables/income?address=${this.state.token}`
+        // ),
+
+        axios.post("/.netlify/functions/account", { token: this.state.token }),
+        axios.post("/.netlify/functions/income", { token: this.state.token }),
       ])
       .then(
         axios.spread((account, income) => {
