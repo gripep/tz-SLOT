@@ -157,16 +157,21 @@ export class Stats extends Component {
     //   ).json();
     // };
 
-    const getAccount = async () =>
+    const fetchAccount = async () => {
       await (
-        await axios.post("/.netlify/functions/account", {
-          body: {
-            token: this.state.token,
+        await fetch("./netlyfy/lambda-functions/account", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
           },
+          body: JSON.stringify({
+            token: this.state.token,
+          }),
         })
       ).json();
+    };
 
-    getAccount().then((res) => {
+    fetchAccount().then((res) => {
       console.log(res);
     });
     // axios
