@@ -2,7 +2,7 @@
   "name": "tzstats",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:9000",
+  "proxy": "https://api.tzstats.com",
   "engines": {
     "node": "12.16.1",
     "npm": "6.13.4"
