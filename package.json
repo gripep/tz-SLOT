@@ -2,7 +2,7 @@
   "name": "tzstats",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://api.tzstats.com",
+  "proxy": "https://vibrant-hopper-a7397d.netlify.app/",
   "engines": {
     "node": "12.16.1",
     "npm": "6.13.4"
