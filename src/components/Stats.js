@@ -171,11 +171,28 @@ export class Stats extends Component {
       ).json();
     };
 
+    const fetchIncome = async () => {
+      await (
+        await fetch("/.netlify/functions/income", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            token: this.state.token,
+          }),
+        })
+      ).json();
+    };
+
     fetchAccount().then((data) => {
-      data.forEach((i) => {
-        console.log(i);
-      });
+      console.log(data);
     });
+
+    fetchIncome().then((data) => {
+      console.log(data);
+    });
+
     // axios
     //   .post("http://localhost:9000/.netlify/account", {
     //     body: {
