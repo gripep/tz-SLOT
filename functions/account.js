@@ -12,7 +12,7 @@ exports.handler = (event, context, callback) => {
         "Access-Control-Allow-Headers":
           "Origin, X-Requested-With, Content-Type, Accept",
       },
-      body: body,
+      body: JSON.stringify(body),
     });
   };
 
@@ -21,7 +21,7 @@ exports.handler = (event, context, callback) => {
     axios
       .get(`https://api.tzstats.com/explorer/account/${token}`)
       .then((res) => {
-        send(res.data);
+        send(res);
       })
       .catch((err) => {
         send(err.data);
