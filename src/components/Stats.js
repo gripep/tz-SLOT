@@ -159,7 +159,7 @@ export class Stats extends Component {
 
     const fetchAccount = async () => {
       await (
-        await fetch("/.netlyfy/functions/account", {
+        await fetch("/.netlify/functions/account", {
           method: "POST",
           headers: {
             "Content-type": "application/json",
