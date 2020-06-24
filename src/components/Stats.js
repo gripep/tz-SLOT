@@ -97,70 +97,15 @@ export class Stats extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    // // prod
-    // const fetchAccount = async () => {
-    //   await (
-    //     await fetch("./netlyfy/lambda-functions/account", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         token: this.state.token,
-    //       }),
-    //     })
-    //   ).json();
-    // };
-
-    // // dev
-    // const fetchAccountDev = async () => {
-    //   await (
-    //     await fetch("http://localhost:9000/account", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         token: this.state.token,
-    //       }),
-    //     })
-    //   ).json();
-    // };
-
-    // // prod
-    // const fetchIncome = async () => {
-    //   await (
-    //     await fetch("./netlyfy/lambda-functions/income", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         token: this.state.token,
-    //       }),
-    //     })
-    //   ).json();
-    // };
-
-    // // dev
-    // const fetchIncomeDev = async () => {
-    //   await (
-    //     await fetch("http://localhost:9000/income", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         token: this.state.token,
-    //       }),
-    //     })
-    //   ).json();
-    // };
-
+    // /.netlify/functions/account
+    // http://localhost:9000/account
     const fetchAccount = async () => {
       await (
         await fetch("/.netlify/functions/account", {
           method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
           body: JSON.stringify({
             token: this.state.token,
           }),
@@ -172,6 +117,9 @@ export class Stats extends Component {
       await (
         await fetch("/.netlify/functions/income", {
           method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
           body: JSON.stringify({
             token: this.state.token,
           }),
@@ -187,132 +135,132 @@ export class Stats extends Component {
       console.log(data);
     });
 
-    // axios
-    //   .all([
-    //     axios.get(
-    //       `https://api.tzstats.com/explorer/account/${this.state.token}`
-    //     ),
-    //     axios.get(
-    //       `https://api.tzstats.com/tables/income?address=${this.state.token}`
-    //     ),
-    //   ])
-    //   .then(
-    //     axios.spread((account, income) => {
-    //       const accountData = account.data;
-    //       const incomeData = income.data;
+    axios
+      .all([
+        axios.get(
+          `https://api.tzstats.com/explorer/account/${this.state.token}`
+        ),
+        axios.get(
+          `https://api.tzstats.com/tables/income?address=${this.state.token}`
+        ),
+      ])
+      .then(
+        axios.spread((account, income) => {
+          const accountData = account.data;
+          const incomeData = income.data;
 
-    //       // find active cycle
-    //       let i;
-    //       for (i = incomeData.length - 1; i >= 0; i--) {
-    //         // When total_bonds (i 22 of response Array) is not 0,
-    //         // an active cycle is found.
-    //         // 'i' will represent its position in the result Array
-    //         if (incomeData[i][22] !== 0) break;
-    //       }
+          // find active cycle
+          let i;
+          for (i = incomeData.length - 1; i >= 0; i--) {
+            // When total_bonds (i 22 of response Array) is not 0,
+            // an active cycle is found.
+            // 'i' will represent its position in the result Array
+            if (incomeData[i][22] !== 0) break;
+          }
 
-    //       // Array storing the bonds ans rewards over time
-    //       let bonds_over_time = [];
-    //       let delegations_over_time = [];
-    //       let tot_delegations = 0;
-    //       let rewards_over_time = []; // baking_income
-    //       let tot_rewards = 0;
+          // Array storing the bonds ans rewards over time
+          let bonds_over_time = [];
+          let delegations_over_time = [];
+          let tot_delegations = 0;
+          let rewards_over_time = []; // baking_income
+          let tot_rewards = 0;
 
-    //       // Each roll represents a weight which
-    //       // multiplies the number of bonds
-    //       // the sum of all teh weights (roll) is kept to
-    //       // calculate the weighted average
-    //       let bond_x_weight_sum = 0;
-    //       let weight_sum = 0; // rolls' sum
+          // Each roll represents a weight which
+          // multiplies the number of bonds
+          // the sum of all teh weights (roll) is kept to
+          // calculate the weighted average
+          let bond_x_weight_sum = 0;
+          let weight_sum = 0; // rolls' sum
 
-    //       let j;
-    //       for (j = 0; j <= i; j++) {
-    //         bonds_over_time.push(incomeData[j][22]);
-    //         delegations_over_time.push(incomeData[j][6]);
-    //         tot_delegations += incomeData[j][6];
-    //         rewards_over_time.push(incomeData[j][23]);
-    //         tot_rewards += incomeData[j][23];
+          let j;
+          for (j = 0; j <= i; j++) {
+            bonds_over_time.push(incomeData[j][22]);
+            delegations_over_time.push(incomeData[j][6]);
+            tot_delegations += incomeData[j][6];
+            rewards_over_time.push(incomeData[j][23]);
+            tot_rewards += incomeData[j][23];
 
-    //         let bonds = incomeData[j][22];
-    //         let rolls = incomeData[j][3];
-    //         bond_x_weight_sum += bonds * rolls;
-    //         weight_sum += rolls;
-    //       }
-    //       const active_cycle = incomeData[i];
+            let bonds = incomeData[j][22];
+            let rolls = incomeData[j][3];
+            bond_x_weight_sum += bonds * rolls;
+            weight_sum += rolls;
+          }
+          const active_cycle = incomeData[i];
 
-    //       // calculate all cycles
-    //       let cycles = [];
-    //       let l;
-    //       for (l = 0; l <= i; l++) {
-    //         cycles.push(l);
-    //       }
+          // calculate all cycles
+          let cycles = [];
+          let l;
+          for (l = 0; l <= i; l++) {
+            cycles.push(l);
+          }
 
-    //       this.setState({
-    //         hasResponse: true,
-    //         stats: {
-    //           account: {
-    //             address: accountData.address,
-    //             first_in_time: accountData.first_in_time
-    //               .replace("T", ", ")
-    //               .replace("Z", ""),
-    //             last_out_time: accountData.last_out_time
-    //               .replace("T", ", ")
-    //               .replace("Z", ""),
-    //             active_delegations: accountData.active_delegations,
-    //             full_balance:
-    //               accountData.total_balance + accountData.frozen_rewards,
-    //             total_rewards_earned: accountData.total_rewards_earned,
-    //           },
-    //           income: {
-    //             cycle: active_cycle[1],
-    //             bonds: bonds_over_time,
-    //             total_bonds: active_cycle[22],
-    //             average_return: bond_x_weight_sum / weight_sum,
-    //             average_delegations: Math.round(
-    //               tot_delegations / active_cycle[1]
-    //             ),
-    //             average_rewards: Math.round(tot_rewards / active_cycle[1]),
-    //             start_time: active_cycle[39],
-    //             end_time: active_cycle[40],
-    //           },
-    //         },
-    //         linechartData: {
-    //           labels: cycles,
-    //           datasets: [
-    //             {
-    //               label: "Bonds: ",
-    //               data: bonds_over_time,
-    //             },
-    //             // {
-    //             //   label: "Rewards: ",
-    //             //   data: rewards_over_time,
-    //             //   type: "bar",
-    //             // },
-    //           ],
-    //         },
-    //         barchartData: {
-    //           labels: cycles,
-    //           datasets: [
-    //             {
-    //               label: "Rewards: ",
-    //               data: rewards_over_time,
-    //             },
-    //             // {
-    //             //   label: "Delegations: ",
-    //             //   data: delegations_over_time,
-    //             //   type: "line",
-    //             // },
-    //           ],
-    //         },
-    //       });
-    //       // console.log(this.state.stats);
-    //       // console.log(accountData);
-    //       // console.log(incomeData);
-    //       // console.log(active_cycle);
-    //     })
-    //   )
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+          this.setState({
+            hasResponse: true,
+            stats: {
+              account: {
+                address: accountData.address,
+                first_in_time: accountData.first_in_time
+                  .replace("T", ", ")
+                  .replace("Z", ""),
+                last_out_time: accountData.last_out_time
+                  .replace("T", ", ")
+                  .replace("Z", ""),
+                active_delegations: accountData.active_delegations,
+                full_balance:
+                  accountData.total_balance + accountData.frozen_rewards,
+                total_rewards_earned: accountData.total_rewards_earned,
+              },
+              income: {
+                cycle: active_cycle[1],
+                bonds: bonds_over_time,
+                total_bonds: active_cycle[22],
+                average_return: bond_x_weight_sum / weight_sum,
+                average_delegations: Math.round(
+                  tot_delegations / active_cycle[1]
+                ),
+                average_rewards: Math.round(tot_rewards / active_cycle[1]),
+                start_time: active_cycle[39],
+                end_time: active_cycle[40],
+              },
+            },
+            linechartData: {
+              labels: cycles,
+              datasets: [
+                {
+                  label: "Bonds: ",
+                  data: bonds_over_time,
+                },
+                // {
+                //   label: "Rewards: ",
+                //   data: rewards_over_time,
+                //   type: "bar",
+                // },
+              ],
+            },
+            barchartData: {
+              labels: cycles,
+              datasets: [
+                {
+                  label: "Rewards: ",
+                  data: rewards_over_time,
+                },
+                // {
+                //   label: "Delegations: ",
+                //   data: delegations_over_time,
+                //   type: "line",
+                // },
+              ],
+            },
+          });
+          // console.log(this.state.stats);
+          // console.log(accountData);
+          // console.log(incomeData);
+          // console.log(active_cycle);
+        })
+      )
+      .catch((err) => {
+        console.log(err);
+      });
 
     // Promise.all([
     //   fetch(`https://api.tzstats.com/explorer/account/${this.state.token}`),
