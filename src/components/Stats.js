@@ -171,8 +171,10 @@ export class Stats extends Component {
       ).json();
     };
 
-    fetchAccount().then((res) => {
-      console.log(res);
+    fetchAccount().then((data) => {
+      data.forEach((i) => {
+        console.log(i);
+      });
     });
     // axios
     //   .post("http://localhost:9000/.netlify/account", {
