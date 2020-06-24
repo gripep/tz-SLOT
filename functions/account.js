@@ -21,7 +21,7 @@ exports.handler = (event, context, callback) => {
     axios
       .get(`https://api.tzstats.com/explorer/account/${token}`)
       .then((res) => {
-        send(res);
+        send(res.data);
       })
       .catch((err) => {
         send(err.data);
