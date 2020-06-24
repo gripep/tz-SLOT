@@ -99,41 +99,50 @@ export class Stats extends Component {
 
     // /.netlify/functions/account
     // http://localhost:9000/account
-    const fetchAccount = async () => {
-      await (
-        await fetch("/.netlify/functions/account", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({
-            token: this.state.token,
-          }),
-        })
-      ).json();
-    };
+    // const fetchAccount = async () => {
+    //   await (
+    //     await fetch("/.netlify/functions/account", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         token: this.state.token,
+    //       }),
+    //     })
+    //   ).json();
+    // };
 
-    const fetchIncome = async () => {
-      await (
-        await fetch("/.netlify/functions/income", {
-          method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({
-            token: this.state.token,
-          }),
-        })
-      ).json();
-    };
+    // const fetchIncome = async () => {
+    //   await (
+    //     await fetch("/.netlify/functions/income", {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         token: this.state.token,
+    //       }),
+    //     })
+    //   ).json();
+    // };
 
-    fetchAccount().then((data) => {
-      console.log(data);
-    });
+    // fetchAccount().then((data) => {
+    //   console.log(data);
+    // });
 
-    fetchIncome().then((data) => {
-      console.log(data);
-    });
+    // fetchIncome().then((data) => {
+    //   console.log(data);
+    // });
+
+    axios
+      .post("/.netlify/functions/account", { token: this.state.token })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     axios
       .all([
