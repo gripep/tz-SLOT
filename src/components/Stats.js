@@ -157,6 +157,18 @@ export class Stats extends Component {
     //   ).json();
     // };
 
+    const getAccount = async () =>
+      await (
+        await axios.post("/.netlify/functions/account", {
+          body: {
+            token: this.state.token,
+          },
+        })
+      ).json();
+
+    getAccount().then((res) => {
+      console.log(res);
+    });
     // axios
     //   .post("http://localhost:9000/.netlify/account", {
     //     body: {
@@ -164,19 +176,11 @@ export class Stats extends Component {
     //     },
     //   })
     //   .then((res) => {
+    //     console.log("res...");
     //     console.log(res);
     //   })
     //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
-    // axios
-    //   // .get(`https://api.tzstats.com/tables/account?address=${this.state.token}`)
-    //   .get(`https://api.tzstats.com/tables/income?address=${this.state.token}`)
-    //   .then((res) => {
-    //     console.log(res.data[res.data.length - 1]);
-    //   })
-    //   .catch((err) => {
+    //     console.log("err...");
     //     console.log(err);
     //   });
 
