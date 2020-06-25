@@ -39,6 +39,7 @@ import {
   faRedoAlt,
   faCoins,
   faChartLine,
+  faMoneyBillAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 export class Stats extends Component {
@@ -56,6 +57,7 @@ export class Stats extends Component {
       },
       income: {
         cycle: null,
+        marketCap: null,
         bonds: [],
         total_bonds: null,
         average_return: null,
@@ -221,6 +223,13 @@ export class Stats extends Component {
               },
               income: {
                 cycle: active_cycle[1],
+                marketCap:
+                  accountData.total_balance +
+                  accountData.frozen_rewards +
+                  accountData.total_rewards_earned +
+                  (accountData.total_rewards_earned +
+                    rewards_over_time[rewards_over_time.length - 1] * 0.74) /
+                    active_cycle[1],
                 bonds: bonds_over_time,
                 total_bonds: active_cycle[22],
                 average_return: bond_x_weight_sum / weight_sum,
@@ -237,11 +246,14 @@ export class Stats extends Component {
               datasets: [
                 {
                   label: "Bonds: ",
-                  data: bonds_over_time,
+                  data: bonds_over_time.slice(0, bonds_over_time.length - 2),
                 },
                 {
                   label: "Bonds w-avg: ",
-                  data: avg_bonds_per_cycle,
+                  data: avg_bonds_per_cycle.slice(
+                    0,
+                    bonds_over_time.length - 2
+                  ),
                   borderColor: "rgba(45, 206, 137, 1)",
                 },
               ],
@@ -251,12 +263,15 @@ export class Stats extends Component {
               datasets: [
                 {
                   label: "Avg Rewatds: ",
-                  data: avg_rewards_per_cycle,
+                  data: avg_rewards_per_cycle.slice(
+                    0,
+                    bonds_over_time.length - 2
+                  ),
                   type: "line",
                 },
                 {
                   label: "Rewards: ",
-                  data: rewards_over_time,
+                  data: rewards_over_time.slice(0, bonds_over_time.length - 2),
                 },
               ],
             },
@@ -497,7 +512,7 @@ export class Stats extends Component {
                   </CardBody>
                 </Card>
 
-                <Card className="shadow mt-5">
+                <Card className="shadow mt-4">
                   <CardHeader className="bg-transparent">
                     <Row className="align-items-center">
                       <div className="col">
@@ -521,7 +536,7 @@ export class Stats extends Component {
               </Col>
 
               <Col>
-                <Card className="mb-3 shadow border-0">
+                {/* <Card className="mb-3 shadow border-0">
                   <CardBody>
                     <Row>
                       <div className="col">
@@ -559,6 +574,28 @@ export class Stats extends Component {
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-default text-white rounded-circle shadow">
                           <FontAwesomeIcon icon={faCalendarAlt} />
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card> */}
+                <Card className="mb-3 shadow border-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h4"
+                          className="text-uppercase text-muted mb-2"
+                        >
+                          <u>Market Cap</u>
+                        </CardTitle>
+                        <span className="h4 font-weight-bold">
+                          {stats.income.marketCap}
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-default text-white rounded-circle shadow">
+                          <FontAwesomeIcon icon={faMoneyBillAlt} />
                         </div>
                       </Col>
                     </Row>
@@ -630,7 +667,8 @@ export class Stats extends Component {
                     </Row>
                   </CardBody>
                 </Card>
-                <Card className="mb-3 shadow border-0">
+
+                <Card className="mt-6 mb-3 shadow border-0">
                   <CardBody>
                     <Row>
                       <div className="col">
