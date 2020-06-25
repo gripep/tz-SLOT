@@ -161,11 +161,15 @@ export class Stats extends Component {
             if (incomeData[i][22] !== 0) break;
           }
 
+          const active_cycle = incomeData[i];
+
           // Array storing the bonds ans rewards over time
           let bonds_over_time = [];
+          let avg_bonds_per_cycle = [];
           let delegations_over_time = [];
           let tot_delegations = 0;
           let rewards_over_time = []; // baking_income
+          let avg_rewards_per_cycle = [];
           let tot_rewards = 0;
 
           // Each roll represents a weight which
@@ -182,13 +186,15 @@ export class Stats extends Component {
             tot_delegations += incomeData[j][6];
             rewards_over_time.push(incomeData[j][23]);
             tot_rewards += incomeData[j][23];
+            // avg_rewards_per_cycle.push(tot_rewards / tot_delegations);
+            avg_rewards_per_cycle.push(incomeData[j][23] / incomeData[j][6]);
 
             let bonds = incomeData[j][22];
             let rolls = incomeData[j][3];
             bond_x_weight_sum += bonds * rolls;
             weight_sum += rolls;
+            avg_bonds_per_cycle.push(bond_x_weight_sum / weight_sum);
           }
-          const active_cycle = incomeData[i];
 
           // calculate all cycles
           let cycles = [];
@@ -233,25 +239,24 @@ export class Stats extends Component {
                   label: "Bonds: ",
                   data: bonds_over_time,
                 },
-                // {
-                //   label: "Rewards: ",
-                //   data: rewards_over_time,
-                //   type: "bar",
-                // },
+                {
+                  label: "Bonds w-avg: ",
+                  data: avg_bonds_per_cycle,
+                },
               ],
             },
             barchartData: {
               labels: cycles,
               datasets: [
                 {
+                  label: "Avg Rewatds: ",
+                  data: avg_rewards_per_cycle,
+                  type: "line",
+                },
+                {
                   label: "Rewards: ",
                   data: rewards_over_time,
                 },
-                // {
-                //   label: "Delegations: ",
-                //   data: delegations_over_time,
-                //   type: "line",
-                // },
               ],
             },
           });
