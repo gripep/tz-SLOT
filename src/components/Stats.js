@@ -242,6 +242,7 @@ export class Stats extends Component {
                 {
                   label: "Bonds w-avg: ",
                   data: avg_bonds_per_cycle,
+                  borderColor: "rgba(45, 206, 137, 1)",
                 },
               ],
             },

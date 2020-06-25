@@ -30,7 +30,7 @@ export class Footer extends Component {
                 <Button
                   className="btn-icon-only rounded-circle ml-1"
                   color="github"
-                  href="https://github.com/gripep"
+                  href="https://github.com/gripep/tzstats"
                   id="tooltip495507257"
                   target="_blank"
                 >
