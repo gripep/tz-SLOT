@@ -99,7 +99,7 @@ export class Stats extends Component {
 
         axios.post("/.netlify/functions/account", { token: this.state.token }),
         axios.post("/.netlify/functions/income", { token: this.state.token }),
-        axios.get("/.netlify/functions//tickers"),
+        axios.get("/.netlify/functions/tickers"),
       ])
       .then(
         axios.spread((account, income, tickers) => {
