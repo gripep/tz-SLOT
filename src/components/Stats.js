@@ -89,17 +89,17 @@ export class Stats extends Component {
 
     axios
       .all([
-        // axios.get(
-        //   `https://api.tzstats.com/explorer/account/${this.state.token}`
-        // ),
-        // axios.get(
-        //   `https://api.tzstats.com/tables/income?address=${this.state.token}`
-        // ),
-        // axios.get("https://api.tzstats.com/markets/tickers"),
+        axios.get(
+          `https://api.tzstats.com/explorer/account/${this.state.token}`
+        ),
+        axios.get(
+          `https://api.tzstats.com/tables/income?address=${this.state.token}`
+        ),
+        axios.get("https://api.tzstats.com/markets/tickers"),
 
-        axios.post("/.netlify/functions/account", { token: this.state.token }),
-        axios.post("/.netlify/functions/income", { token: this.state.token }),
-        axios.get("/.netlify/functions/tickers"),
+        // axios.post("/.netlify/functions/account", { token: this.state.token }),
+        // axios.post("/.netlify/functions/income", { token: this.state.token }),
+        // axios.get("/.netlify/functions/tickers"),
       ])
       .then(
         axios.spread((account, income, tickers) => {
@@ -189,14 +189,14 @@ export class Stats extends Component {
                 cycle: active_cycle[1],
                 marketCap: Intl.NumberFormat().format(
                   Math.round(
-                    accountData.staking_balance +
+                    (accountData.staking_balance +
                       accountData.total_rewards_earned +
-                      ((accountData.total_rewards_earned +
+                      (accountData.total_rewards_earned +
                         rewards_over_time[rewards_over_time.length - 1] *
                           0.74) /
-                        active_cycle[1]) *
-                        USD_exchange.last *
-                        100
+                        i) *
+                      USD_exchange.last *
+                      100
                   ) / 100
                 ),
                 bonds: bonds_over_time,
@@ -250,7 +250,7 @@ export class Stats extends Component {
           });
           // console.log(this.state.stats);
           // console.log(accountData);
-          // console.log(incomeData);
+          console.log(incomeData);
           // console.log(active_cycle);
         })
       )
