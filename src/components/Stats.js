@@ -39,7 +39,7 @@ import {
   faRedoAlt,
   faCoins,
   faChartLine,
-  faMoneyBillAlt,
+  faDollarSign,
 } from "@fortawesome/free-solid-svg-icons";
 
 export class Stats extends Component {
@@ -65,6 +65,9 @@ export class Stats extends Component {
         average_rewards: [],
         start_time: null,
         end_time: null,
+      },
+      tickers: {
+        to_USD: null,
       },
     },
     linechartData: null,
@@ -139,20 +142,23 @@ export class Stats extends Component {
 
     axios
       .all([
-        // axios.get(
-        //   `https://api.tzstats.com/explorer/account/${this.state.token}`
-        // ),
-        // axios.get(
-        //   `https://api.tzstats.com/tables/income?address=${this.state.token}`
-        // ),
+        axios.get(
+          `https://api.tzstats.com/explorer/account/${this.state.token}`
+        ),
+        axios.get(
+          `https://api.tzstats.com/tables/income?address=${this.state.token}`
+        ),
+        axios.get("https://api.tzstats.com/markets/tickers"),
 
-        axios.post("/.netlify/functions/account", { token: this.state.token }),
-        axios.post("/.netlify/functions/income", { token: this.state.token }),
+        // axios.post("/.netlify/functions/account", { token: this.state.token }),
+        // axios.post("/.netlify/functions/income", { token: this.state.token }),
+        // axios.get("/.netlify/functions//tickers"),
       ])
       .then(
-        axios.spread((account, income) => {
+        axios.spread((account, income, tickers) => {
           const accountData = account.data;
           const incomeData = income.data;
+          const tickersData = tickers.data;
 
           // find active cycle
           let i;
@@ -205,6 +211,17 @@ export class Stats extends Component {
             cycles.push(l);
           }
 
+          // find XTZ_USD ticker under coinbasepro exchange
+          let USD_exchange = null;
+          let m;
+          for (m = 0; m < tickersData.length; m++) {
+            let curr = tickersData[m];
+            if (curr.pair === "XTZ_USD" && curr.exchange === "coinbasepro") {
+              USD_exchange = curr;
+              break;
+            }
+          }
+
           this.setState({
             hasResponse: true,
             stats: {
@@ -217,19 +234,25 @@ export class Stats extends Component {
                   .replace("T", ", ")
                   .replace("Z", ""),
                 active_delegations: accountData.active_delegations,
-                full_balance:
-                  accountData.total_balance + accountData.frozen_rewards,
+                full_balance: accountData.staking_balance,
+                // accountData.total_balance + accountData.frozen_rewards,
                 total_rewards_earned: accountData.total_rewards_earned,
               },
               income: {
                 cycle: active_cycle[1],
-                marketCap:
-                  accountData.total_balance +
-                  accountData.frozen_rewards +
-                  accountData.total_rewards_earned +
-                  (accountData.total_rewards_earned +
-                    rewards_over_time[rewards_over_time.length - 1] * 0.74) /
-                    active_cycle[1],
+                marketCap: Intl.NumberFormat().format(
+                  Math.round(
+                    (accountData.total_balance +
+                      accountData.frozen_rewards +
+                      active_cycle[22] +
+                      (accountData.total_rewards_earned +
+                        rewards_over_time[rewards_over_time.length - 1] *
+                          0.74) /
+                        active_cycle[1]) *
+                      USD_exchange.last *
+                      100
+                  ) / 100
+                ),
                 bonds: bonds_over_time,
                 total_bonds: active_cycle[22],
                 average_return: bond_x_weight_sum / weight_sum,
@@ -239,6 +262,9 @@ export class Stats extends Component {
                 average_rewards: Math.round(tot_rewards / active_cycle[1]),
                 start_time: active_cycle[39],
                 end_time: active_cycle[40],
+              },
+              ticker: {
+                to_USD: USD_exchange,
               },
             },
             linechartData: {
@@ -590,12 +616,12 @@ export class Stats extends Component {
                           <u>Market Cap</u>
                         </CardTitle>
                         <span className="h4 font-weight-bold">
-                          {stats.income.marketCap}
+                          {stats.income.marketCap} USD
                         </span>
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-default text-white rounded-circle shadow">
-                          <FontAwesomeIcon icon={faMoneyBillAlt} />
+                          <FontAwesomeIcon icon={faDollarSign} />
                         </div>
                       </Col>
                     </Row>
