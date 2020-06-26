@@ -74,21 +74,6 @@ export class Stats extends Component {
     barchartData: null,
   };
 
-  // Intl.NumberFormat().format(
-  //   Math.round(
-  //     bonds.balance[bonds.balance.length - 1] * 100
-  //   ) / 100
-  //  )
-
-  // new Intl.DateTimeFormat("en-US", {
-  //   year: "numeric",
-  //   month: "2-digit",
-  //   day: "2-digit",
-  //   hour: "2-digit",
-  //   minute: "2-digit",
-  //   second: "2-digit",
-  // }).format(bonds.start_time[bonds.start_time.length - 1])}
-
   componentDidMount() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
