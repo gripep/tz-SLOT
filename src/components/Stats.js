@@ -189,8 +189,7 @@ export class Stats extends Component {
                 cycle: active_cycle[1],
                 marketCap: Intl.NumberFormat().format(
                   Math.round(
-                    (accountData.total_balance +
-                      accountData.frozen_rewards +
+                    (accountData.staking_balance +
                       active_cycle[22] +
                       (accountData.total_rewards_earned +
                         rewards_over_time[rewards_over_time.length - 1] *
