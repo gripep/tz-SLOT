@@ -250,7 +250,7 @@ export class Stats extends Component {
           });
           // console.log(this.state.stats);
           // console.log(accountData);
-          console.log(incomeData);
+          // console.log(incomeData);
           // console.log(active_cycle);
         })
       )
