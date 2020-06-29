@@ -43,9 +43,10 @@ export class Landing extends Component {
               <Button
                 className="mb-3 mb-sm-0 ml-5"
                 color="primary"
-                href="#"
+                href="/double"
                 size="lg"
                 type="button"
+                disabled
               >
                 <span className="btn-inner--text">Two Tokens</span>
               </Button>
