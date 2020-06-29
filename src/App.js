@@ -1,4 +1,6 @@
-import React from "react";
+import React, { Fragment } from "react";
+
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
 import Footer from "./components/Footer";
 // import Header from "./components/Header";
@@ -8,11 +10,19 @@ import "./assets/css/chart-react.css";
 
 function App() {
   return (
-    <div className="App">
-      {/* <Header /> */}
-      <Stats />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Fragment>
+        {/* <Header /> */}
+        <div className="App">
+          <Switch>
+            {/* <Route exact path="/" component={Landing} /> */}
+            <Route exact path="/" component={Stats} />
+            <Redirect to="/" />
+          </Switch>
+        </div>
+        <Footer />
+      </Fragment>
+    </BrowserRouter>
   );
 }
 
