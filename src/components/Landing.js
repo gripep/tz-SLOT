@@ -46,7 +46,6 @@ export class Landing extends Component {
                 href="/double"
                 size="lg"
                 type="button"
-                disabled
               >
                 <span className="btn-inner--text">Two Tokens</span>
               </Button>

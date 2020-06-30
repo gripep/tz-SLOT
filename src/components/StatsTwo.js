@@ -146,7 +146,7 @@ export class StatsTwo extends Component {
 
           // calculate max cycle and
           // store all cycle 0 to MAX
-          let max_cycle = Math.max(active_cycle1, active_cycle2);
+          let max_cycle = Math.max(active_cycle1[1], active_cycle2[1]);
           let cycles = [];
           let l;
           for (l = 0; l <= max_cycle; l++) {
@@ -328,12 +328,12 @@ export class StatsTwo extends Component {
                     0,
                     bonds_over_time2.length - 2
                   ),
-                  borderColor: "rgba(86, 3, 173, 1)",
+                  borderColor: "rgba(245, 54, 92, 1)",
                 },
               ],
             },
           });
-          console.log(this.state.stats);
+          // console.log(this.state.stats);
           // console.log(accountData);
           // console.log(incomeData);
           // console.log(active_cycle);
@@ -510,6 +510,35 @@ export class StatsTwo extends Component {
                   </CardBody>
                 </Card>
               </div>
+            </Row>
+          </div>
+
+          <div className="text-center mt-5">
+            <Row>
+              <Col className="mb-5 mb-xl-0" xl="12">
+                <Card className="bg-gradient-default shadow">
+                  <CardHeader className="bg-transparent">
+                    <Row className="align-items-center">
+                      <div className="col">
+                        <h6 className="text-uppercase text-muted ls-1 mb-1">
+                          Bonds
+                        </h6>
+                        <h2 className="text-white mb-0">Bonds per cycle</h2>
+                      </div>
+                    </Row>
+                  </CardHeader>
+                  <CardBody>
+                    {/* Chart */}
+                    <div className="chart">
+                      <Line
+                        data={this.state.linechartData}
+                        options={linechart.options}
+                        getDatasetAtEvent={(e) => console.log(e)}
+                      />
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
             </Row>
           </div>
         </Container>
