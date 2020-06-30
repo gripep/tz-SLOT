@@ -32,14 +32,8 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faKey,
-  faWallet,
-  faStar,
-  faUsers,
-  faCalendarAlt,
-  faRedoAlt,
-  faCoins,
-  faChartLine,
   faDollarSign,
+  faStar,
   faArrowUp,
   faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
@@ -70,6 +64,7 @@ export class StatsTwo extends Component {
       },
     },
     linechartData: null,
+    barchartData: null,
   };
 
   componentDidMount() {
@@ -260,30 +255,26 @@ export class StatsTwo extends Component {
               },
               income: {
                 marketCap: [
-                  Intl.NumberFormat().format(
-                    Math.round(
-                      (accountData1.staking_balance +
-                        accountData1.total_rewards_earned +
-                        (accountData1.total_rewards_earned +
-                          rewards_over_time1[rewards_over_time1.length - 1] *
-                            0.74) /
-                          i) *
-                        USD_exchange.last *
-                        100
-                    ) / 100
-                  ),
-                  Intl.NumberFormat().format(
-                    Math.round(
-                      (accountData2.staking_balance +
-                        accountData2.total_rewards_earned +
-                        (accountData2.total_rewards_earned +
-                          rewards_over_time2[rewards_over_time2.length - 1] *
-                            0.74) /
-                          ii) *
-                        USD_exchange.last *
-                        100
-                    ) / 100
-                  ),
+                  Math.round(
+                    (accountData1.staking_balance +
+                      accountData1.total_rewards_earned +
+                      (accountData1.total_rewards_earned +
+                        rewards_over_time1[rewards_over_time1.length - 1] *
+                          0.74) /
+                        i) *
+                      USD_exchange.last *
+                      100
+                  ) / 100,
+                  Math.round(
+                    (accountData2.staking_balance +
+                      accountData2.total_rewards_earned +
+                      (accountData2.total_rewards_earned +
+                        rewards_over_time2[rewards_over_time2.length - 1] *
+                          0.74) /
+                        ii) *
+                      USD_exchange.last *
+                      100
+                  ) / 100,
                 ],
                 bonds: [bonds_over_time1, bonds_over_time2],
                 average_return: [
@@ -329,6 +320,45 @@ export class StatsTwo extends Component {
                     bonds_over_time2.length - 2
                   ),
                   borderColor: "rgba(245, 54, 92, 1)",
+                },
+              ],
+            },
+            barchartData: {
+              labels: cycles,
+              datasets: [
+                {
+                  label: "T1 Avg Rewatds: ",
+                  data: avg_rewards_per_cycle1.slice(
+                    0,
+                    avg_rewards_per_cycle1.length - 2
+                  ),
+                  type: "line",
+                  borderColor: "rgba(45, 206, 137, 1)",
+                },
+                {
+                  label: "T1 Rewards: ",
+                  data: rewards_over_time1.slice(
+                    0,
+                    rewards_over_time1.length - 2
+                  ),
+                },
+
+                {
+                  label: "T2 Avg Rewatds: ",
+                  data: avg_rewards_per_cycle2.slice(
+                    0,
+                    avg_rewards_per_cycle2.length - 2
+                  ),
+                  type: "line",
+                  borderColor: "rgba(245, 54, 92, 1)",
+                },
+                {
+                  label: "T2 Rewards: ",
+                  data: rewards_over_time2.slice(
+                    0,
+                    rewards_over_time2.length - 2
+                  ),
+                  borderColor: "rgba(137, 101, 244, 1)",
                 },
               ],
             },
@@ -396,43 +426,49 @@ export class StatsTwo extends Component {
                           tag="h4"
                           className="text-uppercase text-muted mb-2"
                         >
-                          <u>Avg Bond Return</u>
+                          <u>Market Cap</u>
                         </CardTitle>
                         <Row>
                           <Col className="text-center" lg="9">
                             <Row className="justify-content-center">
                               <span className="h4 font-weight-bold mb-2">
-                                {stats.income.average_return[0]}
+                                {Intl.NumberFormat().format(
+                                  stats.income.marketCap[0]
+                                )}{" "}
+                                USD
                               </span>
                             </Row>
                             <Row className="justify-content-center">
                               <span className="h4 font-weight-bold mb-2">
-                                {stats.income.average_return[1]}
+                                {Intl.NumberFormat().format(
+                                  stats.income.marketCap[1]
+                                )}{" "}
+                                USD
                               </span>
                             </Row>
                           </Col>
                           <Col className="text-center">
                             {Math.round(
-                              ((stats.income.average_return[0] -
-                                stats.income.average_return[1]) /
-                                stats.income.average_return[0]) *
+                              ((stats.income.marketCap[0] -
+                                stats.income.marketCap[1]) /
+                                stats.income.marketCap[0]) *
                                 100
                             ) /
                               100 >
                             0
                               ? pos(
                                   Math.round(
-                                    ((stats.income.average_return[0] -
-                                      stats.income.average_return[1]) /
-                                      stats.income.average_return[0]) *
+                                    ((stats.income.marketCap[0] -
+                                      stats.income.marketCap[1]) /
+                                      stats.income.marketCap[0]) *
                                       100
                                   ) / 100
                                 )
                               : neg(
                                   Math.round(
-                                    ((stats.income.average_return[0] -
-                                      stats.income.average_return[1]) /
-                                      stats.income.average_return[0]) *
+                                    ((stats.income.marketCap[0] -
+                                      stats.income.marketCap[1]) /
+                                      stats.income.marketCap[0]) *
                                       100
                                   ) / 100
                                 )}
@@ -441,7 +477,7 @@ export class StatsTwo extends Component {
                       </div>
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-default text-white rounded-circle shadow">
-                          <FontAwesomeIcon icon={faChartLine} />
+                          <FontAwesomeIcon icon={faDollarSign} />
                         </div>
                       </Col>
                     </Row>
@@ -534,6 +570,32 @@ export class StatsTwo extends Component {
                         data={this.state.linechartData}
                         options={linechart.options}
                         getDatasetAtEvent={(e) => console.log(e)}
+                      />
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+            <br />
+            <Row>
+              <Col className="mb-5 mb-xl-0" xl="12">
+                <Card className="shadow mt-4">
+                  <CardHeader className="bg-transparent">
+                    <Row className="align-items-center">
+                      <div className="col">
+                        <h6 className="text-uppercase text-muted ls-1 mb-1">
+                          Rewards
+                        </h6>
+                        <h2 className="mb-0">Rewards per cycle</h2>
+                      </div>
+                    </Row>
+                  </CardHeader>
+                  <CardBody>
+                    {/* Chart */}
+                    <div className="chart">
+                      <Bar
+                        data={this.state.barchartData}
+                        options={barchart.options}
                       />
                     </div>
                   </CardBody>
