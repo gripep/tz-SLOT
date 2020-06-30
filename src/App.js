@@ -8,8 +8,7 @@ import Landing from "./components/Landing";
 import Stats from "./components/Stats";
 import StatsTwo from "./components/StatsTwo";
 
-// import "./assets/css/chart-react.css";
-import "./assets/css/argon-dashboard-react.css";
+import "./assets/css/chart-react.css";
 
 function App() {
   return (
