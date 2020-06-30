@@ -82,33 +82,33 @@ export class StatsTwo extends Component {
 
     axios
       .all([
-        axios.get(
-          `https://api.tzstats.com/explorer/account/${this.state.token1}`
-        ),
-        axios.get(
-          `https://api.tzstats.com/tables/income?address=${this.state.token1}`
-        ),
-        axios.get(
-          `https://api.tzstats.com/explorer/account/${this.state.token2}`
-        ),
-        axios.get(
-          `https://api.tzstats.com/tables/income?address=${this.state.token2}`
-        ),
-        axios.get("https://api.tzstats.com/markets/tickers"),
+        // axios.get(
+        //   `https://api.tzstats.com/explorer/account/${this.state.token1}`
+        // ),
+        // axios.get(
+        //   `https://api.tzstats.com/tables/income?address=${this.state.token1}`
+        // ),
+        // axios.get(
+        //   `https://api.tzstats.com/explorer/account/${this.state.token2}`
+        // ),
+        // axios.get(
+        //   `https://api.tzstats.com/tables/income?address=${this.state.token2}`
+        // ),
+        // axios.get("https://api.tzstats.com/markets/tickers"),
 
-        // axios.post("/.netlify/functions/account", {
-        //   token: this.state.token1,
-        // }),
-        // axios.post("/.netlify/functions/income", {
-        //   token: this.state.token1,
-        // }),
-        // axios.post("/.netlify/functions/account", {
-        //   token: this.state.token2,
-        // }),
-        // axios.post("/.netlify/functions/income", {
-        //   token: this.state.token2,
-        // }),
-        // axios.get("/.netlify/functions/tickers"),
+        axios.post("/.netlify/functions/account", {
+          token: this.state.token1,
+        }),
+        axios.post("/.netlify/functions/income", {
+          token: this.state.token1,
+        }),
+        axios.post("/.netlify/functions/account", {
+          token: this.state.token2,
+        }),
+        axios.post("/.netlify/functions/income", {
+          token: this.state.token2,
+        }),
+        axios.get("/.netlify/functions/tickers"),
       ])
       .then(
         axios.spread((account1, income1, account2, income2, tickers) => {
