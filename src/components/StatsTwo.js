@@ -381,7 +381,7 @@ export class StatsTwo extends Component {
       <p className="mt-3 mb-0 text-muted text-md">
         <span className="text-success">
           <FontAwesomeIcon className="mr-2" icon={faArrowUp} />
-          {diff}
+          {diff}%
         </span>
       </p>
     );
@@ -390,7 +390,7 @@ export class StatsTwo extends Component {
       <p className="mt-3 mb-0 text-muted text-md">
         <span className="text-danger">
           <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
-          {diff}
+          {diff}%
         </span>
       </p>
     );
@@ -454,7 +454,7 @@ export class StatsTwo extends Component {
                                 stats.income.marketCap[0]) *
                                 100
                             ) /
-                              100 >
+                              100 >=
                             0
                               ? pos(
                                   Math.round(
@@ -516,7 +516,7 @@ export class StatsTwo extends Component {
                                 stats.account.total_rewards_earned[0]) *
                                 100
                             ) /
-                              100 >
+                              100 >=
                             0
                               ? pos(
                                   Math.round(
@@ -601,6 +601,16 @@ export class StatsTwo extends Component {
                   </CardBody>
                 </Card>
               </Col>
+            </Row>
+          </div>
+
+          <div className="text-center mt-5">
+            <Row className="justify-content-center mt-5">
+              <div className="col mt-5">
+                <p>
+                  Data provided by <a href="https://tezos.com/">Tezos</a>
+                </p>
+              </div>
             </Row>
           </div>
         </Container>
