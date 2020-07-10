@@ -71,6 +71,7 @@ export class TokenForm extends Component {
       data2: {
         address: null,
         first_in_time: null,
+        full_balance: null,
         total_rewards_earned: null,
       },
     },
@@ -453,11 +454,13 @@ export class TokenForm extends Component {
                   address: accountData1.address,
                   first_in_time: this.formatDate(accountData1.first_in_time),
                   full_balance: accountData1.staking_balance,
+                  total_rewards_earned: accountData1.total_rewards_earned,
                 },
                 data2: {
                   address: accountData2.address,
                   first_in_time: this.formatDate(accountData2.first_in_time),
                   full_balance: accountData2.staking_balance,
+                  total_rewards_earned: accountData2.total_rewards_earned,
                 },
               },
               activeCycle: {
@@ -1092,9 +1095,11 @@ export class TokenForm extends Component {
                   <Row className="align-items-center">
                     <div className="col">
                       <h6 className="text-uppercase text-muted ls-1 mb-1">
-                        Rewards
+                        Rewards Earned
                       </h6>
-                      <h2 className="mb-0">Rewards per cycle</h2>
+                      <h4 className="text-muted ls-1 mb-1">
+                        {accountData.total_rewards_earned}
+                      </h4>
                     </div>
                   </Row>
                 </CardHeader>
