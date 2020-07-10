@@ -402,6 +402,10 @@ export class TokenForm extends Component {
             let bonds_w_avg1 = [];
             let bond_x_weight_sum1 = 0;
             let weight_sum1 = 0;
+            // store average rewards per cycle (for bar chart)
+            let avg_rewards1 = [];
+            // store all rewards (for bar chart)
+            let rewards1 = [];
 
             let k;
             for (k = 0; k <= i; k++) {
@@ -413,6 +417,10 @@ export class TokenForm extends Component {
               bond_x_weight_sum1 += bond * roll;
               weight_sum1 += roll;
               bonds_w_avg1.push(bond_x_weight_sum1 / weight_sum1);
+              // average rewards
+              avg_rewards1.push(incomeData1[k][23] / incomeData1[k][6]);
+              // rewards
+              rewards1.push(incomeData1[k][23]);
             }
 
             // store all bonds (for line chart)
@@ -421,6 +429,10 @@ export class TokenForm extends Component {
             let bonds_w_avg2 = [];
             let bond_x_weight_sum2 = 0;
             let weight_sum2 = 0;
+            // store average rewards per cycle (for bar chart)
+            let avg_rewards2 = [];
+            // store all rewards (for bar chart)
+            let rewards2 = [];
 
             let kk;
             for (kk = 0; kk <= ii; kk++) {
@@ -432,6 +444,10 @@ export class TokenForm extends Component {
               bond_x_weight_sum2 += bond * roll;
               weight_sum2 += roll;
               bonds_w_avg2.push(bond_x_weight_sum2 / weight_sum2);
+              // average rewards
+              avg_rewards2.push(incomeData2[kk][23] / incomeData2[kk][6]);
+              // rewards
+              rewards2.push(incomeData2[kk][23]);
             }
 
             // store all cycles
@@ -519,34 +535,34 @@ export class TokenForm extends Component {
                     },
                   ],
                 },
-                //   bar1: {
-                //     labels: cycles,
-                //     datasets: [
-                //       {
-                //         label: "Avg Rewatds: ",
-                //         data: avg_rewards.slice(0, avg_rewards.length - 2),
-                //         type: "line",
-                //       },
-                //       {
-                //         label: "Rewards: ",
-                //         data: rewards.slice(0, rewards.length - 2),
-                //       },
-                //     ],
-                //   },
-                //   bar2: {
-                //     labels: cycles,
-                //     datasets: [
-                //       {
-                //         label: "Avg Rewatds: ",
-                //         data: avg_rewards.slice(0, avg_rewards.length - 2),
-                //         type: "line",
-                //       },
-                //       {
-                //         label: "Rewards: ",
-                //         data: rewards.slice(0, rewards.length - 2),
-                //       },
-                //     ],
-                //   },
+                bar1: {
+                  labels: cycle1,
+                  datasets: [
+                    {
+                      label: "Avg Rewatds: ",
+                      data: avg_rewards1.slice(0, avg_rewards1.length - 2),
+                      type: "line",
+                    },
+                    {
+                      label: "Rewards: ",
+                      data: rewards1.slice(0, rewards1.length - 2),
+                    },
+                  ],
+                },
+                bar2: {
+                  labels: cycle2,
+                  datasets: [
+                    {
+                      label: "Avg Rewatds: ",
+                      data: avg_rewards2.slice(0, avg_rewards2.length - 2),
+                      type: "line",
+                    },
+                    {
+                      label: "Rewards: ",
+                      data: rewards2.slice(0, rewards2.length - 2),
+                    },
+                  ],
+                },
               },
             });
           })
@@ -1087,9 +1103,9 @@ export class TokenForm extends Component {
         </Row>
 
         {/* Bar Chart */}
-        <div className="text-center mt-5">
+        <div className="text-center mt-3">
           <Row>
-            <Col className="mb-5 mb-xl-0" xl="8">
+            <Col className="mb-5 mb-xl-0" xl="12">
               <Card className="shadow mt-4">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
