@@ -1128,7 +1128,9 @@ export class TokenForm extends Component {
                       <Col className="text-center" lg="12">
                         <Row className="justify-content-center">
                           <span className="h4 font-weight-bold mt-3">
-                            {accountData.full_balance}
+                            {Intl.NumberFormat().format(
+                              accountData.full_balance
+                            )}
                           </span>
                         </Row>
                       </Col>
@@ -1157,7 +1159,9 @@ export class TokenForm extends Component {
                         Rewards Earned
                       </h6>
                       <h4 className="text-muted ls-1 mb-1">
-                        {accountData.total_rewards_earned}
+                        {Intl.NumberFormat().format(
+                          accountData.total_rewards_earned
+                        )}
                       </h4>
                     </div>
                   </Row>
