@@ -40,8 +40,8 @@ import {
   faRedoAlt,
   faCoins,
   faChartLine,
-  faArrowUp,
-  faArrowDown,
+  // faArrowUp,
+  // faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 export class TokenForm extends Component {
