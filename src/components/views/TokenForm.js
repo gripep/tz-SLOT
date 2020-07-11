@@ -113,7 +113,7 @@ export class TokenForm extends Component {
   }
 
   formatDate = (date) => {
-    if (date === null || date === undefined) return;
+    // if (date === null || date === undefined) return;
     return date.replace("T", ", ").replace("Z", "");
   };
 
@@ -121,6 +121,9 @@ export class TokenForm extends Component {
     return ((a - b) / a) * 100;
   };
 
+  // TODO:
+  // claculate staking bal for diff
+  // staking_balance (% diff)
   getMarketCap = (accountData, bakingIncome, exchange, cycle) => {
     return Intl.NumberFormat().format(
       Math.round(
@@ -1016,7 +1019,7 @@ export class TokenForm extends Component {
                     <Row>
                       <Col className="text-center" lg="9">
                         <Row className="justify-content-center">
-                          <span className="h4 font-weight-bold mt-3">
+                          <span className="h4 font-weight-bold ml-3 mt-3">
                             {incomeData.marketCap} USD
                           </span>
                         </Row>
@@ -1080,16 +1083,16 @@ export class TokenForm extends Component {
                       <u>Staking Balance</u>
                     </CardTitle>
                     <Row>
-                      <Col className="text-center" lg="9">
+                      <Col className="text-center" lg="12">
                         <Row className="justify-content-center">
                           <span className="h4 font-weight-bold mt-3">
                             {accountData.full_balance}
                           </span>
                         </Row>
                       </Col>
-                      <Col className="text-center mr-3">
+                      {/* <Col className="text-center mr-3">
                         {this.getVariance(10, 20) >= 0 ? pos(10) : neg(20)}
-                      </Col>
+                      </Col> */}
                     </Row>
                   </div>
                   <Col className="col-auto mr-3">
