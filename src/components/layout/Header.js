@@ -3,12 +3,7 @@ import { Link } from "react-router-dom";
 
 import Headroom from "headroom.js";
 
-import {
-  NavbarBrand,
-  Navbar,
-  UncontrolledCollapse,
-  Container,
-} from "reactstrap";
+import { NavbarBrand, Navbar, Container } from "reactstrap";
 
 export class Header extends Component {
   componentDidMount() {
