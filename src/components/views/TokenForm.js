@@ -113,6 +113,7 @@ export class TokenForm extends Component {
   }
 
   formatDate = (date) => {
+    if (date === null) return;
     return date.replace("T", ", ").replace("Z", "");
   };
 
