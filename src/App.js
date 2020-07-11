@@ -1,5 +1,5 @@
-// import React from "react";
-import React, { Component } from "react";
+import React from "react";
+// import React, { Component } from "react";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
@@ -9,8 +9,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 // import Stats from "./components/Stats";
 // import StatsTwo from "./components/StatsTwo";
 
-import Dashboard from "./components/views/Compare/Dashboard";
-import Single from "./components/views/Single/Single";
+// import Dashboard from "./components/views/Compare/Dashboard";
+// import Single from "./components/views/Single/Single";
 import TokenForm from "./components/views/TokenForm";
 
 import Footer from "./components/layout/Footer";
