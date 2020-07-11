@@ -40,8 +40,8 @@ import {
   faRedoAlt,
   faCoins,
   faChartLine,
-  // faArrowUp,
-  // faArrowDown,
+  faArrowUp,
+  faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 export class TokenForm extends Component {
@@ -115,7 +115,6 @@ export class TokenForm extends Component {
   }
 
   formatDate = (date) => {
-    if (date === null || date === undefined) return date;
     return date.replace("T", ", ").replace("Z", "");
   };
 
@@ -431,7 +430,8 @@ export class TokenForm extends Component {
               // rewards
               rewards1.push(incomeData1[k][23]);
               // approx staking balance
-              prevStakingBalance1 += incomeData1[k][4] + incomeData1[k][5];
+              if (k === i - 1)
+                prevStakingBalance1 += incomeData1[k][4] + incomeData1[k][5];
             }
 
             // store all bonds (for line chart)
@@ -463,7 +463,8 @@ export class TokenForm extends Component {
               // rewards
               rewards2.push(incomeData2[kk][23]);
               // approx staking balance
-              prevStakingBalance2 += incomeData2[kk][4] + incomeData2[kk][5];
+              if (kk === ii - 1)
+                prevStakingBalance2 += incomeData2[kk][4] + incomeData2[kk][5];
             }
 
             // store all cycles
@@ -984,23 +985,23 @@ export class TokenForm extends Component {
       </Container>
     );
 
-    // const pos = (diff) => (
-    //   <p className="mt-3 mb-0 text-muted text-md">
-    //     <span className="text-success">
-    //       <FontAwesomeIcon className="mr-2" icon={faArrowUp} />
-    //       {diff}%
-    //     </span>
-    //   </p>
-    // );
+    const pos = (diff) => (
+      <p className="mt-3 mb-0 text-muted text-md">
+        <span className="text-success">
+          <FontAwesomeIcon className="mr-2" icon={faArrowUp} />
+          {Intl.NumberFormat().format(Math.round(diff * 100) / 100)}%
+        </span>
+      </p>
+    );
 
-    // const neg = (diff) => (
-    //   <p className="mt-3 mb-0 text-muted text-md">
-    //     <span className="text-danger">
-    //       <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
-    //       {diff}%
-    //     </span>
-    //   </p>
-    // );
+    const neg = (diff) => (
+      <p className="mt-3 mb-0 text-muted text-md">
+        <span className="text-danger">
+          <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
+          {Intl.NumberFormat().format(Math.round(diff * 100) / 100)}%
+        </span>
+      </p>
+    );
 
     const getStats = (
       accountData,
@@ -1038,16 +1039,31 @@ export class TokenForm extends Component {
                       <u className="ml-2">Slot Market Cap</u>
                     </CardTitle>
                     <Row>
-                      <Col className="text-center" lg="12">
+                      <Col className="text-center" lg="8">
                         <Row className="justify-content-center">
-                          <span className="h4 font-weight-bold ml-3 mt-3">
+                          <span className="h4 font-weight-bold ml-9 mt-3">
                             {incomeData.marketCap} USD
                           </span>
                         </Row>
                       </Col>
-                      {/* <Col className="text-center mr-3">
-                        {this.getVariance(20, 10) >= 0 ? pos(10) : neg(20)}
-                      </Col> */}
+                      <Col className="text-center mr-3">
+                        {this.getVariance(
+                          accountData.full_balance,
+                          accountData.prevBalance
+                        ) >= 0
+                          ? pos(
+                              this.getVariance(
+                                accountData.full_balance,
+                                accountData.prevBalance
+                              )
+                            )
+                          : neg(
+                              this.getVariance(
+                                accountData.full_balance,
+                                accountData.prevBalance
+                              )
+                            )}
+                      </Col>
                     </Row>
                   </div>
                   <Col className="col-auto mr-3">
@@ -1116,9 +1132,6 @@ export class TokenForm extends Component {
                           </span>
                         </Row>
                       </Col>
-                      {/* <Col className="text-center mr-3">
-                        {this.getVariance(10, 20) >= 0 ? pos(10) : neg(20)}
-                      </Col> */}
                     </Row>
                   </div>
                   <Col className="col-auto mr-3">
