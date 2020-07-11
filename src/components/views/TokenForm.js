@@ -970,23 +970,23 @@ export class TokenForm extends Component {
       </Container>
     );
 
-    const pos = (diff) => (
-      <p className="mt-3 mb-0 text-muted text-md">
-        <span className="text-success">
-          <FontAwesomeIcon className="mr-2" icon={faArrowUp} />
-          {diff}%
-        </span>
-      </p>
-    );
+    // const pos = (diff) => (
+    //   <p className="mt-3 mb-0 text-muted text-md">
+    //     <span className="text-success">
+    //       <FontAwesomeIcon className="mr-2" icon={faArrowUp} />
+    //       {diff}%
+    //     </span>
+    //   </p>
+    // );
 
-    const neg = (diff) => (
-      <p className="mt-3 mb-0 text-muted text-md">
-        <span className="text-danger">
-          <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
-          {diff}%
-        </span>
-      </p>
-    );
+    // const neg = (diff) => (
+    //   <p className="mt-3 mb-0 text-muted text-md">
+    //     <span className="text-danger">
+    //       <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
+    //       {diff}%
+    //     </span>
+    //   </p>
+    // );
 
     const getStats = (
       accountData,
