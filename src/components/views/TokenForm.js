@@ -1021,7 +1021,7 @@ export class TokenForm extends Component {
                         </Row>
                       </Col>
                       <Col className="text-center mr-3">
-                        {this.getVariance(10, 20) >= 0 ? pos(10) : neg(20)}
+                        {this.getVariance(20, 10) >= 0 ? pos(10) : neg(20)}
                       </Col>
                     </Row>
                   </div>
