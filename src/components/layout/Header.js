@@ -26,7 +26,7 @@ export class Header extends Component {
                 <h3 className="text-white">TZ Explorer</h3>
               </NavbarBrand> */}
               <NavbarBrand className="mr-lg-5">
-                <h3 className="text-white">TZ Explorer</h3>
+                <h3 className="text-white">SLOT</h3>
               </NavbarBrand>
             </Container>
           </Navbar>

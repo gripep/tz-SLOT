@@ -113,7 +113,7 @@ export class TokenForm extends Component {
   }
 
   formatDate = (date) => {
-    // if (date === null || date === undefined) return;
+    if (date === null || date === undefined) return date;
     return date.replace("T", ", ").replace("Z", "");
   };
 
@@ -156,8 +156,8 @@ export class TokenForm extends Component {
     // it is needed for both single and compare
     let XTZ_USD = null;
     axios
-      // .get("https://api.tzstats.com/markets/tickers")
-      .get("/.netlify/functions/tickers")
+      .get("https://api.tzstats.com/markets/tickers")
+      // .get("/.netlify/functions/tickers")
       .then((res) => {
         let tickersData = res.data;
 
@@ -178,19 +178,19 @@ export class TokenForm extends Component {
     if (!this.state.compare) {
       axios
         .all([
-          // axios.get(
-          //   `https://api.tzstats.com/explorer/account/${this.state.token1}`
-          // ),
-          // axios.get(
-          //   `https://api.tzstats.com/tables/income?address=${this.state.token1}`
-          // ),
+          axios.get(
+            `https://api.tzstats.com/explorer/account/${this.state.token1}`
+          ),
+          axios.get(
+            `https://api.tzstats.com/tables/income?address=${this.state.token1}`
+          ),
 
-          axios.post("/.netlify/functions/account", {
-            token: this.props.token1,
-          }),
-          axios.post("/.netlify/functions/income", {
-            token: this.props.token1,
-          }),
+          // axios.post("/.netlify/functions/account", {
+          //   token: this.props.token1,
+          // }),
+          // axios.post("/.netlify/functions/income", {
+          //   token: this.props.token1,
+          // }),
         ])
         .then(
           axios.spread((account, income) => {
@@ -331,31 +331,31 @@ export class TokenForm extends Component {
     } else {
       axios
         .all([
-          // axios.get(
-          //   `https://api.tzstats.com/explorer/account/${this.state.token1}`
-          // ),
-          // axios.get(
-          //   `https://api.tzstats.com/tables/income?address=${this.state.token1}`
-          // ),
-          // axios.get(
-          //   `https://api.tzstats.com/explorer/account/${this.state.token2}`
-          // ),
-          // axios.get(
-          //   `https://api.tzstats.com/tables/income?address=${this.state.token2}`
-          // ),
+          axios.get(
+            `https://api.tzstats.com/explorer/account/${this.state.token1}`
+          ),
+          axios.get(
+            `https://api.tzstats.com/tables/income?address=${this.state.token1}`
+          ),
+          axios.get(
+            `https://api.tzstats.com/explorer/account/${this.state.token2}`
+          ),
+          axios.get(
+            `https://api.tzstats.com/tables/income?address=${this.state.token2}`
+          ),
 
-          axios.post("/.netlify/functions/account", {
-            token: this.state.token1,
-          }),
-          axios.post("/.netlify/functions/income", {
-            token: this.state.token1,
-          }),
-          axios.post("/.netlify/functions/account", {
-            token: this.state.token2,
-          }),
-          axios.post("/.netlify/functions/income", {
-            token: this.state.token2,
-          }),
+          // axios.post("/.netlify/functions/account", {
+          //   token: this.state.token1,
+          // }),
+          // axios.post("/.netlify/functions/income", {
+          //   token: this.state.token1,
+          // }),
+          // axios.post("/.netlify/functions/account", {
+          //   token: this.state.token2,
+          // }),
+          // axios.post("/.netlify/functions/income", {
+          //   token: this.state.token2,
+          // }),
         ])
         .then(
           axios.spread((account1, income1, account2, income2) => {
@@ -585,6 +585,7 @@ export class TokenForm extends Component {
       compare,
       income,
       submitted,
+      tickers,
     } = this.state;
 
     const single = (
@@ -987,7 +988,13 @@ export class TokenForm extends Component {
       </p>
     );
 
-    const getStats = (accountData, incomeData, linechartData, barchartData) => (
+    const getStats = (
+      accountData,
+      incomeData,
+      ticker,
+      linechartData,
+      barchartData
+    ) => (
       <Container>
         {/* header */}
         <div className="header-body">
@@ -1014,19 +1021,19 @@ export class TokenForm extends Component {
                       tag="h4"
                       className="text-center text-uppercase text-muted mb-2"
                     >
-                      <u>Slot Market Cap</u>
+                      <u className="ml-2">Slot Market Cap</u>
                     </CardTitle>
                     <Row>
-                      <Col className="text-center" lg="9">
+                      <Col className="text-center" lg="12">
                         <Row className="justify-content-center">
                           <span className="h4 font-weight-bold ml-3 mt-3">
                             {incomeData.marketCap} USD
                           </span>
                         </Row>
                       </Col>
-                      <Col className="text-center mr-3">
+                      {/* <Col className="text-center mr-3">
                         {this.getVariance(20, 10) >= 0 ? pos(10) : neg(20)}
-                      </Col>
+                      </Col> */}
                     </Row>
                   </div>
                   <Col className="col-auto mr-3">
@@ -1052,7 +1059,12 @@ export class TokenForm extends Component {
                         Average Bond Return
                       </h6>
                       <h4 className="text-white text-muted ls-1 mb-1">
-                        {incomeData.averageBondReturn}
+                        {Intl.NumberFormat().format(
+                          Math.round(
+                            incomeData.averageBondReturn * ticker * 100
+                          ) / 100
+                        )}{" "}
+                        USD
                       </h4>
                     </div>
                   </Row>
@@ -1141,6 +1153,7 @@ export class TokenForm extends Component {
           {getStats(
             accounts.data1,
             income.data1,
+            tickers.XTZ_USD,
             chartData.line1,
             chartData.bar1
           )}
@@ -1149,6 +1162,7 @@ export class TokenForm extends Component {
           {getStats(
             accounts.data2,
             income.data2,
+            tickers.XTZ_USD,
             chartData.line2,
             chartData.bar2
           )}
