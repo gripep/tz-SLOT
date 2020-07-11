@@ -65,6 +65,7 @@ export class TokenForm extends Component {
         first_in_time: null,
         last_out_time: null,
         full_balance: null,
+        prevBalance: null,
         total_rewards_earned: null,
         active_delegations: null,
       },
@@ -72,6 +73,7 @@ export class TokenForm extends Component {
         address: null,
         first_in_time: null,
         full_balance: null,
+        prevBalance: null,
         total_rewards_earned: null,
       },
     },
@@ -186,10 +188,10 @@ export class TokenForm extends Component {
           // ),
 
           axios.post("/.netlify/functions/account", {
-            token: this.props.token1,
+            token: this.state.token1,
           }),
           axios.post("/.netlify/functions/income", {
-            token: this.props.token1,
+            token: this.state.token1,
           }),
         ])
         .then(
@@ -410,6 +412,9 @@ export class TokenForm extends Component {
             let avg_rewards1 = [];
             // store all rewards (for bar chart)
             let rewards1 = [];
+            // store approx value of staking balance,
+            // up until previous cycle
+            let prevStakingBalance1 = 0;
 
             let k;
             for (k = 0; k <= i; k++) {
@@ -425,6 +430,8 @@ export class TokenForm extends Component {
               avg_rewards1.push(incomeData1[k][23] / incomeData1[k][6]);
               // rewards
               rewards1.push(incomeData1[k][23]);
+              // approx staking balance
+              prevStakingBalance1 += incomeData1[k][4] + incomeData1[k][5];
             }
 
             // store all bonds (for line chart)
@@ -437,6 +444,9 @@ export class TokenForm extends Component {
             let avg_rewards2 = [];
             // store all rewards (for bar chart)
             let rewards2 = [];
+            // store approx value of staking balance,
+            // up until previous cycle
+            let prevStakingBalance2 = 0;
 
             let kk;
             for (kk = 0; kk <= ii; kk++) {
@@ -452,6 +462,8 @@ export class TokenForm extends Component {
               avg_rewards2.push(incomeData2[kk][23] / incomeData2[kk][6]);
               // rewards
               rewards2.push(incomeData2[kk][23]);
+              // approx staking balance
+              prevStakingBalance2 += incomeData2[kk][4] + incomeData2[kk][5];
             }
 
             // store all cycles
@@ -474,12 +486,14 @@ export class TokenForm extends Component {
                   address: accountData1.address,
                   first_in_time: this.formatDate(accountData1.first_in_time),
                   full_balance: accountData1.staking_balance,
+                  prevBalance: prevStakingBalance1,
                   total_rewards_earned: accountData1.total_rewards_earned,
                 },
                 data2: {
                   address: accountData2.address,
                   first_in_time: this.formatDate(accountData2.first_in_time),
                   full_balance: accountData2.staking_balance,
+                  prevBalance: prevStakingBalance2,
                   total_rewards_earned: accountData2.total_rewards_earned,
                 },
               },
