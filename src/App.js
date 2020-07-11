@@ -38,8 +38,8 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/" component={TokenForm} />
-          {/* <Route exact path="/compare" component={Dashboard} />
-          <Route exact path="/stats" component={Single} /> */}
+          {/* <Route exact path="/compare" component={Dashboard} /> */}
+          {/* <Route exact path="/stats" component={Single} /> */}
         </Switch>
       </div>
       <Footer />
