@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from "react";
+// import React, { Component, Fragment } from "react";
 
-import { Container, Row } from "reactstrap";
+// import { Container, Row } from "reactstrap";
 
-import Account from "./Account";
+// import Account from "./Account";
 
 // export class Single extends Component {
 //   constructor(props) {
@@ -47,15 +47,3 @@ import Account from "./Account";
 // }
 
 // export default Single;
-
-export default function Single(props) {
-  return (
-    <Row>
-      <div className="col ml-4 mb-5">
-        <Fragment>
-          <Account accounts={props.accounts} />
-        </Fragment>
-      </div>
-    </Row>
-  );
-}
