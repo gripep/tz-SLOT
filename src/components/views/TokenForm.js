@@ -1153,7 +1153,7 @@ export class TokenForm extends Component {
     );
 
     return (
-      <div>
+      <>
         <Container fluid className="bg-gradient-primary">
           <Row className="justify-content-center mb-5">
             <Col className="text-center mt-3" lg="12">
@@ -1203,22 +1203,20 @@ export class TokenForm extends Component {
           </Row>
           <Row className="justify-content-center">
             <Col className="text-center mt--150">
-              {submitted ? (
+              {submitted && (
                 <img
                   alt="..."
                   className="img-fluid floating"
                   src={require("../../assets/img/arrow-48.png")}
                 />
-              ) : (
-                ""
               )}
             </Col>
           </Row>
         </Container>
         <Container fluid className={submitted ? "mt-5 mb-5" : ""}>
-          {submitted ? (!compare ? stats : comparison) : ""}
+          {submitted && (!compare ? stats : comparison)}
         </Container>
-      </div>
+      </>
     );
   }
 }

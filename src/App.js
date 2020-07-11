@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 // import React, { Component } from "react";
 
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+// import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // import Footer from "./components/Footer";
 // import Header from "./components/Header";
@@ -19,35 +19,41 @@ import Header from "./components/layout/Header";
 // import "./assets/css/chart-react.css";
 import "./assets/css/argon-dashboard-react.css";
 
-function App() {
-  return (
-    // <BrowserRouter>
-    //   {/* <Header /> */}
-    //   <div className="App">
-    //     <Switch>
-    //       <Route exact path="/" component={Landing} />
-    //       <Route exact path="/single" component={Stats} />
-    //       <Route exact path="/double" component={StatsTwo} />
-    //     </Switch>
-    //   </div>
-    //   <Footer />
-    // </BrowserRouter>
+// function App() {
+//   return (
+//     // <BrowserRouter>
+//     //   {/* <Header /> */}
+//     //   <div className="App">
+//     //     <Switch>
+//     //       <Route exact path="/" component={Landing} />
+//     //       <Route exact path="/single" component={Stats} />
+//     //       <Route exact path="/double" component={StatsTwo} />
+//     //     </Switch>
+//     //   </div>
+//     //   <Footer />
+//     // </BrowserRouter>
 
-    <BrowserRouter>
-      <Header />
-      <div className="App">
-        <Switch>
-          <Route exact path="/" component={TokenForm} />
-          {/* <Route exact path="/compare" component={Dashboard} /> */}
-          {/* <Route exact path="/stats" component={Single} /> */}
-        </Switch>
-      </div>
-      <Footer />
-    </BrowserRouter>
-  );
-}
+//     // <BrowserRouter>
+//     //   <Header />
+//     //   <div className="App">
+//     //     <Switch>
+//     //       <Route exact path="/" component={TokenForm} />
+//     //       {/* <Route exact path="/compare" component={Dashboard} /> */}
+//     //       {/* <Route exact path="/stats" component={Single} /> */}
+//     //     </Switch>
+//     //   </div>
+//     //   <Footer />
+//     // </BrowserRouter>
 
-export default App;
+//     <div className="App">
+//       <Header />
+//       <TokenForm />
+//       <Footer />
+//     </div>
+//   );
+// }
+
+// export default App;
 
 // class App extends Component {
 //   state = {
@@ -102,3 +108,15 @@ export default App;
 // }
 
 // export default App;
+
+function App() {
+  return (
+    <Fragment>
+      <Header />
+      <TokenForm />
+      <Footer />
+    </Fragment>
+  );
+}
+
+export default App;

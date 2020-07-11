@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 import Headroom from "headroom.js";
 
@@ -22,7 +22,10 @@ export class Header extends Component {
             id="navbar-main"
           >
             <Container>
-              <NavbarBrand className="mr-lg-5" to="/" tag={Link}>
+              {/* <NavbarBrand className="mr-lg-5" to="/" tag={Link}>
+                <h3 className="text-white">TZ Explorer</h3>
+              </NavbarBrand> */}
+              <NavbarBrand className="mr-lg-5">
                 <h3 className="text-white">TZ Explorer</h3>
               </NavbarBrand>
             </Container>
