@@ -986,21 +986,29 @@ export class TokenForm extends Component {
     );
 
     const pos = (diff) => (
-      <p className="mt-3 mb-0 text-muted text-md">
-        <span className="text-success">
-          <FontAwesomeIcon className="mr-2" icon={faArrowUp} />
-          {Intl.NumberFormat().format(Math.round(diff * 100) / 100)}%
-        </span>
-      </p>
+      <Row className="justify-content-center">
+        <Col className="pull-left">
+          <p className="mb-0 text-muted text-md">
+            <span className="text-success">
+              <FontAwesomeIcon className="mr-2" icon={faArrowUp} />
+              {Intl.NumberFormat().format(Math.round(diff * 100) / 100)}%
+            </span>
+          </p>
+        </Col>
+      </Row>
     );
 
     const neg = (diff) => (
-      <p className="mt-3 mb-0 text-muted text-md">
-        <span className="text-danger">
-          <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
-          {Intl.NumberFormat().format(Math.round(diff * 100) / 100)}%
-        </span>
-      </p>
+      <Row className="justify-content-center">
+        <Col className="pull-left">
+          <p className="mb-0 text-muted text-md">
+            <span className="text-danger">
+              <FontAwesomeIcon className="mr-2" icon={faArrowDown} />
+              {Intl.NumberFormat().format(Math.round(diff * 100) / 100)}%
+            </span>
+          </p>
+        </Col>
+      </Row>
     );
 
     const getStats = (
@@ -1034,19 +1042,21 @@ export class TokenForm extends Component {
                   <div className="col">
                     <CardTitle
                       tag="h4"
-                      className="text-center text-uppercase text-muted mb-2"
+                      className="pull-left text-uppercase text-muted mb-2 ml-2"
                     >
                       <u className="ml-2">Slot Market Cap</u>
                     </CardTitle>
                     <Row>
-                      <Col className="text-center" lg="8">
+                      <Col lg="8">
                         <Row className="justify-content-center">
-                          <span className="h4 font-weight-bold ml-9 mt-3">
-                            {incomeData.marketCap} USD
-                          </span>
+                          <Col className="pull-left">
+                            <span className="h4 font-weight-bold mt-3 ml-3">
+                              {incomeData.marketCap} USD
+                            </span>
+                          </Col>
                         </Row>
                       </Col>
-                      <Col className="text-center mr-3">
+                      <Col>
                         {this.getVariance(
                           accountData.full_balance,
                           accountData.prevBalance
