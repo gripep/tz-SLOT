@@ -1153,7 +1153,7 @@ export class TokenForm extends Component {
     );
 
     return (
-      <>
+      <div>
         <Container fluid className="bg-gradient-primary">
           <Row className="justify-content-center mb-5">
             <Col className="text-center mt-3" lg="12">
@@ -1218,7 +1218,7 @@ export class TokenForm extends Component {
         <Container fluid className={submitted ? "mt-5 mb-5" : ""}>
           {submitted ? (!compare ? stats : comparison) : ""}
         </Container>
-      </>
+      </div>
     );
   }
 }
