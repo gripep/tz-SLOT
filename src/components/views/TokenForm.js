@@ -44,15 +44,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export class TokenForm extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     compare: false,
-  //     token1: null,
-  //     token2: null,
-  //   };
-  // }
-
   state = {
     compare: false,
     token1: null,
@@ -142,7 +133,7 @@ export class TokenForm extends Component {
     this.setState({ submitted: true });
     scroller.scrollTo("stats", {
       duration: 1500,
-      delay: 100,
+      delay: 500,
       smooth: true,
       offset: 5, // Scrolls to element + 5 pixels down the page
     });
@@ -1362,13 +1353,14 @@ export class TokenForm extends Component {
 
     const error = (
       <Row className="justify-content-center">
-        <Col className="text-center">
+        <Col className="text-center mt-3">
           <img
             alt="..."
             className="img-fluid"
-            src={require("../../assets/img/error-256.png")}
+            src={require("../../assets/img/error-72.png")}
           />
-          <h2 className="mt-6">An error has occurred</h2>
+          <h2 className="mt-6">Token not found</h2>
+          <h2 className="mt-2">Please enter a valid token...</h2>
         </Col>
       </Row>
     );
