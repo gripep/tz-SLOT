@@ -35,11 +35,9 @@ import {
   faWallet,
   faStar,
   faUsers,
-  faCalendarAlt,
   faDollarSign,
   faRedoAlt,
   faCoins,
-  faChartLine,
   faArrowUp,
   faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
@@ -123,9 +121,6 @@ export class TokenForm extends Component {
     return ((a - b) / a) * 100;
   };
 
-  // TODO:
-  // claculate staking bal for diff
-  // staking_balance (% diff)
   getMarketCap = (accountData, bakingIncome, exchange, cycle) => {
     return Intl.NumberFormat().format(
       Math.round(
