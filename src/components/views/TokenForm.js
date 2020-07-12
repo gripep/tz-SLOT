@@ -686,6 +686,33 @@ export class TokenForm extends Component {
 
           {/* account cards */}
           <Row>
+            {/* <div className="col col-2"></div> */}
+            <div className="text-center col col-4">
+              <Card className="mb-3 shadow border-0">
+                <CardBody>
+                  <Row>
+                    <div className="col">
+                      <CardTitle
+                        tag="h4"
+                        className="text-uppercase text-muted mb-2"
+                      >
+                        <u>Market Cap</u>
+                      </CardTitle>
+                      <span className="h4 font-weight-bold">
+                        {income.data1.marketCap} USD
+                      </span>
+                    </div>
+                    <Col className="col-auto">
+                      <div className="icon icon-shape bg-success text-white rounded-circle shadow">
+                        <FontAwesomeIcon icon={faDollarSign} />
+                      </div>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card>
+            </div>
+          </Row>
+          {/* <Row>
             <div className="col col-6">
               <Card className="shadow border-0">
                 <CardBody>
@@ -698,7 +725,10 @@ export class TokenForm extends Component {
                         <u>Full Balance</u>
                       </CardTitle>
                       <span className="h4 font-weight-bold mb-2">
-                        {accounts.data1.full_balance} XTZ
+                        {Intl.NumberFormat().format(
+                          accounts.data1.full_balance
+                        )}{" "}
+                        XTZ
                       </span>
                     </div>
                     <Col className="col-auto">
@@ -720,15 +750,15 @@ export class TokenForm extends Component {
                         tag="h4"
                         className="text-uppercase text-muted mb-2"
                       >
-                        <u>Rewards Earned</u>
+                        <u>Total Bonds</u>
                       </CardTitle>
                       <span className="h4 font-weight-bold mb-2">
-                        {accounts.data1.total_rewards_earned}
+                        {income.data1.totalBonds}
                       </span>
                     </div>
                     <Col className="col-auto">
                       <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faStar} />
+                        <FontAwesomeIcon icon={faCoins} />
                       </div>
                     </Col>
                   </Row>
@@ -771,28 +801,28 @@ export class TokenForm extends Component {
                         tag="h4"
                         className="text-uppercase text-muted mb-0"
                       >
-                        <u>Last Active</u>
+                        <u>Cycle</u>
                       </CardTitle>
                       <span className="h4 font-weight-bold mb-0">
-                        {accounts.data1.last_out_time}
+                        {activeCycle.cycle1}
                       </span>
                     </div>
                     <Col className="col-auto">
                       <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faCalendarAlt} />
+                        <FontAwesomeIcon icon={faRedoAlt} />
                       </div>
                     </Col>
                   </Row>
                 </CardBody>
               </Card>
             </div>
-          </Row>
+          </Row> */}
         </div>
 
-        <hr />
+        {/* <hr /> */}
 
         {/* line chart (bonds) and income cards */}
-        <div className="text-center mt-5">
+        <div className="text-center mt-1">
           <Row>
             {/* Line Chart */}
             <Col className="mb-5 mb-xl-0" xl="8">
@@ -801,9 +831,18 @@ export class TokenForm extends Component {
                   <Row className="align-items-center">
                     <div className="col">
                       <h6 className="text-uppercase text-muted ls-1 mb-1">
-                        Bonds
+                        Average Bond Return
                       </h6>
-                      <h2 className="text-white mb-0">Bonds per cycle</h2>
+                      <h4 className="text-white mb-0">
+                        {Intl.NumberFormat().format(
+                          Math.round(
+                            income.data1.averageBondReturn *
+                              tickers.XTZ_USD *
+                              100
+                          ) / 100
+                        )}{" "}
+                        USD
+                      </h4>
                     </div>
                   </Row>
                 </CardHeader>
@@ -816,7 +855,7 @@ export class TokenForm extends Component {
             </Col>
             {/* Cards */}
             <Col className="mt-3 mb-5 mb-xl-0" xl="4">
-              <Card className="mb-3 shadow border-0">
+              {/* <Card className="mb-3 shadow border-0">
                 <CardBody>
                   <Row>
                     <div className="col">
@@ -837,8 +876,8 @@ export class TokenForm extends Component {
                     </Col>
                   </Row>
                 </CardBody>
-              </Card>
-              <Card className="mb-3 shadow border-0">
+              </Card> */}
+              {/* <Card className="mb-3 shadow border-0">
                 <CardBody>
                   <Row>
                     <div className="col">
@@ -855,6 +894,76 @@ export class TokenForm extends Component {
                     <Col className="col-auto">
                       <div className="icon icon-shape bg-default text-white rounded-circle shadow">
                         <FontAwesomeIcon icon={faRedoAlt} />
+                      </div>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card> */}
+              {/* <Card className="mb-3 shadow border-0">
+                <CardBody>
+                  <Row>
+                    <div className="col">
+                      <CardTitle
+                        tag="h4"
+                        className="text-uppercase text-muted mb-2"
+                      >
+                        <u>Total Bonds</u>
+                      </CardTitle>
+                      <span className="h4 font-weight-bold">
+                        {income.data1.totalBonds}
+                      </span>
+                    </div>
+                    <Col className="col-auto">
+                      <div className="icon icon-shape bg-default text-white rounded-circle shadow">
+                        <FontAwesomeIcon icon={faCoins} />
+                      </div>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card> */}
+              {/* <Card className="mb-3 shadow border-0">
+                <CardBody>
+                  <Row>
+                    <div className="col">
+                      <CardTitle
+                        tag="h4"
+                        className="text-uppercase text-muted mb-2"
+                      >
+                        <u>Avg Bond Return</u>
+                      </CardTitle>
+                      <span className="h4 font-weight-bold">
+                        {income.data1.averageBondReturn}
+                      </span>
+                    </div>
+                    <Col className="col-auto">
+                      <div className="icon icon-shape bg-default text-white rounded-circle shadow">
+                        <FontAwesomeIcon icon={faChartLine} />
+                      </div>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card> */}
+
+              <Card className="mb-3 shadow border-0">
+                <CardBody>
+                  <Row>
+                    <div className="col">
+                      <CardTitle
+                        tag="h4"
+                        className="text-uppercase text-muted mb-2"
+                      >
+                        <u>Full Balance</u>
+                      </CardTitle>
+                      <span className="h4 font-weight-bold">
+                        {Intl.NumberFormat().format(
+                          accounts.data1.full_balance
+                        )}{" "}
+                        XTZ
+                      </span>
+                    </div>
+                    <Col className="col-auto">
+                      <div className="icon icon-shape bg-default text-white rounded-circle shadow">
+                        <FontAwesomeIcon icon={faWallet} />
                       </div>
                     </Col>
                   </Row>
@@ -890,15 +999,37 @@ export class TokenForm extends Component {
                         tag="h4"
                         className="text-uppercase text-muted mb-2"
                       >
-                        <u>Avg Bond Return</u>
+                        <u>Active Delegations</u>
                       </CardTitle>
                       <span className="h4 font-weight-bold">
-                        {income.data1.averageBondReturn}
+                        {accounts.data1.active_delegations}
                       </span>
                     </div>
                     <Col className="col-auto">
                       <div className="icon icon-shape bg-default text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faChartLine} />
+                        <FontAwesomeIcon icon={faUsers} />
+                      </div>
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card>
+              <Card className="mb-3 shadow border-0">
+                <CardBody>
+                  <Row>
+                    <div className="col">
+                      <CardTitle
+                        tag="h4"
+                        className="text-uppercase text-muted mb-2"
+                      >
+                        <u>Cycle</u>
+                      </CardTitle>
+                      <span className="h4 font-weight-bold">
+                        {activeCycle.cycle1}
+                      </span>
+                    </div>
+                    <Col className="col-auto">
+                      <div className="icon icon-shape bg-default text-white rounded-circle shadow">
+                        <FontAwesomeIcon icon={faRedoAlt} />
                       </div>
                     </Col>
                   </Row>
@@ -920,9 +1051,13 @@ export class TokenForm extends Component {
                   <Row className="align-items-center">
                     <div className="col">
                       <h6 className="text-uppercase text-muted ls-1 mb-1">
-                        Rewards
+                        Rewards Earned
                       </h6>
-                      <h2 className="mb-0">Rewards per cycle</h2>
+                      <h4 className="mb-0">
+                        {Intl.NumberFormat().format(
+                          accounts.data1.total_rewards_earned
+                        )}
+                      </h4>
                     </div>
                   </Row>
                 </CardHeader>
