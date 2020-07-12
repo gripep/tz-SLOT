@@ -1359,8 +1359,8 @@ export class TokenForm extends Component {
             className="img-fluid"
             src={require("../../assets/img/error-72.png")}
           />
-          <h2 className="mt-6">Token not found</h2>
-          <h2 className="mt-2">Please enter a valid token...</h2>
+          <h2 className="mt-6">Baker Key not found</h2>
+          <h2 className="mt-2">Please enter a valid Baker Key...</h2>
         </Col>
       </Row>
     );
