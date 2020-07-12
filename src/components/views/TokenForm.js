@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-scroll";
 
 import classnames from "classnames";
 import axios from "axios";
@@ -1383,7 +1384,7 @@ export class TokenForm extends Component {
                   <CardBody className="p-lg-5">
                     {!compare ? single : double}
                     <Row>
-                      <Col>
+                      <Col lg="6">
                         <Button
                           block
                           className="btn-round"
@@ -1405,7 +1406,7 @@ export class TokenForm extends Component {
                           Submit
                         </Button>
                       </Col>
-                      <Col>
+                      <Col lg="6">
                         <Button
                           block
                           className="btn-round"
@@ -1435,7 +1436,7 @@ export class TokenForm extends Component {
             </Col>
           </Row>
         </Container>
-        <Container fluid className={submitted ? "mt-5 mb-5" : ""}>
+        <Container fluid className={submitted ? "mt-5 mb-5" : ""} id="stats">
           {submitted && (!isError ? (!compare ? stats : comparison) : error)}
         </Container>
       </>
