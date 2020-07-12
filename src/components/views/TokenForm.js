@@ -103,6 +103,7 @@ export class TokenForm extends Component {
       bar1: null,
       bar2: null,
     },
+    isError: false,
   };
 
   componentDidMount() {
@@ -172,6 +173,10 @@ export class TokenForm extends Component {
             break;
           }
         }
+      })
+      .catch((err) => {
+        this.setState({ isError: true });
+        console.log(err);
       });
 
     // if tokens not compared, API calls for one (2)
@@ -583,10 +588,12 @@ export class TokenForm extends Component {
                   ],
                 },
               },
+              isError: false,
             });
           })
         )
         .catch((err) => {
+          this.setState({ isError: true });
           console.log(err);
         });
     }
@@ -598,6 +605,7 @@ export class TokenForm extends Component {
       activeCycle,
       chartData,
       compare,
+      isError,
       income,
       submitted,
       tickers,
@@ -1346,6 +1354,19 @@ export class TokenForm extends Component {
       </Row>
     );
 
+    const error = (
+      <Row className="justify-content-center">
+        <Col className="text-center">
+          <img
+            alt="..."
+            className="img-fluid"
+            src={require("../../assets/img/error-256.png")}
+          />
+          <h2 className="mt-6">An error has occurred</h2>
+        </Col>
+      </Row>
+    );
+
     return (
       <>
         <Container fluid className="bg-gradient-primary">
@@ -1418,7 +1439,7 @@ export class TokenForm extends Component {
           </Row>
         </Container>
         <Container fluid className={submitted ? "mt-5 mb-5" : ""}>
-          {submitted && (!compare ? stats : comparison)}
+          {submitted && (!isError ? (!compare ? stats : comparison) : error)}
         </Container>
       </>
     );
