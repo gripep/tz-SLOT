@@ -328,10 +328,12 @@ export class TokenForm extends Component {
                   ],
                 },
               },
+              isError: false,
             });
           })
         )
         .catch((err) => {
+          this.setState({ isError: true });
           console.log(err);
         });
     } else {
