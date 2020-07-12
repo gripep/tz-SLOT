@@ -678,24 +678,21 @@ export class TokenForm extends Component {
       <Container>
         {/* header */}
         <div className="header-body">
-          <Row>
-            <div className="col ml-4">
+          <Row className="justyfy-content-center">
+            <div className="text-center col mr-5">
               <h4>
                 <u>{accounts.data1.address}</u>
               </h4>
               <p>Joined {accounts.data1.first_in_time}</p>
             </div>
           </Row>
-
-          <hr />
-
           {/* account cards */}
           <Row>
             <div className="col col-2"></div>
-            <div className="text-center col col-7">
+            <div className="text-center col col-8">
               <Card className="mb-3 shadow border-0">
                 <CardBody>
-                  <Row>
+                  <Row className="justify-content-center">
                     <div className="col">
                       <CardTitle
                         tag="h4"
@@ -824,7 +821,7 @@ export class TokenForm extends Component {
           </Row> */}
         </div>
 
-        {/* <hr /> */}
+        <hr />
 
         {/* line chart (bonds) and income cards */}
         <div className="text-center mt-1">
