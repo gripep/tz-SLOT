@@ -700,7 +700,7 @@ export class TokenForm extends Component {
 
           {/* account cards */}
           <Row>
-            {/* <div className="col col-2"></div> */}
+            <div className="col col-2"></div>
             <div className="text-center col col-7">
               <Card className="mb-3 shadow border-0">
                 <CardBody>
