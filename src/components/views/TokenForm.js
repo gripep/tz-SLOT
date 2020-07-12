@@ -701,7 +701,7 @@ export class TokenForm extends Component {
           {/* account cards */}
           <Row>
             {/* <div className="col col-2"></div> */}
-            <div className="text-center col col-4">
+            <div className="text-center col col-7">
               <Card className="mb-3 shadow border-0">
                 <CardBody>
                   <Row>
@@ -1432,7 +1432,7 @@ export class TokenForm extends Component {
               </Form>
             </Col>
           </Row>
-          <Row className="justify-content-center">
+          {/* <Row className="justify-content-center">
             <Col className="text-center mt--150">
               {submitted && (
                 <img
@@ -1442,7 +1442,7 @@ export class TokenForm extends Component {
                 />
               )}
             </Col>
-          </Row>
+          </Row> */}
         </Container>
         <Container fluid className={submitted ? "mt-5 mb-5" : ""}>
           <Element name="stats">
