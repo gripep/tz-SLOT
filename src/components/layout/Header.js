@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 import Headroom from "headroom.js";
 
-import { NavbarBrand, Navbar, Container } from "reactstrap";
+import { Button, NavbarBrand, Navbar, Container } from "reactstrap";
 
 export class Header extends Component {
   componentDidMount() {
@@ -11,6 +11,10 @@ export class Header extends Component {
     // initialise
     headroom.init();
   }
+
+  onClick = (e) => {
+    window.location.reload(true);
+  };
 
   render() {
     return (
@@ -26,7 +30,9 @@ export class Header extends Component {
                 <h3 className="text-white">TZ Explorer</h3>
               </NavbarBrand> */}
               <NavbarBrand className="mr-lg-5">
-                <h3 className="text-white">SLOT</h3>
+                <Button color="link" onClick={this.onClick}>
+                  <h3 className="text-white">SLOT</h3>
+                </Button>
               </NavbarBrand>
             </Container>
           </Navbar>
