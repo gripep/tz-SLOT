@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-scroll";
+import { Element, scroller } from "react-scroll";
 
 import classnames from "classnames";
 import axios from "axios";
@@ -138,7 +138,15 @@ export class TokenForm extends Component {
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-  onClick = (e) => this.setState({ submitted: true });
+  onClick = (e) => {
+    this.setState({ submitted: true });
+    scroller.scrollTo("stats", {
+      duration: 1500,
+      delay: 100,
+      smooth: true,
+      offset: 5, // Scrolls to element + 5 pixels down the page
+    });
+  };
 
   onCompare = (e) => {
     this.setState({
@@ -1436,8 +1444,10 @@ export class TokenForm extends Component {
             </Col>
           </Row>
         </Container>
-        <Container fluid className={submitted ? "mt-5 mb-5" : ""} id="stats">
-          {submitted && (!isError ? (!compare ? stats : comparison) : error)}
+        <Container fluid className={submitted ? "mt-5 mb-5" : ""}>
+          <Element name="stats">
+            {submitted && (!isError ? (!compare ? stats : comparison) : error)}
+          </Element>
         </Container>
       </>
     );
