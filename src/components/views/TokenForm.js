@@ -1235,6 +1235,16 @@ export class TokenForm extends Component {
                           block
                           className="btn-round"
                           color="default"
+                          disabled={
+                            !compare
+                              ? this.state.token1 !== null
+                                ? false
+                                : true
+                              : this.state.token1 !== null &&
+                                this.state.token2 !== null
+                              ? false
+                              : true
+                          }
                           onClick={this.onClick}
                           size="lg"
                           type="submit"
