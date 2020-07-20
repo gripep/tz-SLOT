@@ -1388,7 +1388,8 @@ export class TokenForm extends Component {
                           color="default"
                           disabled={
                             !compare
-                              ? this.state.token1 !== null
+                              ? this.state.token1 !== null &&
+                                this.state.token1 !== ""
                                 ? false
                                 : true
                               : (this.state.token1 === null &&
