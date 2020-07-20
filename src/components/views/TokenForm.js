@@ -1391,10 +1391,20 @@ export class TokenForm extends Component {
                               ? this.state.token1 !== null
                                 ? false
                                 : true
-                              : this.state.token1 !== null &&
-                                this.state.token2 !== null
-                              ? false
-                              : true
+                              : (this.state.token1 === null &&
+                                  this.state.token2 === null) ||
+                                (this.state.token1 === "" &&
+                                  this.state.token2 === "") ||
+                                (this.state.token1 !== null &&
+                                  this.state.token2 === null) ||
+                                (this.state.token1 === null &&
+                                  this.state.token2 !== null) ||
+                                (this.state.token1 !== "" &&
+                                  this.state.token2 === "") ||
+                                (this.state.token1 === "" &&
+                                  this.state.token2 !== "")
+                              ? true
+                              : false
                           }
                           onClick={this.onClick}
                           size="lg"
