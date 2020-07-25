@@ -45,6 +45,44 @@ import {
   faArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
 
+// Autosuggest
+// const suggesions = [];
+
+// const getSuggestions = value => {
+//   const inputValue = value.trim().toLowerCase();
+//   const inputLength = inputValue.length;
+
+//   return inputLength === 0 ? [] : languages.filter(lang =>
+//     lang.name.toLowerCase().slice(0, inputLength) === inputValue
+//   );
+// };
+
+// const getSuggestions = async ({ value }) => {
+//   if (!value) {
+//     this.setState({ suggestions: [] });
+//     return;
+//   }
+
+//   try {
+//     const res = await axios.get(
+//       `https://api.tzkt.io/v1/suggest/accounts/${value}`
+//     );
+//     this.setState({ suggestions: res.data });
+//   } catch (err) {
+//     this.setState({ suggestions: [] });
+//     console.log(err);
+//   }
+// };
+
+const getSuggestionValue = (suggestion) => suggestion.name;
+
+const renderSuggestion = (suggestion) => (
+  <>
+    {/* <img src={suggestion.logo} style={{ width: "25px" }} /> */}
+    <div>{suggestion.alias}</div>
+  </>
+);
+
 export class TokenForm extends Component {
   state = {
     compare: false,
@@ -97,12 +135,15 @@ export class TokenForm extends Component {
     },
     isError: false,
 
-    prevValue: "",
-    stateVal: "",
+    value: "",
     suggestions: [],
-    searchedVal: "",
-    availableValues: [],
-    suggestionSelected: "",
+
+    // prevValue: "",
+    // stateVal: "",
+    // suggestions: [],
+    // searchedVal: "",
+    // availableValues: [],
+    // suggestionSelected: "",
   };
 
   componentDidMount() {
@@ -605,24 +646,43 @@ export class TokenForm extends Component {
     }
   };
 
-  onHighCardValueChange = async (event, { newValue }) => {
-    const {
-      attribute: { name, valueMap, cacheConfig },
-    } = this.props;
-    const { searchedVal } = this.state;
-    const splitVals = newValue.toString().split(",");
-    const filterVal = splitVals[splitVals.length - 1].trim();
-    const filterValLength = filterVal.length;
-    if (searchedVal && filterValLength <= (cacheConfig?.minMatchLength || 4)) {
-      this.setState({ availableValues: [], suggestions: [], searchedVal: "" });
-    }
-
-    if (filterValLength >= (cacheConfig?.minMatchLength || 4)) {
-      this.autocompleteSearchDebounce(name, filterVal, valueMap, cacheConfig);
-    }
-
-    this.setState({ stateVal: newValue });
+  // Autosuggest
+  onChangeAutosuggest = (event, { newValue }) => {
+    this.setState({
+      value: newValue,
+    });
   };
+
+  // onSuggestionsFetchRequested = ({ value }) => {
+  //   this.setState({
+  //     suggestions: getSuggestions(value),
+  //   });
+  // };
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: [],
+    });
+  };
+
+  // onHighCardValueChange = async (event, { newValue }) => {
+  //   const {
+  //     attribute: { name, valueMap, cacheConfig },
+  //   } = this.props;
+  //   const { searchedVal } = this.state;
+  //   const splitVals = newValue.toString().split(",");
+  //   const filterVal = splitVals[splitVals.length - 1].trim();
+  //   const filterValLength = filterVal.length;
+  //   if (searchedVal && filterValLength <= (cacheConfig?.minMatchLength || 4)) {
+  //     this.setState({ availableValues: [], suggestions: [], searchedVal: "" });
+  //   }
+
+  //   if (filterValLength >= (cacheConfig?.minMatchLength || 4)) {
+  //     this.autocompleteSearchDebounce(name, filterVal, valueMap, cacheConfig);
+  //   }
+
+  //   this.setState({ stateVal: newValue });
+  // };
 
   render() {
     const {
@@ -635,31 +695,41 @@ export class TokenForm extends Component {
       submitted,
       tickers,
 
-      prevValue,
-      stateVal,
+      value,
       suggestions,
-      searchedVal,
-      availableValues,
-      suggestionSelected,
+
+      // prevValue,
+      // stateVal,
+      // suggestions,
+      // searchedVal,
+      // availableValues,
+      // suggestionSelected,
     } = this.state;
+
+    const inputProps = {
+      placeholder: "Your Baker Adress",
+      autoComplete: "Baker",
+      value: value,
+      onChange: this.onChangeAutosuggest,
+    };
 
     // const valueMapEntries =
     //   attribute.valueMap && Object.entries(attribute.valueMap);
-    const valueMapEntries = "";
-    const searchInputValue =
-      valueMapEntries && valueMapEntries.find((e) => e[0] === stateVal)?.[1];
-    const autosuggestValue = searchInputValue || stateVal;
+    // const valueMapEntries = "";
+    // const searchInputValue =
+    //   valueMapEntries && valueMapEntries.find((e) => e[0] === stateVal)?.[1];
+    // const autosuggestValue = searchInputValue || stateVal;
 
-    const autosuggestProps = {
-      renderInputComponent: this.renderInputComponent,
-      suggestions,
-      onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,
-      onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
-      shouldRenderSuggestions: this.handleShouldRenderSuggestions,
-      getSuggestionValue: this.getSuggestionValue,
-      renderSuggestion: this.renderSuggestion,
-      onSuggestionSelected: this.handleSuggestionSelected,
-    };
+    // const autosuggestProps = {
+    //   renderInputComponent: this.renderInputComponent,
+    //   suggestions,
+    //   onSuggestionsFetchRequested: this.handleSuggestionsFetchRequested,
+    //   onSuggestionsClearRequested: this.handleSuggestionsClearRequested,
+    //   shouldRenderSuggestions: this.handleShouldRenderSuggestions,
+    //   getSuggestionValue: this.getSuggestionValue,
+    //   renderSuggestion: this.renderSuggestion,
+    //   onSuggestionSelected: this.handleSuggestionSelected,
+    // };
 
     const single = (
       <FormGroup
@@ -683,18 +753,6 @@ export class TokenForm extends Component {
             onBlur={(e) => this.setState({ boxFocused: false })}
           />
         </InputGroup>
-        <Autosuggest
-          {...autosuggestProps}
-          inputProps={{
-            id: "autosuggest",
-            name: "autosuggest",
-            placeholder: "Your Token Address",
-            value: autosuggestValue,
-            onChange: this.onHighCardValueChange,
-            // onBlur: this.onBlurAutosuggest,
-            // disabled,
-          }}
-        />
       </FormGroup>
     );
 
@@ -1429,6 +1487,49 @@ export class TokenForm extends Component {
 
     return (
       <>
+        <Container>
+          <Row className="justify-content-center mt-4">
+            <Form>
+              <FormGroup>
+                <Autosuggest
+                  suggestions={suggestions}
+                  onSuggestionsFetchRequested={async ({ value }) => {
+                    if (!value) {
+                      this.setState({ suggestions: [] });
+                      return;
+                    }
+
+                    try {
+                      const res = await axios.get(
+                        `https://api.tzkt.io/v1/suggest/accounts/${value}`
+                      );
+                      this.setState({
+                        suggestions: res.data.map((row) => ({
+                          address: row.address,
+                          alias: row.alias,
+                          logo: row.logo,
+                        })),
+                      });
+                    } catch (err) {
+                      this.setState({ suggestions: [] });
+                      console.log(err);
+                    }
+                  }}
+                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                  onSuggestionSelected={(e, { suggestion, method }) => {
+                    if (method === "click" || method === "enter") {
+                      e.preventDefault();
+                    }
+                    this.setState({ value: suggestion });
+                  }}
+                  getSuggestionValue={getSuggestionValue}
+                  renderSuggestion={renderSuggestion}
+                  inputProps={inputProps}
+                />
+              </FormGroup>
+            </Form>
+          </Row>
+        </Container>
         <Container fluid className="bg-gradient-primary">
           <Row className="justify-content-center mb-5">
             <Col className="text-center mt-3" lg="12">
