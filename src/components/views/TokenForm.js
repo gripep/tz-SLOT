@@ -617,7 +617,7 @@ export class TokenForm extends Component {
   };
 
   // Autosuggest
-  onChangeAutosuggest = (event, { newValue }) => {
+  onChangeAutosuggest = (e, { newValue }) => {
     this.setState({
       value: newValue,
     });
@@ -646,13 +646,9 @@ export class TokenForm extends Component {
     });
   };
 
-  getSuggestionValue = (suggestion) => suggestion.name;
+  getSuggestionValue = (suggestion) => suggestion.address;
 
-  renderSuggestion = (suggestion) => (
-    <>
-      <p className="mt-2">{suggestion.alias}</p>
-    </>
-  );
+  renderSuggestion = (suggestion) => <div>{suggestion.alias}</div>;
 
   render() {
     const {
@@ -702,52 +698,22 @@ export class TokenForm extends Component {
     );
 
     const singleAutosuggest = (
-      <>
-        <Form>
-          <Row>
-            <Col md="6">
-              <FormGroup>
-                <Autosuggest
-                  suggestions={suggestions}
-                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                  // onSuggestionsFetchRequested={async ({ value }) => {
-                  //   if (!value) {
-                  //     this.setState({ suggestions: [] });
-                  //     return;
-                  //   }
-
-                  //   try {
-                  //     const res = await axios.get(
-                  //       `https://api.tzkt.io/v1/suggest/accounts/${value}`
-                  //     );
-                  //     this.setState({
-                  //       suggestions: res.data.map((row) => ({
-                  //         address: row.address,
-                  //         alias: row.alias,
-                  //         logo: row.logo,
-                  //       })),
-                  //     });
-                  //   } catch (err) {
-                  //     this.setState({ suggestions: [] });
-                  //     console.log(err);
-                  //   }
-                  // }}
-                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                  onSuggestionSelected={(e, { suggestion, method }) => {
-                    if (method === "click" || method === "enter") {
-                      e.preventDefault();
-                    }
-                    this.setState({ value: suggestion });
-                  }}
-                  getSuggestionValue={this.getSuggestionValue}
-                  renderSuggestion={this.renderSuggestion}
-                  inputProps={inputProps}
-                />
-              </FormGroup>
-            </Col>
-          </Row>
-        </Form>
-      </>
+      <FormGroup>
+        <InputGroup className="input-group-alternative">
+          <Autosuggest
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+            onSuggestionSelected={(e, { suggestion }) => {
+              e.preventDefault();
+              this.setState({ token1: value });
+            }}
+            getSuggestionValue={this.getSuggestionValue}
+            renderSuggestion={this.renderSuggestion}
+            inputProps={inputProps}
+          />
+        </InputGroup>
+      </FormGroup>
     );
 
     const double = (
