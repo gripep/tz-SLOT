@@ -1575,7 +1575,7 @@ export class TokenForm extends Component {
                 <Card className="bg-gradient-secondary shadow mb-5">
                   <CardBody className="p-lg-5">
                     <Row>
-                      <Col lg="10">
+                      <Col lg>
                         {!compare ? singleAutosuggest : doubleAutosuggest}
                         {/* {!compare ? single : double} */}
                       </Col>
