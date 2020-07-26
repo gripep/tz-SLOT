@@ -111,11 +111,13 @@ import "./assets/css/argon-dashboard-react.css";
 
 function App() {
   return (
-    <Fragment>
-      <Header />
-      <TokenForm />
-      <Footer />
-    </Fragment>
+    <div className="App">
+      <Fragment>
+        <Header />
+        <TokenForm />
+        <Footer />
+      </Fragment>
+    </div>
   );
 }
 

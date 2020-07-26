@@ -708,7 +708,6 @@ export class TokenForm extends Component {
     // Autocomplete
     const inputProps = {
       placeholder: "Baker Adress",
-      autoComplete: "Baker",
       value: value,
       onChange: this.onChangeAutosuggest,
     };
@@ -716,14 +715,12 @@ export class TokenForm extends Component {
     // Autocomplete X2
     const inputProps1 = {
       placeholder: "Baker Adress #1",
-      autoComplete: "Baker",
       value: value,
       onChange: this.onChangeAutosuggest,
     };
 
     const inputProps2 = {
       placeholder: "Baker Adress #2",
-      autoComplete: "Baker",
       value: value2,
       onChange: this.onChangeAutosuggest2,
     };
@@ -1577,8 +1574,12 @@ export class TokenForm extends Component {
               <Form onSubmit={this.onSubmit}>
                 <Card className="bg-gradient-secondary shadow mb-5">
                   <CardBody className="p-lg-5">
-                    {!compare ? singleAutosuggest : doubleAutosuggest}
-                    {/* {!compare ? single : double} */}
+                    <Row>
+                      <Col lg="10">
+                        {!compare ? singleAutosuggest : doubleAutosuggest}
+                        {/* {!compare ? single : double} */}
+                      </Col>
+                    </Row>
                     <Row>
                       <Col lg="6">
                         <Button
@@ -1618,7 +1619,7 @@ export class TokenForm extends Component {
                           //     : false
                           // }
                           onClick={this.onClick}
-                          size="lg"
+                          // size="lg"
                           type="submit"
                         >
                           Submit
@@ -1631,7 +1632,7 @@ export class TokenForm extends Component {
                           color="primary"
                           onClick={this.onCompare}
                           outline
-                          size="lg"
+                          // size="lg"
                         >
                           {!compare ? "Compare" : "Back"}
                         </Button>
