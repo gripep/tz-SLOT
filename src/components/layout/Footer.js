@@ -45,25 +45,23 @@ export class Footer extends Component {
             </Row> */}
             {/* <hr /> */}
             <Row className="align-items-center justify-content-md-between">
-              <Col md="4">
+              <Col md="7">
                 <div className=" copyright">
                   © {new Date().getFullYear()} gripep.
                 </div>
               </Col>
               <Col className="pull-right text-lg btn-wrapper" md="2">
-                <div className="ml-9">
-                  <Button
-                    className="btn-icon-only rounded-circle ml-9"
-                    color="github"
-                    href="https://github.com/gripep/tzstats"
-                    id="tooltip495507257"
-                    target="_blank"
-                  >
-                    <span className="btn-inner">
-                      <FontAwesomeIcon icon={faGithub} />
-                    </span>
-                  </Button>
-                </div>
+                <Button
+                  className="btn-icon-only rounded-circle ml-8"
+                  color="github"
+                  href="https://github.com/gripep/tzstats"
+                  id="tooltip495507257"
+                  target="_blank"
+                >
+                  <span className="btn-inner">
+                    <FontAwesomeIcon icon={faGithub} />
+                  </span>
+                </Button>
                 <UncontrolledTooltip delay={0} target="tooltip495507257">
                   Check it out!
                 </UncontrolledTooltip>
