@@ -708,41 +708,41 @@ export class TokenForm extends Component {
 
     // Autocomplete
     const inputProps = {
-      placeholder: "Baker Adress",
+      placeholder: "Enter Baker Name",
       value: value,
       onChange: this.onChangeAutosuggest,
     };
 
     const inputProps2 = {
-      placeholder: "Baker Adress #2",
+      placeholder: "Enter Baker Name #2",
       value: value2,
       onChange: this.onChangeAutosuggest2,
     };
 
-    const single = (
-      <FormGroup
-        className={classnames({
-          focused: this.state.boxFocused,
-        })}
-      >
-        <InputGroup className="input-group-alternative">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>
-              <FontAwesomeIcon icon={faKey} />
-            </InputGroupText>
-          </InputGroupAddon>
-          <Input
-            placeholder="Your Token Address"
-            autoComplete="false"
-            name="token1"
-            type="text"
-            onChange={this.onChange}
-            onFocus={(e) => this.setState({ boxFocused: true })}
-            onBlur={(e) => this.setState({ boxFocused: false })}
-          />
-        </InputGroup>
-      </FormGroup>
-    );
+    // const single = (
+    //   <FormGroup
+    //     className={classnames({
+    //       focused: this.state.boxFocused,
+    //     })}
+    //   >
+    //     <InputGroup className="input-group-alternative">
+    //       <InputGroupAddon addonType="prepend">
+    //         <InputGroupText>
+    //           <FontAwesomeIcon icon={faKey} />
+    //         </InputGroupText>
+    //       </InputGroupAddon>
+    //       <Input
+    //         placeholder="Your Token Address"
+    //         autoComplete="false"
+    //         name="token1"
+    //         type="text"
+    //         onChange={this.onChange}
+    //         onFocus={(e) => this.setState({ boxFocused: true })}
+    //         onBlur={(e) => this.setState({ boxFocused: false })}
+    //       />
+    //     </InputGroup>
+    //   </FormGroup>
+    // );
 
     const singleAutosuggest = (
       <FormGroup>
@@ -767,46 +767,46 @@ export class TokenForm extends Component {
       </FormGroup>
     );
 
-    const double = (
-      <FormGroup
-        className={classnames({
-          focused: this.state.boxFocused,
-        })}
-      >
-        <InputGroup className="input-group-alternative">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>
-              <FontAwesomeIcon icon={faKey} />
-            </InputGroupText>
-          </InputGroupAddon>
-          <Input
-            placeholder="Token Address 1"
-            autoComplete="false"
-            name="token1"
-            type="text"
-            onChange={this.onChange}
-            onFocus={(e) => this.setState({ boxFocused: true })}
-            onBlur={(e) => this.setState({ boxFocused: false })}
-          />
-        </InputGroup>
-        <InputGroup className="input-group-alternative mt-2">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>
-              <FontAwesomeIcon icon={faKey} />
-            </InputGroupText>
-          </InputGroupAddon>
-          <Input
-            placeholder="Token Address 2"
-            autoComplete="false"
-            name="token2"
-            type="text"
-            onChange={this.onChange}
-            onFocus={(e) => this.setState({ boxFocused: true })}
-            onBlur={(e) => this.setState({ boxFocused: false })}
-          />
-        </InputGroup>
-      </FormGroup>
-    );
+    // const double = (
+    //   <FormGroup
+    //     className={classnames({
+    //       focused: this.state.boxFocused,
+    //     })}
+    //   >
+    //     <InputGroup className="input-group-alternative">
+    //       <InputGroupAddon addonType="prepend">
+    //         <InputGroupText>
+    //           <FontAwesomeIcon icon={faKey} />
+    //         </InputGroupText>
+    //       </InputGroupAddon>
+    //       <Input
+    //         placeholder="Token Address 1"
+    //         autoComplete="false"
+    //         name="token1"
+    //         type="text"
+    //         onChange={this.onChange}
+    //         onFocus={(e) => this.setState({ boxFocused: true })}
+    //         onBlur={(e) => this.setState({ boxFocused: false })}
+    //       />
+    //     </InputGroup>
+    //     <InputGroup className="input-group-alternative mt-2">
+    //       <InputGroupAddon addonType="prepend">
+    //         <InputGroupText>
+    //           <FontAwesomeIcon icon={faKey} />
+    //         </InputGroupText>
+    //       </InputGroupAddon>
+    //       <Input
+    //         placeholder="Token Address 2"
+    //         autoComplete="false"
+    //         name="token2"
+    //         type="text"
+    //         onChange={this.onChange}
+    //         onFocus={(e) => this.setState({ boxFocused: true })}
+    //         onBlur={(e) => this.setState({ boxFocused: false })}
+    //       />
+    //     </InputGroup>
+    //   </FormGroup>
+    // );
 
     const doubleAutosuggest = (
       <FormGroup
@@ -881,7 +881,7 @@ export class TokenForm extends Component {
                         tag="h4"
                         className="text-uppercase text-muted mb-2"
                       >
-                        <u>Market Cap</u>
+                        <u>Slot Market Cap</u>
                       </CardTitle>
                       <span className="h4 font-weight-bold">
                         {income.data1.marketCap} USD
@@ -1649,7 +1649,7 @@ export class TokenForm extends Component {
             </Col>
           </Row> */}
         </Container>
-        <Container fluid className={submitted ? "mt-5 mb-5" : ""}>
+        <Container className={submitted ? "mt-5 mb-5" : ""}>
           <Element name="stats">
             {submitted && (!isError ? (!compare ? stats : comparison) : error)}
           </Element>
