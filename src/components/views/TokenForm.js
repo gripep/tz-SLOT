@@ -1364,7 +1364,7 @@ export class TokenForm extends Component {
                       <u className="ml-2">Slot Market Cap</u>
                     </CardTitle>
                     <Row>
-                      <Col lg="8">
+                      <Col lg="6">
                         <Row className="justify-content-center">
                           <Col className="pull-left">
                             <span className="h4 font-weight-bold mt-3 ml-3">
@@ -1571,25 +1571,36 @@ export class TokenForm extends Component {
                           color="default"
                           disabled={
                             !compare
-                              ? this.state.token1 !== null &&
-                                this.state.token1 !== ""
+                              ? value !== ""
                                 ? false
                                 : true
-                              : (this.state.token1 === null &&
-                                  this.state.token2 === null) ||
-                                (this.state.token1 === "" &&
-                                  this.state.token2 === "") ||
-                                (this.state.token1 !== null &&
-                                  this.state.token2 === null) ||
-                                (this.state.token1 === null &&
-                                  this.state.token2 !== null) ||
-                                (this.state.token1 !== "" &&
-                                  this.state.token2 === "") ||
-                                (this.state.token1 === "" &&
-                                  this.state.token2 !== "")
+                              : (value === "" && value2 === "") ||
+                                (value !== "" && value2 === "") ||
+                                (value === "" && value2 !== "")
                               ? true
                               : false
                           }
+                          // disabled={
+                          //   !compare
+                          //     ? this.state.token1 !== null &&
+                          //       this.state.token1 !== ""
+                          //       ? false
+                          //       : true
+                          //     : (this.state.token1 === null &&
+                          //         this.state.token2 === null) ||
+                          //       (this.state.token1 === "" &&
+                          //         this.state.token2 === "") ||
+                          //       (this.state.token1 !== null &&
+                          //         this.state.token2 === null) ||
+                          //       (this.state.token1 === null &&
+                          //         this.state.token2 !== null) ||
+                          //       (this.state.token1 !== "" &&
+                          //         this.state.token2 === "") ||
+                          //       (this.state.token1 === "" &&
+                          //         this.state.token2 !== "")
+                          //     ? true
+                          //     : false
+                          // }
                           onClick={this.onClick}
                           size="lg"
                           type="submit"
