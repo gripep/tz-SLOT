@@ -99,8 +99,10 @@ export class TokenForm extends Component {
 
     availableValues: [],
     value: "",
+    value2: "",
     suggestions: [],
     alias: "",
+    alias2: "",
   };
 
   componentDidMount() {
@@ -624,7 +626,24 @@ export class TokenForm extends Component {
     });
   };
 
+  onChangeAutosuggest2 = (e, { newValue }) => {
+    this.setState({
+      value2: newValue,
+    });
+  };
+
   getSuggestions = (value) => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    return inputLength === 0
+      ? []
+      : this.state.availableValues.filter(
+          (val) => val.alias.slice(0, inputLength).toLowerCase() === inputValue
+        );
+  };
+
+  getSuggestions2 = (value) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
 
@@ -638,6 +657,12 @@ export class TokenForm extends Component {
   onSuggestionsFetchRequested = ({ value }) => {
     this.setState({
       suggestions: this.getSuggestions(value),
+    });
+  };
+
+  onSuggestionsFetchRequested2 = ({ value }) => {
+    this.setState({
+      suggestions: this.getSuggestions2(value),
     });
   };
 
@@ -655,7 +680,17 @@ export class TokenForm extends Component {
     return suggestion.alias;
   };
 
+  getSuggestionValue2 = (suggestion) => {
+    this.setState({
+      token2: suggestion.address,
+      alias2: suggestion.alias,
+    });
+    return suggestion.alias;
+  };
+
   renderSuggestion = (suggestion) => <div>{suggestion.alias}</div>;
+
+  renderSuggestion2 = (suggestion) => <div>{suggestion.alias}</div>;
 
   render() {
     const {
@@ -669,15 +704,33 @@ export class TokenForm extends Component {
       tickers,
 
       value,
+      value2,
       suggestions,
       alias,
+      alias2,
     } = this.state;
 
+    // Autocomplete
     const inputProps = {
-      placeholder: "Your Baker Adress",
+      placeholder: "Baker Adress",
       autoComplete: "Baker",
       value: value,
       onChange: this.onChangeAutosuggest,
+    };
+
+    // Autocomplete X2
+    const inputProps1 = {
+      placeholder: "Baker Adress #1",
+      autoComplete: "Baker",
+      value: value,
+      onChange: this.onChangeAutosuggest,
+    };
+
+    const inputProps2 = {
+      placeholder: "Baker Adress #2",
+      autoComplete: "Baker",
+      value: value2,
+      onChange: this.onChangeAutosuggest2,
     };
 
     const single = (
@@ -707,19 +760,17 @@ export class TokenForm extends Component {
 
     const singleAutosuggest = (
       <FormGroup>
-        <InputGroup className="input-group-alternative">
-          <Autosuggest
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            onSuggestionSelected={(e) => {
-              e.preventDefault();
-            }}
-            getSuggestionValue={this.getSuggestionValue}
-            renderSuggestion={this.renderSuggestion}
-            inputProps={inputProps}
-          />
-        </InputGroup>
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={(e) => {
+            e.preventDefault();
+          }}
+          getSuggestionValue={this.getSuggestionValue}
+          renderSuggestion={this.renderSuggestion}
+          inputProps={inputProps}
+        />
       </FormGroup>
     );
 
@@ -761,6 +812,38 @@ export class TokenForm extends Component {
             onBlur={(e) => this.setState({ boxFocused: false })}
           />
         </InputGroup>
+      </FormGroup>
+    );
+
+    const doubleAutosuggest = (
+      <FormGroup
+        className={classnames({
+          focused: this.state.boxFocused,
+        })}
+      >
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={(e) => {
+            e.preventDefault();
+          }}
+          getSuggestionValue={this.getSuggestionValue}
+          renderSuggestion={this.renderSuggestion}
+          inputProps={inputProps1}
+        />
+        <br />
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested2}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={(e) => {
+            e.preventDefault();
+          }}
+          getSuggestionValue={this.getSuggestionValue2}
+          renderSuggestion={this.renderSuggestion2}
+          inputProps={inputProps2}
+        />
       </FormGroup>
     );
 
@@ -1242,6 +1325,7 @@ export class TokenForm extends Component {
     );
 
     const getStats = (
+      alias,
       accountData,
       incomeData,
       ticker,
@@ -1253,9 +1337,12 @@ export class TokenForm extends Component {
         <div className="header-body">
           <Row className="justify-content-center">
             <div className="text-center col ml-4">
-              <h4>
+              <h2>
+                <u>{alias}</u>
+              </h2>
+              {/* <h4>
                 <u>{accountData.address}</u>
-              </h4>
+              </h4> */}
               <p>Joined {accountData.first_in_time}</p>
             </div>
           </Row>
@@ -1422,6 +1509,7 @@ export class TokenForm extends Component {
       <Row>
         <Col>
           {getStats(
+            alias,
             accounts.data1,
             income.data1,
             tickers.XTZ_USD,
@@ -1431,6 +1519,7 @@ export class TokenForm extends Component {
         </Col>
         <Col>
           {getStats(
+            alias2,
             accounts.data2,
             income.data2,
             tickers.XTZ_USD,
@@ -1472,7 +1561,8 @@ export class TokenForm extends Component {
               <Form onSubmit={this.onSubmit}>
                 <Card className="bg-gradient-secondary shadow mb-5">
                   <CardBody className="p-lg-5">
-                    {!compare ? singleAutosuggest : double}
+                    {!compare ? singleAutosuggest : doubleAutosuggest}
+                    {/* {!compare ? single : double} */}
                     <Row>
                       <Col lg="6">
                         <Button
