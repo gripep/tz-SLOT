@@ -114,6 +114,7 @@ export class TokenForm extends Component {
 
     axios
       .get("https://api.tzkt.io/v1/suggest/accounts/")
+      // .get("/.netlify/functions/baker")
       .then((res) => {
         this.setState({
           availableValues: res.data.map((row) => ({
@@ -712,13 +713,6 @@ export class TokenForm extends Component {
       onChange: this.onChangeAutosuggest,
     };
 
-    // Autocomplete X2
-    const inputProps1 = {
-      placeholder: "Baker Adress #1",
-      value: value,
-      onChange: this.onChangeAutosuggest,
-    };
-
     const inputProps2 = {
       placeholder: "Baker Adress #2",
       value: value2,
@@ -836,7 +830,7 @@ export class TokenForm extends Component {
           }}
           getSuggestionValue={this.getSuggestionValue}
           renderSuggestion={this.renderSuggestion}
-          inputProps={inputProps1}
+          inputProps={inputProps}
         />
         <br />
         <Autosuggest
@@ -850,7 +844,7 @@ export class TokenForm extends Component {
 
             this.setState({
               token2: suggestion.address,
-              alias: suggestion.alias,
+              alias2: suggestion.alias,
             });
           }}
           getSuggestionValue={this.getSuggestionValue2}
