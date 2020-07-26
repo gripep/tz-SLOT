@@ -4,7 +4,6 @@ import { Element, scroller } from "react-scroll";
 
 import axios from "axios";
 import classnames from "classnames";
-// import {  } from "conseiljs";
 
 import Chart from "chart.js";
 import { Bar, Line } from "react-chartjs-2";
@@ -673,10 +672,6 @@ export class TokenForm extends Component {
   };
 
   getSuggestionValue = (suggestion) => {
-    this.setState({
-      token1: suggestion.address,
-      alias: suggestion.alias,
-    });
     return suggestion.alias;
   };
 
@@ -764,8 +759,15 @@ export class TokenForm extends Component {
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          onSuggestionSelected={(e) => {
-            e.preventDefault();
+          onSuggestionSelected={(e, { suggestion, method }) => {
+            if (method === "enter") {
+              e.preventDefault();
+            }
+
+            this.setState({
+              token1: suggestion.address,
+              alias: suggestion.alias,
+            });
           }}
           getSuggestionValue={this.getSuggestionValue}
           renderSuggestion={this.renderSuggestion}
@@ -825,8 +827,15 @@ export class TokenForm extends Component {
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          onSuggestionSelected={(e) => {
-            e.preventDefault();
+          onSuggestionSelected={(e, { suggestion, method }) => {
+            if (method === "enter") {
+              e.preventDefault();
+            }
+
+            this.setState({
+              token1: suggestion.address,
+              alias: suggestion.alias,
+            });
           }}
           getSuggestionValue={this.getSuggestionValue}
           renderSuggestion={this.renderSuggestion}
@@ -837,8 +846,15 @@ export class TokenForm extends Component {
           suggestions={suggestions}
           onSuggestionsFetchRequested={this.onSuggestionsFetchRequested2}
           onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-          onSuggestionSelected={(e) => {
-            e.preventDefault();
+          onSuggestionSelected={(e, { suggestion, method }) => {
+            if (method === "enter") {
+              e.preventDefault();
+            }
+
+            this.setState({
+              token2: suggestion.address,
+              alias: suggestion.alias,
+            });
           }}
           getSuggestionValue={this.getSuggestionValue2}
           renderSuggestion={this.renderSuggestion2}
