@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import Autosuggest from "react-autosuggest";
 import { Element, scroller } from "react-scroll";
 
-import classnames from "classnames";
 import axios from "axios";
+import classnames from "classnames";
 
 import Chart from "chart.js";
 import { Bar, Line } from "react-chartjs-2";
@@ -21,10 +22,10 @@ import {
   CardTitle,
   Form,
   FormGroup,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
+  // Input,
+  // InputGroupAddon,
+  // InputGroupText,
+  // InputGroup,
   Container,
   Row,
   Col,
@@ -32,7 +33,7 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faKey,
+  // faKey,
   faWallet,
   faStar,
   faUsers,
@@ -94,6 +95,13 @@ export class TokenForm extends Component {
       bar2: null,
     },
     isError: false,
+
+    availableValues: [],
+    value: "",
+    value2: "",
+    suggestions: [],
+    alias: "",
+    alias2: "",
   };
 
   componentDidMount() {
@@ -103,6 +111,21 @@ export class TokenForm extends Component {
     if (window.Chart) {
       parseOptions(Chart, chartOptions());
     }
+
+    axios
+      // .get("https://api.tzkt.io/v1/suggest/accounts/")
+      .get("/.netlify/functions/baker")
+      .then((res) => {
+        this.setState({
+          availableValues: res.data.map((row) => ({
+            address: row.address,
+            alias: row.alias,
+          })),
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   formatDate = (date) => {
@@ -596,6 +619,75 @@ export class TokenForm extends Component {
     }
   };
 
+  // Autosuggest
+  onChangeAutosuggest = (e, { newValue }) => {
+    this.setState({
+      value: newValue,
+    });
+  };
+
+  onChangeAutosuggest2 = (e, { newValue }) => {
+    this.setState({
+      value2: newValue,
+    });
+  };
+
+  getSuggestions = (value) => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    return inputLength === 0
+      ? []
+      : this.state.availableValues.filter(
+          (val) => val.alias.slice(0, inputLength).toLowerCase() === inputValue
+        );
+  };
+
+  getSuggestions2 = (value) => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    return inputLength === 0
+      ? []
+      : this.state.availableValues.filter(
+          (val) => val.alias.slice(0, inputLength).toLowerCase() === inputValue
+        );
+  };
+
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: this.getSuggestions(value),
+    });
+  };
+
+  onSuggestionsFetchRequested2 = ({ value }) => {
+    this.setState({
+      suggestions: this.getSuggestions2(value),
+    });
+  };
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: [],
+    });
+  };
+
+  getSuggestionValue = (suggestion) => {
+    return suggestion.alias;
+  };
+
+  getSuggestionValue2 = (suggestion) => {
+    this.setState({
+      token2: suggestion.address,
+      alias2: suggestion.alias,
+    });
+    return suggestion.alias;
+  };
+
+  renderSuggestion = (suggestion) => <div>{suggestion.alias}</div>;
+
+  renderSuggestion2 = (suggestion) => <div>{suggestion.alias}</div>;
+
   render() {
     const {
       accounts,
@@ -606,71 +698,159 @@ export class TokenForm extends Component {
       income,
       submitted,
       tickers,
+
+      value,
+      value2,
+      suggestions,
+      alias,
+      alias2,
     } = this.state;
 
-    const single = (
-      <FormGroup
-        className={classnames({
-          focused: this.state.boxFocused,
-        })}
-      >
-        <InputGroup className="input-group-alternative">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>
-              <FontAwesomeIcon icon={faKey} />
-            </InputGroupText>
-          </InputGroupAddon>
-          <Input
-            placeholder="Your Token Address"
-            autoComplete="false"
-            name="token1"
-            type="text"
-            onChange={this.onChange}
-            onFocus={(e) => this.setState({ boxFocused: true })}
-            onBlur={(e) => this.setState({ boxFocused: false })}
-          />
-        </InputGroup>
+    // Autocomplete
+    const inputProps = {
+      placeholder: "Enter Baker Name",
+      value: value,
+      onChange: this.onChangeAutosuggest,
+    };
+
+    const inputProps2 = {
+      placeholder: "Enter Baker Name #2",
+      value: value2,
+      onChange: this.onChangeAutosuggest2,
+    };
+
+    // const single = (
+    //   <FormGroup
+    //     className={classnames({
+    //       focused: this.state.boxFocused,
+    //     })}
+    //   >
+    //     <InputGroup className="input-group-alternative">
+    //       <InputGroupAddon addonType="prepend">
+    //         <InputGroupText>
+    //           <FontAwesomeIcon icon={faKey} />
+    //         </InputGroupText>
+    //       </InputGroupAddon>
+    //       <Input
+    //         placeholder="Your Token Address"
+    //         autoComplete="false"
+    //         name="token1"
+    //         type="text"
+    //         onChange={this.onChange}
+    //         onFocus={(e) => this.setState({ boxFocused: true })}
+    //         onBlur={(e) => this.setState({ boxFocused: false })}
+    //       />
+    //     </InputGroup>
+    //   </FormGroup>
+    // );
+
+    const singleAutosuggest = (
+      <FormGroup>
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={(e, { suggestion, method }) => {
+            if (method === "enter") {
+              e.preventDefault();
+            }
+
+            this.setState({
+              token1: suggestion.address,
+              alias: suggestion.alias,
+            });
+          }}
+          getSuggestionValue={this.getSuggestionValue}
+          renderSuggestion={this.renderSuggestion}
+          inputProps={inputProps}
+        />
       </FormGroup>
     );
 
-    const double = (
+    // const double = (
+    //   <FormGroup
+    //     className={classnames({
+    //       focused: this.state.boxFocused,
+    //     })}
+    //   >
+    //     <InputGroup className="input-group-alternative">
+    //       <InputGroupAddon addonType="prepend">
+    //         <InputGroupText>
+    //           <FontAwesomeIcon icon={faKey} />
+    //         </InputGroupText>
+    //       </InputGroupAddon>
+    //       <Input
+    //         placeholder="Token Address 1"
+    //         autoComplete="false"
+    //         name="token1"
+    //         type="text"
+    //         onChange={this.onChange}
+    //         onFocus={(e) => this.setState({ boxFocused: true })}
+    //         onBlur={(e) => this.setState({ boxFocused: false })}
+    //       />
+    //     </InputGroup>
+    //     <InputGroup className="input-group-alternative mt-2">
+    //       <InputGroupAddon addonType="prepend">
+    //         <InputGroupText>
+    //           <FontAwesomeIcon icon={faKey} />
+    //         </InputGroupText>
+    //       </InputGroupAddon>
+    //       <Input
+    //         placeholder="Token Address 2"
+    //         autoComplete="false"
+    //         name="token2"
+    //         type="text"
+    //         onChange={this.onChange}
+    //         onFocus={(e) => this.setState({ boxFocused: true })}
+    //         onBlur={(e) => this.setState({ boxFocused: false })}
+    //       />
+    //     </InputGroup>
+    //   </FormGroup>
+    // );
+
+    const doubleAutosuggest = (
       <FormGroup
         className={classnames({
           focused: this.state.boxFocused,
         })}
       >
-        <InputGroup className="input-group-alternative">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>
-              <FontAwesomeIcon icon={faKey} />
-            </InputGroupText>
-          </InputGroupAddon>
-          <Input
-            placeholder="Token Address 1"
-            autoComplete="false"
-            name="token1"
-            type="text"
-            onChange={this.onChange}
-            onFocus={(e) => this.setState({ boxFocused: true })}
-            onBlur={(e) => this.setState({ boxFocused: false })}
-          />
-        </InputGroup>
-        <InputGroup className="input-group-alternative mt-2">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>
-              <FontAwesomeIcon icon={faKey} />
-            </InputGroupText>
-          </InputGroupAddon>
-          <Input
-            placeholder="Token Address 2"
-            autoComplete="false"
-            name="token2"
-            type="text"
-            onChange={this.onChange}
-            onFocus={(e) => this.setState({ boxFocused: true })}
-            onBlur={(e) => this.setState({ boxFocused: false })}
-          />
-        </InputGroup>
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={(e, { suggestion, method }) => {
+            if (method === "enter") {
+              e.preventDefault();
+            }
+
+            this.setState({
+              token1: suggestion.address,
+              alias: suggestion.alias,
+            });
+          }}
+          getSuggestionValue={this.getSuggestionValue}
+          renderSuggestion={this.renderSuggestion}
+          inputProps={inputProps}
+        />
+        <br />
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested2}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          onSuggestionSelected={(e, { suggestion, method }) => {
+            if (method === "enter") {
+              e.preventDefault();
+            }
+
+            this.setState({
+              token2: suggestion.address,
+              alias2: suggestion.alias,
+            });
+          }}
+          getSuggestionValue={this.getSuggestionValue2}
+          renderSuggestion={this.renderSuggestion2}
+          inputProps={inputProps2}
+        />
       </FormGroup>
     );
 
@@ -680,9 +860,12 @@ export class TokenForm extends Component {
         <div className="header-body">
           <Row className="justyfy-content-center">
             <div className="text-center col mr-5">
-              <h4>
+              <h2>
+                <u>{alias}</u>
+              </h2>
+              {/* <h4>
                 <u>{accounts.data1.address}</u>
-              </h4>
+              </h4> */}
               <p>Joined {accounts.data1.first_in_time}</p>
             </div>
           </Row>
@@ -698,7 +881,7 @@ export class TokenForm extends Component {
                         tag="h4"
                         className="text-uppercase text-muted mb-2"
                       >
-                        <u>Market Cap</u>
+                        <u>Slot Market Cap</u>
                       </CardTitle>
                       <span className="h4 font-weight-bold">
                         {income.data1.marketCap} USD
@@ -1149,6 +1332,7 @@ export class TokenForm extends Component {
     );
 
     const getStats = (
+      alias,
       accountData,
       incomeData,
       ticker,
@@ -1160,9 +1344,12 @@ export class TokenForm extends Component {
         <div className="header-body">
           <Row className="justify-content-center">
             <div className="text-center col ml-4">
-              <h4>
+              <h2>
+                <u>{alias}</u>
+              </h2>
+              {/* <h4>
                 <u>{accountData.address}</u>
-              </h4>
+              </h4> */}
               <p>Joined {accountData.first_in_time}</p>
             </div>
           </Row>
@@ -1184,7 +1371,7 @@ export class TokenForm extends Component {
                       <u className="ml-2">Slot Market Cap</u>
                     </CardTitle>
                     <Row>
-                      <Col lg="8">
+                      <Col lg="6">
                         <Row className="justify-content-center">
                           <Col className="pull-left">
                             <span className="h4 font-weight-bold mt-3 ml-3">
@@ -1329,6 +1516,7 @@ export class TokenForm extends Component {
       <Row>
         <Col>
           {getStats(
+            alias,
             accounts.data1,
             income.data1,
             tickers.XTZ_USD,
@@ -1338,6 +1526,7 @@ export class TokenForm extends Component {
         </Col>
         <Col>
           {getStats(
+            alias2,
             accounts.data2,
             income.data2,
             tickers.XTZ_USD,
@@ -1379,7 +1568,12 @@ export class TokenForm extends Component {
               <Form onSubmit={this.onSubmit}>
                 <Card className="bg-gradient-secondary shadow mb-5">
                   <CardBody className="p-lg-5">
-                    {!compare ? single : double}
+                    <Row>
+                      <Col lg>
+                        {!compare ? singleAutosuggest : doubleAutosuggest}
+                        {/* {!compare ? single : double} */}
+                      </Col>
+                    </Row>
                     <Row>
                       <Col lg="6">
                         <Button
@@ -1388,27 +1582,38 @@ export class TokenForm extends Component {
                           color="default"
                           disabled={
                             !compare
-                              ? this.state.token1 !== null &&
-                                this.state.token1 !== ""
+                              ? value !== ""
                                 ? false
                                 : true
-                              : (this.state.token1 === null &&
-                                  this.state.token2 === null) ||
-                                (this.state.token1 === "" &&
-                                  this.state.token2 === "") ||
-                                (this.state.token1 !== null &&
-                                  this.state.token2 === null) ||
-                                (this.state.token1 === null &&
-                                  this.state.token2 !== null) ||
-                                (this.state.token1 !== "" &&
-                                  this.state.token2 === "") ||
-                                (this.state.token1 === "" &&
-                                  this.state.token2 !== "")
+                              : (value === "" && value2 === "") ||
+                                (value !== "" && value2 === "") ||
+                                (value === "" && value2 !== "")
                               ? true
                               : false
                           }
+                          // disabled={
+                          //   !compare
+                          //     ? this.state.token1 !== null &&
+                          //       this.state.token1 !== ""
+                          //       ? false
+                          //       : true
+                          //     : (this.state.token1 === null &&
+                          //         this.state.token2 === null) ||
+                          //       (this.state.token1 === "" &&
+                          //         this.state.token2 === "") ||
+                          //       (this.state.token1 !== null &&
+                          //         this.state.token2 === null) ||
+                          //       (this.state.token1 === null &&
+                          //         this.state.token2 !== null) ||
+                          //       (this.state.token1 !== "" &&
+                          //         this.state.token2 === "") ||
+                          //       (this.state.token1 === "" &&
+                          //         this.state.token2 !== "")
+                          //     ? true
+                          //     : false
+                          // }
                           onClick={this.onClick}
-                          size="lg"
+                          // size="lg"
                           type="submit"
                         >
                           Submit
@@ -1421,7 +1626,7 @@ export class TokenForm extends Component {
                           color="primary"
                           onClick={this.onCompare}
                           outline
-                          size="lg"
+                          // size="lg"
                         >
                           {!compare ? "Compare" : "Back"}
                         </Button>
@@ -1444,7 +1649,7 @@ export class TokenForm extends Component {
             </Col>
           </Row> */}
         </Container>
-        <Container fluid className={submitted ? "mt-5 mb-5" : ""}>
+        <Container className={submitted ? "mt-5 mb-5" : ""}>
           <Element name="stats">
             {submitted && (!isError ? (!compare ? stats : comparison) : error)}
           </Element>

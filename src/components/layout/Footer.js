@@ -20,7 +20,7 @@ export class Footer extends Component {
       <>
         <footer className="footer bg-light">
           <Container>
-            <Row className="row-grid align-items-center mb-1">
+            {/* <Row className="row-grid align-items-center mb-1">
               <Col lg="6">
                 <h4 className="mb-0 font-weight-light">
                   Find out more on Github!
@@ -42,15 +42,31 @@ export class Footer extends Component {
                   Check it out!
                 </UncontrolledTooltip>
               </Col>
-            </Row>
-            <hr />
-            <Row className=" align-items-center justify-content-md-between">
-              <Col md="6">
+            </Row> */}
+            {/* <hr /> */}
+            <Row className="align-items-center justify-content-md-between">
+              <Col md="7">
                 <div className=" copyright">
                   © {new Date().getFullYear()} gripep.
                 </div>
               </Col>
-              <Col md="6">
+              <Col className="pull-right text-lg btn-wrapper" md="2">
+                <Button
+                  className="btn-icon-only rounded-circle ml-8"
+                  color="github"
+                  href="https://github.com/gripep/tzstats"
+                  id="tooltip495507257"
+                  target="_blank"
+                >
+                  <span className="btn-inner">
+                    <FontAwesomeIcon icon={faGithub} />
+                  </span>
+                </Button>
+                <UncontrolledTooltip delay={0} target="tooltip495507257">
+                  Check it out!
+                </UncontrolledTooltip>
+              </Col>
+              <Col md="3">
                 <Nav className=" nav-footer justify-content-end">
                   <NavItem>
                     <NavLink
