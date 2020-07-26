@@ -22,10 +22,6 @@ import {
   CardTitle,
   Form,
   FormGroup,
-  // Input,
-  // InputGroupAddon,
-  // InputGroupText,
-  // InputGroup,
   Container,
   Row,
   Col,
@@ -33,7 +29,6 @@ import {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  // faKey,
   faWallet,
   faStar,
   faUsers,
@@ -719,31 +714,6 @@ export class TokenForm extends Component {
       onChange: this.onChangeAutosuggest2,
     };
 
-    // const single = (
-    //   <FormGroup
-    //     className={classnames({
-    //       focused: this.state.boxFocused,
-    //     })}
-    //   >
-    //     <InputGroup className="input-group-alternative">
-    //       <InputGroupAddon addonType="prepend">
-    //         <InputGroupText>
-    //           <FontAwesomeIcon icon={faKey} />
-    //         </InputGroupText>
-    //       </InputGroupAddon>
-    //       <Input
-    //         placeholder="Your Token Address"
-    //         autoComplete="false"
-    //         name="token1"
-    //         type="text"
-    //         onChange={this.onChange}
-    //         onFocus={(e) => this.setState({ boxFocused: true })}
-    //         onBlur={(e) => this.setState({ boxFocused: false })}
-    //       />
-    //     </InputGroup>
-    //   </FormGroup>
-    // );
-
     const singleAutosuggest = (
       <FormGroup>
         <Autosuggest
@@ -766,47 +736,6 @@ export class TokenForm extends Component {
         />
       </FormGroup>
     );
-
-    // const double = (
-    //   <FormGroup
-    //     className={classnames({
-    //       focused: this.state.boxFocused,
-    //     })}
-    //   >
-    //     <InputGroup className="input-group-alternative">
-    //       <InputGroupAddon addonType="prepend">
-    //         <InputGroupText>
-    //           <FontAwesomeIcon icon={faKey} />
-    //         </InputGroupText>
-    //       </InputGroupAddon>
-    //       <Input
-    //         placeholder="Token Address 1"
-    //         autoComplete="false"
-    //         name="token1"
-    //         type="text"
-    //         onChange={this.onChange}
-    //         onFocus={(e) => this.setState({ boxFocused: true })}
-    //         onBlur={(e) => this.setState({ boxFocused: false })}
-    //       />
-    //     </InputGroup>
-    //     <InputGroup className="input-group-alternative mt-2">
-    //       <InputGroupAddon addonType="prepend">
-    //         <InputGroupText>
-    //           <FontAwesomeIcon icon={faKey} />
-    //         </InputGroupText>
-    //       </InputGroupAddon>
-    //       <Input
-    //         placeholder="Token Address 2"
-    //         autoComplete="false"
-    //         name="token2"
-    //         type="text"
-    //         onChange={this.onChange}
-    //         onFocus={(e) => this.setState({ boxFocused: true })}
-    //         onBlur={(e) => this.setState({ boxFocused: false })}
-    //       />
-    //     </InputGroup>
-    //   </FormGroup>
-    // );
 
     const doubleAutosuggest = (
       <FormGroup
@@ -863,9 +792,6 @@ export class TokenForm extends Component {
               <h2>
                 <u>{alias}</u>
               </h2>
-              {/* <h4>
-                <u>{accounts.data1.address}</u>
-              </h4> */}
               <p>Joined {accounts.data1.first_in_time}</p>
             </div>
           </Row>
@@ -897,111 +823,6 @@ export class TokenForm extends Component {
               </Card>
             </div>
           </Row>
-          {/* <Row>
-            <div className="col col-6">
-              <Card className="shadow border-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h4"
-                        className="text-uppercase text-muted mb-2"
-                      >
-                        <u>Full Balance</u>
-                      </CardTitle>
-                      <span className="h4 font-weight-bold mb-2">
-                        {Intl.NumberFormat().format(
-                          accounts.data1.full_balance
-                        )}{" "}
-                        XTZ
-                      </span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faWallet} />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </div>
-
-            <div className="col col-6">
-              <Card className="shadow border-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h4"
-                        className="text-uppercase text-muted mb-2"
-                      >
-                        <u>Total Bonds</u>
-                      </CardTitle>
-                      <span className="h4 font-weight-bold mb-2">
-                        {income.data1.totalBonds}
-                      </span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faCoins} />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </div>
-          </Row>
-          <Row>
-            <div className="col col-6 mt-5">
-              <Card className="shadow border-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h4"
-                        className="text-uppercase text-muted mb-0"
-                      >
-                        <u>Active Delegations</u>
-                      </CardTitle>
-                      <span className="h4 font-weight-bold mb-0">
-                        {accounts.data1.active_delegations}
-                      </span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faUsers} />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </div>
-
-            <div className="col col-6 mt-5">
-              <Card className="shadow border-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h4"
-                        className="text-uppercase text-muted mb-0"
-                      >
-                        <u>Cycle</u>
-                      </CardTitle>
-                      <span className="h4 font-weight-bold mb-0">
-                        {activeCycle.cycle1}
-                      </span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faRedoAlt} />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </div>
-          </Row> */}
         </div>
 
         <hr />
@@ -1040,95 +861,6 @@ export class TokenForm extends Component {
             </Col>
             {/* Cards */}
             <Col className="mt-3 mb-5 mb-xl-0" xl="4">
-              {/* <Card className="mb-3 shadow border-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h4"
-                        className="text-uppercase text-muted mb-2"
-                      >
-                        <u>Market Cap</u>
-                      </CardTitle>
-                      <span className="h4 font-weight-bold">
-                        {income.data1.marketCap} USD
-                      </span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-default text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faDollarSign} />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card> */}
-              {/* <Card className="mb-3 shadow border-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h4"
-                        className="text-uppercase text-muted mb-2"
-                      >
-                        <u>Cycle</u>
-                      </CardTitle>
-                      <span className="h4 font-weight-bold">
-                        {activeCycle.cycle1}
-                      </span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-default text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faRedoAlt} />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card> */}
-              {/* <Card className="mb-3 shadow border-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h4"
-                        className="text-uppercase text-muted mb-2"
-                      >
-                        <u>Total Bonds</u>
-                      </CardTitle>
-                      <span className="h4 font-weight-bold">
-                        {income.data1.totalBonds}
-                      </span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-default text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faCoins} />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card> */}
-              {/* <Card className="mb-3 shadow border-0">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h4"
-                        className="text-uppercase text-muted mb-2"
-                      >
-                        <u>Avg Bond Return</u>
-                      </CardTitle>
-                      <span className="h4 font-weight-bold">
-                        {income.data1.averageBondReturn}
-                      </span>
-                    </div>
-                    <Col className="col-auto">
-                      <div className="icon icon-shape bg-default text-white rounded-circle shadow">
-                        <FontAwesomeIcon icon={faChartLine} />
-                      </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card> */}
-
               <Card className="mb-3 shadow border-0">
                 <CardBody>
                   <Row>
@@ -1347,9 +1079,6 @@ export class TokenForm extends Component {
               <h2>
                 <u>{alias}</u>
               </h2>
-              {/* <h4>
-                <u>{accountData.address}</u>
-              </h4> */}
               <p>Joined {accountData.first_in_time}</p>
             </div>
           </Row>
@@ -1591,29 +1320,7 @@ export class TokenForm extends Component {
                               ? true
                               : false
                           }
-                          // disabled={
-                          //   !compare
-                          //     ? this.state.token1 !== null &&
-                          //       this.state.token1 !== ""
-                          //       ? false
-                          //       : true
-                          //     : (this.state.token1 === null &&
-                          //         this.state.token2 === null) ||
-                          //       (this.state.token1 === "" &&
-                          //         this.state.token2 === "") ||
-                          //       (this.state.token1 !== null &&
-                          //         this.state.token2 === null) ||
-                          //       (this.state.token1 === null &&
-                          //         this.state.token2 !== null) ||
-                          //       (this.state.token1 !== "" &&
-                          //         this.state.token2 === "") ||
-                          //       (this.state.token1 === "" &&
-                          //         this.state.token2 !== "")
-                          //     ? true
-                          //     : false
-                          // }
                           onClick={this.onClick}
-                          // size="lg"
                           type="submit"
                         >
                           Submit
@@ -1626,7 +1333,6 @@ export class TokenForm extends Component {
                           color="primary"
                           onClick={this.onCompare}
                           outline
-                          // size="lg"
                         >
                           {!compare ? "Compare" : "Back"}
                         </Button>
@@ -1637,17 +1343,6 @@ export class TokenForm extends Component {
               </Form>
             </Col>
           </Row>
-          {/* <Row className="justify-content-center">
-            <Col className="text-center mt--150">
-              {submitted && (
-                <img
-                  alt="..."
-                  className="img-fluid floating"
-                  src={require("../../assets/img/arrow-48.png")}
-                />
-              )}
-            </Col>
-          </Row> */}
         </Container>
         <Container className={submitted ? "mt-5 mb-5" : ""}>
           <Element name="stats">

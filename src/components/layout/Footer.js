@@ -20,30 +20,6 @@ export class Footer extends Component {
       <>
         <footer className="footer bg-light">
           <Container>
-            {/* <Row className="row-grid align-items-center mb-1">
-              <Col lg="6">
-                <h4 className="mb-0 font-weight-light">
-                  Find out more on Github!
-                </h4>
-              </Col>
-              <Col className="text-lg-center btn-wrapper" lg="6">
-                <Button
-                  className="btn-icon-only rounded-circle ml-1"
-                  color="github"
-                  href="https://github.com/gripep/tzstats"
-                  id="tooltip495507257"
-                  target="_blank"
-                >
-                  <span className="btn-inner">
-                    <FontAwesomeIcon icon={faGithub} />
-                  </span>
-                </Button>
-                <UncontrolledTooltip delay={0} target="tooltip495507257">
-                  Check it out!
-                </UncontrolledTooltip>
-              </Col>
-            </Row> */}
-            {/* <hr /> */}
             <Row className="align-items-center justify-content-md-between">
               <Col md="7">
                 <div className=" copyright">
