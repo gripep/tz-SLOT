@@ -100,6 +100,7 @@ export class TokenForm extends Component {
     availableValues: [],
     value: "",
     suggestions: [],
+    alias: "",
   };
 
   componentDidMount() {
@@ -646,7 +647,13 @@ export class TokenForm extends Component {
     });
   };
 
-  getSuggestionValue = (suggestion) => suggestion.address;
+  getSuggestionValue = (suggestion) => {
+    this.setState({
+      token1: suggestion.address,
+      alias: suggestion.alias,
+    });
+    return suggestion.alias;
+  };
 
   renderSuggestion = (suggestion) => <div>{suggestion.alias}</div>;
 
@@ -663,6 +670,7 @@ export class TokenForm extends Component {
 
       value,
       suggestions,
+      alias,
     } = this.state;
 
     const inputProps = {
@@ -704,9 +712,8 @@ export class TokenForm extends Component {
             suggestions={suggestions}
             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            onSuggestionSelected={(e, { suggestion }) => {
+            onSuggestionSelected={(e) => {
               e.preventDefault();
-              this.setState({ token1: value });
             }}
             getSuggestionValue={this.getSuggestionValue}
             renderSuggestion={this.renderSuggestion}
@@ -763,9 +770,12 @@ export class TokenForm extends Component {
         <div className="header-body">
           <Row className="justyfy-content-center">
             <div className="text-center col mr-5">
-              <h4>
+              <h2>
+                <u>{alias}</u>
+              </h2>
+              {/* <h4>
                 <u>{accounts.data1.address}</u>
-              </h4>
+              </h4> */}
               <p>Joined {accounts.data1.first_in_time}</p>
             </div>
           </Row>
