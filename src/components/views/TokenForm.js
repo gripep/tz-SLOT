@@ -108,8 +108,8 @@ export class TokenForm extends Component {
     }
 
     axios
-      // .get("https://api.tzkt.io/v1/suggest/accounts/")
-      .get("/.netlify/functions/baker")
+      .get("https://api.tzkt.io/v1/suggest/accounts/")
+      // .get("/.netlify/functions/baker")
       .then((res) => {
         this.setState({
           availableValues: res.data.map((row) => ({
@@ -171,8 +171,8 @@ export class TokenForm extends Component {
     // it is needed for both single and compare
     let XTZ_USD = null;
     axios
-      // .get("https://api.tzstats.com/markets/tickers")
-      .get("/.netlify/functions/tickers")
+      .get("https://api.tzstats.com/markets/tickers")
+      // .get("/.netlify/functions/tickers")
       .then((res) => {
         let tickersData = res.data;
 
@@ -197,19 +197,19 @@ export class TokenForm extends Component {
     if (!this.state.compare) {
       axios
         .all([
-          // axios.get(
-          //   `https://api.tzstats.com/explorer/account/${this.state.token1}`
-          // ),
-          // axios.get(
-          //   `https://api.tzstats.com/tables/income?address=${this.state.token1}`
-          // ),
+          axios.get(
+            `https://api.tzstats.com/explorer/account/${this.state.token1}`
+          ),
+          axios.get(
+            `https://api.tzstats.com/tables/income?address=${this.state.token1}`
+          ),
 
-          axios.post("/.netlify/functions/account", {
-            token: this.state.token1,
-          }),
-          axios.post("/.netlify/functions/income", {
-            token: this.state.token1,
-          }),
+          // axios.post("/.netlify/functions/account", {
+          //   token: this.state.token1,
+          // }),
+          // axios.post("/.netlify/functions/income", {
+          //   token: this.state.token1,
+          // }),
         ])
         .then(
           axios.spread((account, income) => {
@@ -352,31 +352,31 @@ export class TokenForm extends Component {
     } else {
       axios
         .all([
-          // axios.get(
-          //   `https://api.tzstats.com/explorer/account/${this.state.token1}`
-          // ),
-          // axios.get(
-          //   `https://api.tzstats.com/tables/income?address=${this.state.token1}`
-          // ),
-          // axios.get(
-          //   `https://api.tzstats.com/explorer/account/${this.state.token2}`
-          // ),
-          // axios.get(
-          //   `https://api.tzstats.com/tables/income?address=${this.state.token2}`
-          // ),
+          axios.get(
+            `https://api.tzstats.com/explorer/account/${this.state.token1}`
+          ),
+          axios.get(
+            `https://api.tzstats.com/tables/income?address=${this.state.token1}`
+          ),
+          axios.get(
+            `https://api.tzstats.com/explorer/account/${this.state.token2}`
+          ),
+          axios.get(
+            `https://api.tzstats.com/tables/income?address=${this.state.token2}`
+          ),
 
-          axios.post("/.netlify/functions/account", {
-            token: this.state.token1,
-          }),
-          axios.post("/.netlify/functions/income", {
-            token: this.state.token1,
-          }),
-          axios.post("/.netlify/functions/account", {
-            token: this.state.token2,
-          }),
-          axios.post("/.netlify/functions/income", {
-            token: this.state.token2,
-          }),
+          //   axios.post("/.netlify/functions/account", {
+          //     token: this.state.token1,
+          //   }),
+          //   axios.post("/.netlify/functions/income", {
+          //     token: this.state.token1,
+          //   }),
+          //   axios.post("/.netlify/functions/account", {
+          //     token: this.state.token2,
+          //   }),
+          //   axios.post("/.netlify/functions/income", {
+          //     token: this.state.token2,
+          //   }),
         ])
         .then(
           axios.spread((account1, income1, account2, income2) => {
@@ -384,6 +384,11 @@ export class TokenForm extends Component {
             const incomeData1 = income1.data;
             const accountData2 = account2.data;
             const incomeData2 = income2.data;
+
+            if (incomeData1.length === 0 || incomeData2.length === 0) {
+              this.setState({ isError: true });
+              return;
+            }
 
             // find active cycles
             let i;
@@ -672,10 +677,6 @@ export class TokenForm extends Component {
   };
 
   getSuggestionValue2 = (suggestion) => {
-    this.setState({
-      token2: suggestion.address,
-      alias2: suggestion.alias,
-    });
     return suggestion.alias;
   };
 
@@ -1274,8 +1275,8 @@ export class TokenForm extends Component {
             className="img-fluid"
             src={require("../../assets/img/error-72.png")}
           />
-          <h2 className="mt-6">Baker Key not found</h2>
-          <h2 className="mt-2">Please enter a valid Baker Key...</h2>
+          <h2 className="mt-6">Baker not found</h2>
+          <h2 className="mt-2">Please enter a valid Baker Name...</h2>
         </Col>
       </Row>
     );
