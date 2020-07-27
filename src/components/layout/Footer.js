@@ -21,35 +21,44 @@ export class Footer extends Component {
         <footer className="footer bg-light">
           <Container>
             <Row className="align-items-center justify-content-md-between">
-              <Col md="7">
+              <Col md="5">
                 <div className=" copyright">
                   © {new Date().getFullYear()} gripep.
                 </div>
               </Col>
-              <Col className="pull-right text-lg btn-wrapper" md="2">
-                <Button
-                  className="btn-icon-only rounded-circle ml-8"
-                  color="github"
-                  href="https://github.com/gripep/tzstats"
-                  id="tooltip495507257"
-                  target="_blank"
-                >
-                  <span className="btn-inner">
-                    <FontAwesomeIcon icon={faGithub} />
-                  </span>
-                </Button>
-                <UncontrolledTooltip delay={0} target="tooltip495507257">
-                  Check it out!
-                </UncontrolledTooltip>
+              <Col className="text-lg btn-wrapper" md="3">
+                <Nav className="nav-footer justify-content-end">
+                  <NavItem>
+                    <Button
+                      className="btn-icon-only rounded-circle"
+                      color="github"
+                      href="https://github.com/gripep/tzstats"
+                      id="tooltip495507257"
+                      target="_blank"
+                    >
+                      <span className="btn-inner">
+                        <FontAwesomeIcon icon={faGithub} />
+                      </span>
+                    </Button>
+                    <UncontrolledTooltip delay={0} target="tooltip495507257">
+                      Check it out!
+                    </UncontrolledTooltip>
+                  </NavItem>
+                </Nav>
               </Col>
-              <Col md="3">
-                <Nav className=" nav-footer justify-content-end">
+              <Col md="4">
+                <Nav className="nav-footer justify-content-end">
                   <NavItem>
                     <NavLink
                       href="https://tzstats.com/docs/api/index.html"
                       target="_blank"
                     >
                       Tezos API
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink href="https://api.tzkt.io/" target="_blank">
+                      TzKT API
                     </NavLink>
                   </NavItem>
                   <NavItem>

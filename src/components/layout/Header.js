@@ -27,7 +27,7 @@ export class Header extends Component {
             <Container>
               <NavbarBrand className="mr-lg-5">
                 <Button color="link" onClick={this.onClick}>
-                  <h3 className="text-white">SLOT</h3>
+                  <h3 className="text-white">SLOT Demo</h3>
                 </Button>
               </NavbarBrand>
             </Container>
