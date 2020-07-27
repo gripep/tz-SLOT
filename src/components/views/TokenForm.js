@@ -1276,7 +1276,12 @@ export class TokenForm extends Component {
             src={require("../../assets/img/error-72.png")}
           />
           <h2 className="mt-6">Baker not found</h2>
-          <h2 className="mt-2">Please enter a valid Baker Name...</h2>
+          <hr />
+          <h2 className="mt-2">Please enter a valid Baker Name</h2>
+          <h2 className="mt-2">or</h2>
+          <h2 className="mt-2">
+            Make sure to select a Baker Name from the list
+          </h2>
         </Col>
       </Row>
     );
