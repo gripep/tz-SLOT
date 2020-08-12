@@ -26,7 +26,7 @@ exports.handler = (event, context, callback) => {
       });
   };
 
-  // make sure method is POST
+  // make sure method is GET
   if (event.httpMethod == "GET") {
     getTickers();
   }
