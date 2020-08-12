@@ -108,7 +108,6 @@ export class TokenForm extends Component {
     }
 
     axios
-      // .get("https://api.tzkt.io/v1/suggest/accounts/")
       .get("/.netlify/functions/baker")
       .then((res) => {
         this.setState({
@@ -171,7 +170,6 @@ export class TokenForm extends Component {
     // it is needed for both single and compare
     let XTZ_USD = null;
     axios
-      // .get("https://api.tzstats.com/markets/tickers")
       .get("/.netlify/functions/tickers")
       .then((res) => {
         let tickersData = res.data;
@@ -197,13 +195,6 @@ export class TokenForm extends Component {
     if (!this.state.compare) {
       axios
         .all([
-          // axios.get(
-          //   `https://api.tzstats.com/explorer/account/${this.state.token1}`
-          // ),
-          // axios.get(
-          //   `https://api.tzstats.com/tables/income?address=${this.state.token1}`
-          // ),
-
           axios.post("/.netlify/functions/account", {
             token: this.state.token1,
           }),
@@ -352,19 +343,6 @@ export class TokenForm extends Component {
     } else {
       axios
         .all([
-          // axios.get(
-          //   `https://api.tzstats.com/explorer/account/${this.state.token1}`
-          // ),
-          // axios.get(
-          //   `https://api.tzstats.com/tables/income?address=${this.state.token1}`
-          // ),
-          // axios.get(
-          //   `https://api.tzstats.com/explorer/account/${this.state.token2}`
-          // ),
-          // axios.get(
-          //   `https://api.tzstats.com/tables/income?address=${this.state.token2}`
-          // ),
-
           axios.post("/.netlify/functions/account", {
             token: this.state.token1,
           }),
