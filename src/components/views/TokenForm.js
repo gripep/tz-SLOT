@@ -111,10 +111,7 @@ export class TokenForm extends Component {
       .get("/.netlify/functions/baker")
       .then((res) => {
         this.setState({
-          availableValues: res.data.map((row) => ({
-            address: row.address,
-            alias: row.alias,
-          })),
+          availableValues: res.data.filter((row => row.alias != null)),
         });
       })
       .catch((err) => {

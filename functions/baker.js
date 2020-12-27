@@ -17,7 +17,7 @@ exports.handler = (event, context, callback) => {
   // perform API call
   const getBakers = () => {
     axios
-      .get("https://api.tzkt.io/v1/accounts/")
+      .get("https://api.tzkt.io/v1/accounts/?select=alias,address&limit=10000")
       .then((res) => {
         send(res.data);
       })
