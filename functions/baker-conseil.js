@@ -16,7 +16,7 @@ exports.handler = (event, context, callback) => {
 
   // perform API call
   const getBakersConseil = () => {
-    const API_KEY = process.env;
+    const API_KEY = process.env.API_KEY;
     const headers = { apiKey: API_KEY };
     axios
       .get(
