@@ -16,9 +16,8 @@ exports.handler = (event, context, callback) => {
 
   // perform API call
   const getBakersConseil = () => {
-    const API_KEY = process.env;
-    const headers = { apiKey: `${API_KEY}` };
-    
+    const API_KEY = process.env.API_KEY;
+    const headers = { apiKey: API_KEY };
     axios
       .get(
         "https://conseil-prod.cryptonomic-infra.tech:443/v2/metadata/tezos/mainnet/accounts/attributes",
