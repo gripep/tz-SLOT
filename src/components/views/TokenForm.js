@@ -108,13 +108,10 @@ export class TokenForm extends Component {
     }
 
     axios
-      .get("/.netlify/functions/baker-conseil")
+      .get("/.netlify/functions/baker")
       .then((res) => {
         this.setState({
-          availableValues: Object.entries(res.data[0].valueMap).map((row) => ({
-            address: row[0],
-            alias: row[1],
-          })),
+          availableValues: res.data.filter((row => row.alias != null)),
         });
       })
       .catch((err) => {
